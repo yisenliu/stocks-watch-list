@@ -1,0 +1,24 @@
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": ["*.md"],
+      "options": {
+        "proseWrap": "never"
+      }
+    },
+    {
+      "files": ["*.htm", "*.html", "*.tpl"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "printWidth": 120,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true
+}

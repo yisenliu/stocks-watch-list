@@ -1,0 +1,76 @@
+// *************************************
+//
+// Components
+// -> Page load progress bar
+//
+// *************************************
+
+// <body class="pace-running | pace-done">
+//   <div class="pace  pace-inactive">
+//     <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+//       <div class="pace-progress-inner"></div>
+//     </div>
+//     <div class="pace-activity"></div>
+//   </div>
+// </body>
+
+.pace
+  @apply select-none pointer-events-none
+  &.pace-inactive
+    @apply hidden
+  .pace-progress
+    @apply fixed z-999 top-0 right-full block w-full h-1 bg-cyan-600
+
+// .pace-activity
+
+// .pace
+//   +size(100%)
+//   user-select: none
+//   pointer-events: none
+//   position: fixed
+//   z-index: get($layer,pace)
+//   top: 0
+//   left: 0
+//   display: block
+//   &::before
+//     +size(50px)
+//     content: ''
+//     border-radius: 50%
+//     border:
+//       style: solid
+//       color: #9FE450
+//     margin: -25px 0 0 -25px
+//     display: block
+//     position: absolute
+//     z-index: 2
+//     top: 50%
+//     left: 50%
+//     animation: rotateLoadingIcon get($time,slow) infinite ease-in-out
+//   &.pace-inactive
+//     &::before
+//       opacity: 0
+//       transition: opacity get($time,normal)
+//   &-done
+//     #container
+//       opacity: 1
+//       transition: opacity get($time,normal) ease
+      
+// .pace-activity
+//   +size(100%)
+//   background: #fff
+//   position: absolute
+//   z-index: 1
+//   left: 0
+//   top: 0
+//   transform-origin: left top
+
+// @keyframes rotateLoadingIcon
+//   0%
+//     transform: rotate(0deg)
+//     border-width: 3px 0 0 0
+//   50%
+//     transform: rotate(180deg)
+//     border-width: 3px 3px 0 0
+//   100%
+//     transform: rotate(360deg)
+//     border-width: 3px 3px 3px 0

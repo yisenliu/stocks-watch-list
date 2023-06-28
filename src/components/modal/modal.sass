@@ -1,0 +1,30 @@
+// keep first line
+.modal
+  @apply w-screen h-screen fixed z-999 left-0 top-0  overflow-hidden backdrop-blur-0 transition-all duration-500
+  &.active
+    @apply backdrop-blur-sm
+  &__body
+    @apply w-full h-full overflow-hidden p-6 bg-white
+    min-height: 10rem
+  // &__close
+  //   @apply block -m-4 ml-0 w-12 h-12 cursor-pointer text-black text-0 font-a p-0 bg-transparent border-none transition-colors
+  //   &:hover
+  //     @apply text-info
+    // &::before
+    //   +md-icon(close)
+    //   @apply w-12 h-12 text-xl font-normal text-center leading-12 text-current opacity-50
+    &:hover
+      @apply bg-transparent
+  &__dialog
+    @apply w-screen h-screen fixed z-999 left-0 top-0  overflow-x-hidden overflow-y-auto
+  &__footer
+    @apply border-t border-t-gray-400 p-4 overflow-hidden text-right bg-white
+  &__header
+    @apply px-4 py-3 bg-gray-50 border-b border-b-gray-300 leading-tight flex items-center justify-between
+  &__loading
+    @apply text-center my-2 mx-0
+    &::after
+      content: ''
+      @apply w-8 h-8 inline-block align-middle rounded-full border-3 border-primary border-t-primary-dark animate-rotate ml-1
+  &__title
+    @apply text-blueGray-600 text-lg font-bold

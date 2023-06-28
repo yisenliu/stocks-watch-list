@@ -1,5 +1,7 @@
 # Stock Market
 
+股市觀察站，自訂台股與美股觀察名單。
+
 ## Getting Started
 
 ### .env
@@ -50,4 +52,3 @@ $ yarn preview
 ## Browser Support
 
 Mobile Browsers
-# stocks

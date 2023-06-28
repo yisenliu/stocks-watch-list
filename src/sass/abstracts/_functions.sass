@@ -1,0 +1,9 @@
+// Data URI for SVG
+// -------------------------------------
+// @function dataURI($iconName)
+//   @return url('@assets/dataURI/#{$iconName}.svg')
+
+@function px2rem($pxValue)
+  $calcRem: $pxValue / 16
+  @return $calcRem * 1rem
+
