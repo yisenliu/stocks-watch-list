@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import NavItem from './NavItem';
 
-const navigationStyles = {
-  basic: 'z-2 top-0 fixed bg-black/50 ',
+const navContsinerStyles = 'z-2 top-0 fixed bg-black/50 ';
+const navStyles = {
   open: 'translate-x-0',
   close: '-translate-x-full',
 };
@@ -11,9 +11,10 @@ const navItems = [
   { to: '/tw', text: '台股' },
   { to: '/us', text: '美股' },
 ];
-export default function Navigation({ open, onClose }) {
+
+export default function Navigation({ isOpen, onClose }) {
   const navRef = useRef();
-  const statusStyle = open ? navigationStyles.open : navigationStyles.close;
+  const statusStyle = isOpen ? navStyles.open : navStyles.close;
   const [animationEnd, SetAnimationEnd] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Navigation({ open, onClose }) {
   return (
     <>
       {!animationEnd && (
-        <div className={navigationStyles.basic + (open ? 'w-full' : 'w-0')} onClick={onClose} id="navigation">
+        <div className={navContsinerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={onClose} id="navigation">
           <nav
             ref={navRef}
             className={

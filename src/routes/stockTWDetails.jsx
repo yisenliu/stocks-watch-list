@@ -19,8 +19,11 @@ export default function StockTWDetails() {
     get ready() {
       return !this.loading && currentStock;
     },
-    get fail() {
-      return this.ready && !currentStock.stock_id;
+    get error() {
+      return stocksInfo.error;
+    },
+    get notfound() {
+      return this.ready && Boolean(!currentStock.stock_id);
     },
   };
 
@@ -41,7 +44,8 @@ export default function StockTWDetails() {
           )}
         </>
       )}
-      {state.fail && <p className="my-4 text-center">查無 {stock_id} 資料，請稍後再試。</p>}
+      {state.error && <p className="my-4 text-center text-red-800">{state.error.message}</p>}
+      {state.notfound && <p className="my-4 text-center">查無 {stock_id} 資料，請稍後再試。</p>}
     </div>,
     document.body,
   );

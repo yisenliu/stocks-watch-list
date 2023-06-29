@@ -3,7 +3,8 @@ import { imagetools } from 'vite-imagetools';
 import macrosPlugin from 'vite-plugin-babel-macros';
 import myPackage from './package.json';
 import mdPlugin from 'vite-plugin-markdown';
-import react from '@vitejs/plugin-react';
+// import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import { resolve } from 'path';
 
 const root = resolve(__dirname, 'src');
@@ -48,9 +49,9 @@ export default defineConfig(({ mode }) => {
     envDir: process.cwd(),
     plugins: [
       react({
-        babel: {
-          babelrc: true,
-        },
+        // babel: {
+        //   babelrc: true,
+        // },
         jsxImportSource: '@emotion/react',
       }),
       macrosPlugin(),

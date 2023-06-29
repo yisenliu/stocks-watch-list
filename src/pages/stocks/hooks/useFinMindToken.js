@@ -13,7 +13,7 @@ export default function useFinMindToken() {
         user_id: import.meta.env.VITE_FinMind_User_Id,
         password: import.meta.env.VITE_FinMind_Password,
       },
-    }).then((res) => {
+    }).then(res => {
       setToken(res.data.token);
     });
   }, []);

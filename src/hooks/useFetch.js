@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetch, { createInstance } from '@utils/fetch';
 import { useState, useEffect } from 'react';
 
 export default function useFetch(options, dependency) {
@@ -12,20 +12,25 @@ export default function useFetch(options, dependency) {
     let retry = 0;
     function fetchData() {
       setLoading(true);
-      axios(options)
-        .then((res) => res.data)
-        .then((data) => {
+      setError(null);
+      fetch(options)
+        .then(res => res.data)
+        .then(data => {
           if (!ignore) {
             setData(data);
             setError(null);
             retry = 0;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           retry++;
           if (retry <= 2) {
-            fetchTimeoutId = setTimeout(fetchData, 5000);
-            err = { ...err, message: err.message + ' (Restarting...)' };
+            fetchTimeoutId = setTimeout(fetchData, 2000);
+            if (err.message.includes('timeout')) {
+              err = { ...err, message: '請求逾時 (Retry...)' };
+            } else {
+              err = { ...err, message: err.message + ' (Restarting...)' };
+            }
           } else {
             err = { ...err, message: '重試次數已達上限，請稍候再試。' };
           }
@@ -48,4 +53,4 @@ export default function useFetch(options, dependency) {
   return { data, error, loading };
 }
 
-export const createInstance = axios.create;
+export { createInstance };

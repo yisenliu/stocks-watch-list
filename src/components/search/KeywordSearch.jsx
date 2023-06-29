@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 import { useCallback, useContext, useRef } from 'react';
 import StockContext from '@contexts/StockContext';
 import tw from 'twin.macro';
@@ -12,12 +12,22 @@ import Loading from '@components/Loading';
 const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
 function getDataSetByMarket(market) {
-  switch (market) {
-    case 'tw':
+  let fn;
+  let dataset = {
+    tw() {
       return 'TaiwanStockInfo';
-    case 'us':
+    },
+    us() {
       return 'USStockInfo';
-  }
+    },
+    default() {
+      console.log('unknown market');
+      return null;
+    },
+  };
+  fn = dataset[market] ? dataset[market] : dataset['default'];
+
+  return fn();
 }
 
 export default function KeywordSearch({ isShowInput, onOpen }) {
@@ -49,11 +59,20 @@ export default function KeywordSearch({ isShowInput, onOpen }) {
     onOpen();
     setKeyword('');
   };
+  const state = {
+    loading: allStocks.loading,
+    get ready() {
+      return !this.loading && !this.error;
+    },
+    get error() {
+      return allStocks.error;
+    },
+  };
 
   return (
     <>
-      {allStocks.loading && <Loading />}
-      {!allStocks.loading && (
+      {state.loading && <Loading />}
+      {state.ready && (
         <>
           {!isShowInput && (
             <IconButton onClick={handleShowInput} aria-label="show input" size="large" sx={{ color: 'white' }}>
@@ -80,6 +99,7 @@ export default function KeywordSearch({ isShowInput, onOpen }) {
           )}
         </>
       )}
+      {state.error && <p>{state.error.message}</p>}
     </>
   );
 }

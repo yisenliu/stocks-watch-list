@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import StockContext from '@contexts/StockContext';
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
+import fetch from '@utils/fetch';
 import moment from 'moment';
 import dataGridStyles from '@pages/stocks/dataGridStyles';
 
@@ -44,7 +44,8 @@ export default function StockUSList() {
   let len = stockList.length;
   const navigate = useNavigate();
   const getStockPrice = ticker => {
-    return axios('/api/stock', {
+    return fetch({
+      url: '/api/stock',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         token,

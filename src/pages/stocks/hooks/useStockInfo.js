@@ -17,7 +17,7 @@ export default function useStockInfo(token, dataset) {
   );
 
   if (info.error) {
-    console.log({ StockInfoError: info.data });
+    console.log(`%c${info.error.message}`, 'color: red');
   }
   if (info.data) {
     info.data = info.data.data;
