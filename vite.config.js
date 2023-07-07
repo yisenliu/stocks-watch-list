@@ -58,7 +58,7 @@ export default defineConfig(({ mode }) => {
       imagetools(),
       splitVendorChunkPlugin(),
       mdPlugin.plugin({
-        mode: ['react'],
+        mode: ['html', 'react'],
       }),
     ],
     publicDir,
@@ -79,6 +79,7 @@ export default defineConfig(({ mode }) => {
     root,
     server: {
       host: true,
+      open: false,
       proxy: {
         '/api/token': {
           target: 'https://api.finmindtrade.com',

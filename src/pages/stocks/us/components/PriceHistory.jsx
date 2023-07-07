@@ -5,7 +5,7 @@ import business from 'moment-business';
 import Loading from '@components/Loading';
 import PriceHistoryChart from '@pages/stocks/us/components/PriceHistoryChart';
 import PriceSummary from '@pages/stocks/components/PriceSummary';
-import usePriceHistory from '@pages/stocks/us/hooks/usePriceHistory';
+import usePriceHistory from '@hooks/usePriceHistory';
 
 export default function PriceHistory({ ticker, token }) {
   const durations = [
@@ -21,6 +21,7 @@ export default function PriceHistory({ ticker, token }) {
   const { data, error, loading } = usePriceHistory({
     ticker,
     token,
+    dataset: 'USStockPrice',
     startDate: moment().subtract(3, 'years').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD'),
   });
@@ -33,7 +34,7 @@ export default function PriceHistory({ ticker, token }) {
     [offsetFromEnd],
   );
   const isReady = dataLength > 0;
-  const handleChangeDuration = (e) => {
+  const handleChangeDuration = e => {
     setCurrentDurationIdx(Number(e.target.value));
   };
 
@@ -41,7 +42,7 @@ export default function PriceHistory({ ticker, token }) {
     let min = null;
     let max = null;
 
-    currentPriceHistory.forEach((history) => {
+    currentPriceHistory.forEach(history => {
       const close = history.Close;
       if (!max || close > max) {
         max = close;

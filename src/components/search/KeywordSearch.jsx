@@ -1,38 +1,20 @@
+import { useCallback, useContext, useRef } from 'react';
+import { debounce } from 'lodash';
 import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
-import { debounce } from 'lodash';
-import { useCallback, useContext, useRef } from 'react';
+import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
+import Loading from '@components/Loading';
+import SearchResult from './SearchResult';
 import StockContext from '@contexts/StockContext';
 import tw from 'twin.macro';
-import useStockInfo from '@pages/stocks/hooks/useStockInfo';
-import SearchResult from './SearchResult';
-import Loading from '@components/Loading';
+import useStockInfo from '@hooks/useStockInfo';
 
 const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
-function getDataSetByMarket(market) {
-  let fn;
-  let dataset = {
-    tw() {
-      return 'TaiwanStockInfo';
-    },
-    us() {
-      return 'USStockInfo';
-    },
-    default() {
-      console.log('unknown market');
-      return null;
-    },
-  };
-  fn = dataset[market] ? dataset[market] : dataset['default'];
-
-  return fn();
-}
-
 export default function KeywordSearch({ isShowInput, onOpen }) {
   const { keyword, setKeyword, market, token } = useContext(StockContext);
-  const dataset = getDataSetByMarket(market);
+  const dataset = getStockInfoDataSetByMarket(market);
   const allStocks = useStockInfo(token, dataset);
   const matchedStocks =
     keyword && allStocks.data ? allStocks.data.filter(stock => stock.stock_id.startsWith(keyword)) : null;
@@ -55,7 +37,7 @@ export default function KeywordSearch({ isShowInput, onOpen }) {
     keywordRef.current.value = '';
     setKeyword('');
   };
-  const handleShowInput = () => {
+  const showInput = () => {
     onOpen();
     setKeyword('');
   };
@@ -75,7 +57,7 @@ export default function KeywordSearch({ isShowInput, onOpen }) {
       {state.ready && (
         <>
           {!isShowInput && (
-            <IconButton onClick={handleShowInput} aria-label="show input" size="large" sx={{ color: 'white' }}>
+            <IconButton onClick={showInput} aria-label="show input" size="large" sx={{ color: 'white' }}>
               <AddIcon fontSize="medium" />
             </IconButton>
           )}

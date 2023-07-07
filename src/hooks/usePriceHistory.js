@@ -1,6 +1,6 @@
 import useFetch from '@hooks/useFetch';
 
-export default function usePriceHistory({ ticker = null, token, startDate, endDate }) {
+export default function usePriceHistory({ ticker = null, token, dataset, startDate, endDate }) {
   const price = useFetch(
     {
       url: '/api/stock',
@@ -10,13 +10,13 @@ export default function usePriceHistory({ ticker = null, token, startDate, endDa
         token,
       },
       params: {
-        dataset: 'TaiwanStockPrice',
+        dataset,
         data_id: ticker,
         start_date: startDate,
         end_date: endDate,
       },
     },
-    [ticker],
+    [ticker, dataset],
   );
 
   if (price.data) {

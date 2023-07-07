@@ -6,7 +6,7 @@ import StockContext from '@contexts/StockContext';
 import BackToList from '@pages/stocks/components/BackToList';
 import DividendChart from '@pages/stocks/tw/components/DividendChart';
 import PriceHistory from '@pages/stocks/tw/components/PriceHistory';
-import useStockInfo from '@pages/stocks/hooks/useStockInfo';
+import useStockInfo from '@hooks/useStockInfo';
 import Loading from '@components/Loading';
 
 export default function StockTWDetails() {
@@ -28,7 +28,7 @@ export default function StockTWDetails() {
   };
 
   return createPortal(
-    <div className="z-1 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
+    <div className="z-2 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
       <BackToList to="/tw" />
       {state.loading && <Loading />}
       {state.ready && (

@@ -6,7 +6,7 @@ import Header from './Header.jsx';
 import Main from './Main';
 import StockContext from '@contexts/StockContext';
 
-import useFinMindToken from '@pages/stocks/hooks/useFinMindToken';
+import useFinMindToken from '@hooks/useFinMindToken';
 
 const stocks = {
   tw: localStorage.getItem('stocks_tw')

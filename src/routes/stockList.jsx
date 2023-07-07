@@ -5,11 +5,12 @@ import { debounce } from 'lodash';
 import { useSwipeable } from 'react-swipeable';
 import { columns, gridStyles } from '@pages/stocks/dataGrid';
 import fetch from '@utils/fetch';
+import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import moment from 'moment';
 import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@pages/stocks/components/SelectedStocksStatistics';
 
-export default function StockTWList() {
+export default function StockList() {
   const [enableSwipe, setEnableSwipe] = useState(false);
   const [swapIdx, setSwapIdx] = useState(null);
   const [currentDir, setCurrentDir] = useState(null);
@@ -19,6 +20,7 @@ export default function StockTWList() {
   const [pageRowTops, setPageRowTops] = useState([]);
   const { market, watchList, setWatchList, token } = useContext(StockContext);
   const apiRef = useGridApiRef();
+  const dataset = getStockPriceDataSetByMarket(market);
   const dealDragRow = useCallback(
     debounce((target, rowHeight, dir) => {
       if (dir === 'Up') {
@@ -137,7 +139,7 @@ export default function StockTWList() {
         token,
       },
       params: {
-        dataset: 'TaiwanStockPrice',
+        dataset,
         data_id: ticker,
         start_date: moment().subtract(7, 'days').format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
@@ -148,8 +150,14 @@ export default function StockTWList() {
         const latest = data[data.length - 1];
 
         if (latest) {
-          const { stock_id, spread, close, open } = latest;
-          return { id: stock_id, spread, close, open };
+          if (market === 'tw') {
+            const { stock_id, spread, close, open } = latest;
+            return { id: stock_id, spread, close, open };
+          }
+          if (market === 'us') {
+            const { stock_id, Close, Open } = latest;
+            return { id: stock_id, spread: Close - Open, close: Close, open: Open };
+          }
         }
         return { id: ticker, spread: '-', close: '-', open: '-' };
       });
@@ -216,7 +224,7 @@ export default function StockTWList() {
               },
             }}
             onRowClick={params => {
-              navigate(`/tw/${params.id}`);
+              navigate(`/${market}/${params.id}`);
             }}
             onSortModelChange={onSortModelChange}
             pageSizeOptions={[5, 10, 20]}

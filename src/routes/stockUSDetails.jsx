@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import StockContext from '@contexts/StockContext';
 import BackToList from '@pages/stocks/components/BackToList';
 import PriceHistory from '@pages/stocks/us/components/PriceHistory';
-import useStockInfo from '@pages/stocks/hooks/useStockInfo';
+import useStockInfo from '@hooks/useStockInfo';
 import Loading from '@components/Loading';
 
 export default function StockUSDetails() {

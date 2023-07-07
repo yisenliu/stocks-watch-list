@@ -3,9 +3,10 @@ import ErrorPage from '@/error-page';
 import Dashboard from '@routes/Dashboard';
 import Index from '@routes/Index';
 // import stockLoader from '@routes/stockLoader';
-import StockTWList from '@routes/stockTWList';
+// import StockTWList from '@routes/stockTWList';
+import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
-import StockUSList from '@routes/stockUSList';
+// import StockUSList from '@routes/stockUSList';
 import StockUSDetails from '@routes/stockUSDetails';
 import CSSModules from '@routes/CSSModules';
 
@@ -26,18 +27,18 @@ export const router = createBrowserRouter([
       },
       {
         path: 'tw',
-        element: <StockTWList />,
+        element: <StockList />,
         children: [
           {
             path: ':stock_id',
-            // loader: stockLoader,
             element: <StockTWDetails />,
+            // loader: stockLoader,
           },
         ],
       },
       {
         path: 'us',
-        element: <StockUSList />,
+        element: <StockList />,
         children: [
           {
             path: ':stock_id',
