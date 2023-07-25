@@ -1,6 +1,6 @@
-# Stock Watch List
+# Stocks Watch List
 
-自訂台股與美股上市股票觀察名單。
+自訂台股與美股上市公司股票與 ETF 觀察名單。
 
 ## Getting Started
 
@@ -13,19 +13,29 @@ VITE_FinMind_User_Id = Your_FinMind_User_Id
 VITE_FinMind_Password = Your_FinMind_Password
 ```
 
-### Install and Run
+### How to use
+
+#### Install all dependencies
 
 ```bash
-# install dependencies
 $ yarn install
+```
 
-# development
+#### Development
+
+```bash
 $ yarn dev
+```
 
-# build for production
+#### Production Build
+
+```bash
 $ yarn build
+```
 
-# preview for production
+#### Production Preview
+
+```bash
 $ yarn preview
 ```
 
@@ -41,9 +51,9 @@ $ yarn preview
 
 ## Features
 
-- 串接 FinMind API，可自訂台股與美股上市股票觀察名單。
+- 串接 FinMind API，可自訂台股與美股上市公司股票與 ETF 觀察名單。
 - 允許新增、刪除、排序觀察名單。
-- 圖表化呈現上市股票在不同時間區間的表現；另外，台股可查詢上市公司近六年股利。
+- 圖表化呈現股票在不同時間區間的表現；另外，台股可查詢上市公司與 ETF 近六年股利。
 
 ## Experience
 
