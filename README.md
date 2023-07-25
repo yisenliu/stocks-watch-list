@@ -4,9 +4,9 @@
 
 ## Getting Started
 
-### .env
+### Create `.env` file
 
-#### 本例使用 [FinMind 開源資料 API](https://finmindtrade.com)，可免費註冊
+本例使用 [FinMind 開源資料 API](https://finmindtrade.com)，可免費註冊
 
 ```
 VITE_FinMind_User_Id = Your_FinMind_User_Id
@@ -15,25 +15,25 @@ VITE_FinMind_Password = Your_FinMind_Password
 
 ### How to use
 
-#### Install all dependencies
+Install all dependencies
 
 ```bash
 $ yarn install
 ```
 
-#### Development
+Development
 
 ```bash
 $ yarn dev
 ```
 
-#### Production Build
+Production Build
 
 ```bash
 $ yarn build
 ```
 
-#### Production Preview
+Production Preview
 
 ```bash
 $ yarn preview
