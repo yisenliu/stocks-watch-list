@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import business from 'moment-business';
+import StackDuration from '@components/StackDuration';
 import moment from 'moment';
+import business from 'moment-business';
 import Loading from '@components/Loading';
-import PriceHistoryChart from '@pages/stocks/tw/components/PriceHistoryChart';
-import PriceSummary from '@pages/stocks/components/PriceSummary';
-import StackDuration from '@pages/stocks/components/StackDuration';
+import PriceHistoryChart from '@markets/us/components/PriceHistoryChart';
+import PriceSummary from '@components/PriceSummary';
 import usePriceHistory from '@hooks/usePriceHistory';
 
 export default function PriceHistory({ ticker, token }) {
@@ -21,7 +21,7 @@ export default function PriceHistory({ ticker, token }) {
   const { data, error, loading } = usePriceHistory({
     ticker,
     token,
-    dataset: 'TaiwanStockPrice',
+    dataset: 'USStockPrice',
     startDate: moment().subtract(3, 'years').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD'),
   });
@@ -43,7 +43,7 @@ export default function PriceHistory({ ticker, token }) {
     let max = null;
 
     currentPriceHistory.forEach(history => {
-      const close = history.close;
+      const close = history.Close;
       if (!max || close > max) {
         max = close;
       }
@@ -53,10 +53,6 @@ export default function PriceHistory({ ticker, token }) {
     });
 
     setRange({ min, max });
-
-    return () => {
-      setRange({ min: null, max: null });
-    };
   }, [isReady, currentDurationIdx]);
 
   return (
@@ -71,8 +67,8 @@ export default function PriceHistory({ ticker, token }) {
       {currentPriceHistory.length > 0 && (
         <>
           <PriceSummary
-            currentPrice={currentPriceHistory[currentPriceHistory.length - 1].close}
-            startPrice={currentPriceHistory[0].close}
+            currentPrice={currentPriceHistory[currentPriceHistory.length - 1].Close}
+            startPrice={currentPriceHistory[0].Close}
             endDate={currentPriceHistory[currentPriceHistory.length - 1].date}
             min={range.min}
             max={range.max}

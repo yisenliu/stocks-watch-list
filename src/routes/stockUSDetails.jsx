@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import StockContext from '@contexts/StockContext';
-import BackToList from '@pages/stocks/components/BackToList';
-import PriceHistory from '@pages/stocks/us/components/PriceHistory';
+import BackToList from '@components/BackToList';
+import PriceHistory from '@markets/us/components/PriceHistory';
 import useStockInfo from '@hooks/useStockInfo';
 import Loading from '@components/Loading';
 

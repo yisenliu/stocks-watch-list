@@ -1,135 +1,25 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { DataGridPro, gridPaginatedVisibleSortedGridRowIdsSelector, useGridApiRef } from '@mui/x-data-grid-pro';
-import { debounce } from 'lodash';
-import { useSwipeable } from 'react-swipeable';
-import { columns, gridStyles } from '@pages/stocks/dataGrid';
-import fetch from '@utils/fetch';
-import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import moment from 'moment';
+import DraggableDataGrid from '@components/DraggableDataGrid';
+import { columns, gridStyles } from '@components/dataGrid';
+import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
+import fetch from '@utils/fetch';
 import StockContext from '@contexts/StockContext';
-import SelectedStocksStatistics from '@pages/stocks/components/SelectedStocksStatistics';
+import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 
 export default function StockList() {
-  const [enableSwipe, setEnableSwipe] = useState(false);
-  const [swapIdx, setSwapIdx] = useState(null);
-  const [currentDir, setCurrentDir] = useState(null);
   const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const [selectedRowId, setSelectedRowId] = useState(null);
   const [sortModel, setSortModel] = useState([]);
-  const [pageRowTops, setPageRowTops] = useState([]);
-  const { market, watchList, setWatchList, token } = useContext(StockContext);
-  const apiRef = useGridApiRef();
+  const { market, watchList, updateWatchList, token } = useContext(StockContext);
+  const [apiRefCurrent, setApiRefCurrent] = useState(null);
   const dataset = getStockPriceDataSetByMarket(market);
-  const dealDragRow = useCallback(
-    debounce((target, rowHeight, dir) => {
-      if (dir === 'Up') {
-        for (let i = target.index - 1; i >= 0; i--) {
-          if (target.top <= pageRowTops[i].top + rowHeight) {
-            const overlapElement = apiRef.current.getRowElement(pageRowTops[i].id);
-            overlapElement.style.transform = `translateY(${rowHeight}px)`;
-            setSwapIdx(getRealIndexInMarket(market, pageRowTops[i].id));
-            setSortModel([]);
-          }
-        }
-      }
-      if (dir === 'Down') {
-        for (let i = target.index + 1; i < pageRowTops.length; i++) {
-          if (target.top >= pageRowTops[i].top) {
-            const overlapElement = apiRef.current.getRowElement(pageRowTops[i].id);
-            overlapElement.style.transform = `translateY(-${rowHeight}px)`;
-            setSwapIdx(getRealIndexInMarket(market, pageRowTops[i].id));
-            setSortModel([]);
-          }
-        }
-      }
-    }, 100),
-    [pageRowTops],
-  );
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const stockList = watchList[market];
   let stocksNum = stockList?.length;
-  const swipeHandlers = useSwipeable({
-    onSwipeStart({ dir }) {
-      if (!enableSwipe) {
-        clearInterval(apiRef.current.timerId);
-      } else {
-        setCurrentDir(dir);
-      }
-    },
-    onSwiping({ event, dir, deltaY }) {
-      if (enableSwipe) {
-        const domRect = event.target.getBoundingClientRect();
-        const rowHeight = domRect.height;
-        const target = {
-          top: domRect.top,
-          index: apiRef.current.getRowIndexRelativeToVisibleRows(selectedRowId),
-          dom: apiRef.current.selectedRowElement,
-        };
-
-        target.dom.style.transform = `translateY(${deltaY}px)`;
-        target.dom.style.opacity = 0.8;
-        setCurrentDir(dir);
-        dealDragRow(target, rowHeight, dir);
-      }
-    },
-    onTouchStartOrOnMouseDown({ event }) {
-      console.clear();
-      let timer = 0;
-      let ms = 100;
-      let rowEl = event.target.closest('.MuiDataGrid-row');
-      const rowId = rowEl?.dataset.id;
-      const pageRowIds = gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
-      setPageRowTops(() => {
-        const rows = document.querySelectorAll('.MuiDataGrid-row');
-        return pageRowIds.map((id, index) => ({
-          id,
-          top: rows[index].getBoundingClientRect().top,
-        }));
-      });
-
-      apiRef.current.timerId = setInterval(() => {
-        timer += ms;
-        if (timer >= 500) {
-          setSelectedRowId(rowId);
-          setSwapIdx(getRealIndexInMarket(market, rowId));
-          if (selectedRowIds.includes(rowId)) {
-            // remove from selection
-            setSelectedRowIds(ids => ids.filter(id => id !== rowId));
-            apiRef.current.selectedRowElement = null;
-          } else {
-            // add to selection
-            setSelectedRowIds([...selectedRowIds, rowId]);
-            apiRef.current.selectedRowElement = rowEl;
-          }
-          clearInterval(apiRef.current.timerId);
-        }
-      }, ms);
-    },
-    onTouchEndOrOnMouseUp() {
-      // console.log('onTouchEndOrOnMouseUp');
-      const selectedRowIndex = getRealIndexInMarket(market, selectedRowId);
-      if (enableSwipe && selectedRowIndex !== swapIdx) {
-        // move data into index of watch list
-        const newData = [...watchList[market]];
-        const dataToMove = newData.splice(selectedRowIndex, 1)[0];
-
-        newData.splice(swapIdx, 0, dataToMove);
-        updateWatchList(market, newData);
-        clearSelectedRowIds();
-      }
-      setEnableSwipe(false);
-      setSelectedRowId(null);
-      setCurrentDir(null);
-      clearInterval(apiRef.current.timerId);
-    },
-  });
   function clearSelectedRowIds() {
     setSelectedRowIds([]);
-  }
-  function getRealIndexInMarket(market, id) {
-    return watchList[market].findIndex(item => item.id === id);
   }
   function getStockPrice(ticker) {
     return fetch({
@@ -162,24 +52,27 @@ export default function StockList() {
         return { id: ticker, spread: '-', close: '-', open: '-' };
       });
   }
+  function onRowClick(params) {
+    if (selectedRowIds.length === 0) {
+      navigate(`/${market}/${params.id}`);
+    } else {
+      updateSelectedRowIds(params.id);
+    }
+  }
   async function onSortModelChange(newSortModel) {
     await setSortModel(newSortModel);
-    updateWatchList(market, apiRef.current.getSortedRows());
+    await updateWatchList(market, apiRefCurrent.getSortedRows());
   }
-  function resetRowStyles() {
-    const pageRowIds = gridPaginatedVisibleSortedGridRowIdsSelector(apiRef);
-    pageRowIds.forEach(id => {
-      const rowEl = apiRef.current.getRowElement(id);
-      if (rowEl) {
-        rowEl.style.removeProperty('transform');
-        rowEl.style.removeProperty('opacity');
-      }
-    });
-  }
-  function updateWatchList(market, data) {
-    const newList = { [market]: data };
-    localStorage.setItem(`stocks_${market}`, JSON.stringify(data));
-    setWatchList(list => ({ ...list, ...newList }));
+  function updateSelectedRowIds(draggableId) {
+    if (selectedRowIds.includes(draggableId)) {
+      // remove from selection
+      setSelectedRowIds(ids => ids.filter(id => id !== draggableId));
+      apiRefCurrent.selectRow(draggableId, false);
+    } else {
+      // add to selection
+      setSelectedRowIds([...selectedRowIds, draggableId]);
+      apiRefCurrent.selectRow(draggableId, true);
+    }
   }
 
   useEffect(() => {
@@ -188,54 +81,46 @@ export default function StockList() {
         return getStockPrice(item.id);
       });
       Promise.all(rowsPromise).then(data => {
-        const newList = { [market]: data };
-        localStorage.setItem(`stocks_${market}`, JSON.stringify(data));
-        setWatchList(list => ({ ...list, ...newList }));
+        updateWatchList(market, data);
       });
     }
   }, [stocksNum]);
 
   useEffect(() => {
-    apiRef.current.setRowSelectionModel(selectedRowIds);
+    apiRefCurrent?.setRowSelectionModel(selectedRowIds);
   }, [selectedRowIds, pathname]);
-
-  useEffect(() => {
-    resetRowStyles();
-  }, [currentDir]);
-
-  useEffect(() => {
-    setEnableSwipe(selectedRowIds.length === 1);
-  }, [selectedRowIds]);
 
   return (
     <>
       {selectedRowIds.length > 0 && (
         <SelectedStocksStatistics clearSelectedRowIds={clearSelectedRowIds} selectedRowIds={selectedRowIds} />
       )}
-      <div className="-m-4" {...swipeHandlers}>
-        {stockList !== null && (
-          <DataGridPro
-            apiRef={apiRef}
-            columns={columns}
-            disableColumnMenu
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            onRowClick={params => {
-              navigate(`/${market}/${params.id}`);
-            }}
-            onSortModelChange={onSortModelChange}
-            pageSizeOptions={[5, 10, 20]}
-            pagination={true}
-            rows={stockList}
-            sortModel={sortModel}
-            sx={gridStyles}
-          />
-        )}
-        <Outlet />
-      </div>
+      {stockList !== null && (
+        <DraggableDataGrid
+          className="-m-4"
+          columns={columns}
+          disableColumnMenu
+          disableColumnResize={true}
+          hideFooter
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          market={market}
+          onRowClick={onRowClick}
+          onSortModelChange={onSortModelChange}
+          rows={stockList}
+          setSelectedRowIds={setSelectedRowIds}
+          selectedRowIds={selectedRowIds}
+          setApiRefCurrent={setApiRefCurrent}
+          sortModel={sortModel}
+          sx={gridStyles}
+          updateSelectedRowIds={updateSelectedRowIds}
+          updateWatchList={updateWatchList}
+        />
+      )}
+      <Outlet />
     </>
   );
 }

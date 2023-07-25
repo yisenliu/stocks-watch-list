@@ -1,9 +1,8 @@
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import { imagetools } from 'vite-imagetools';
 import macrosPlugin from 'vite-plugin-babel-macros';
 import myPackage from './package.json';
 import mdPlugin from 'vite-plugin-markdown';
-// import react from '@vitejs/plugin-react';
 import react from '@vitejs/plugin-react-swc';
 import { resolve } from 'path';
 
@@ -11,17 +10,12 @@ const root = resolve(__dirname, 'src');
 const publicDir = resolve(__dirname, 'public');
 const outDir = resolve(__dirname, 'dist');
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-
+export default defineConfig(() => {
   return {
-    // appType: 'mpa',
-    // cssCodeSplit: false,
     base: './',
     build: {
       emptyOutDir: true,
       outDir,
-      // modulePreload: false,
       rollupOptions: {
         input: {
           index: resolve(root, 'index.html'),
@@ -43,15 +37,10 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
-      'process.env.SOME_KEY': env.VITE_SOME_KEY,
-      'process.env.USER_ID': JSON.stringify(env.VITE_USER_ID), //string 使用 JSON.stringify()
     },
     envDir: process.cwd(),
     plugins: [
       react({
-        // babel: {
-        //   babelrc: true,
-        // },
         jsxImportSource: '@emotion/react',
       }),
       macrosPlugin(),
@@ -67,6 +56,7 @@ export default defineConfig(({ mode }) => {
         '@': root,
         '@assets': resolve(root, 'assets'),
         '@components': resolve(root, 'components'),
+        '@markets': resolve(root, 'markets'),
         '@contexts': resolve(root, 'contexts'),
         '@hooks': resolve(root, 'hooks'),
         '@lib': resolve(root, 'lib'),
@@ -91,16 +81,17 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api\/stock/, '/api/v4/data'),
         },
-        '/api/dayAvgPrice': {
-          target: 'https://openapi.twse.com.tw',
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/api\/dayAvgPrice/, '/v1/exchangeReport/STOCK_DAY_AVG_ALL'),
-        },
-        '/api/eps': {
-          target: 'https://openapi.twse.com.tw',
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/api\/eps/, '/v1/opendata/t187ap14_L'),
-        },
+        // 證交所API
+        // '/api/dayAvgPrice': {
+        //   target: 'https://openapi.twse.com.tw',
+        //   changeOrigin: true,
+        //   rewrite: path => path.replace(/^\/api\/dayAvgPrice/, '/v1/exchangeReport/STOCK_DAY_AVG_ALL'),
+        // },
+        // '/api/eps': {
+        //   target: 'https://openapi.twse.com.tw',
+        //   changeOrigin: true,
+        //   rewrite: path => path.replace(/^\/api\/eps/, '/v1/opendata/t187ap14_L'),
+        // },
       },
     },
   };

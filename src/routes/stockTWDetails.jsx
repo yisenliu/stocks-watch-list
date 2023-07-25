@@ -3,9 +3,9 @@ import { useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { useParams } from 'react-router-dom';
 import StockContext from '@contexts/StockContext';
-import BackToList from '@pages/stocks/components/BackToList';
-import DividendChart from '@pages/stocks/tw/components/DividendChart';
-import PriceHistory from '@pages/stocks/tw/components/PriceHistory';
+import BackToList from '@components/BackToList';
+import DividendChart from '@markets/tw/components/DividendChart';
+import PriceHistory from '@markets/tw/components/PriceHistory';
 import useStockInfo from '@hooks/useStockInfo';
 import Loading from '@components/Loading';
 

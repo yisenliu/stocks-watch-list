@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import NavItem from './NavItem';
 
-const navContsinerStyles = 'z-2 top-0 fixed bg-black/50 ';
+const navContainerStyles = 'z-2 top-0 fixed bg-black/75 ';
 const navStyles = {
   open: 'translate-x-0',
   close: '-translate-x-full',
@@ -29,11 +29,11 @@ export default function Navigation({ isOpen, onClose }) {
   return (
     <>
       {!animationEnd && (
-        <div className={navContsinerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={onClose} id="navigation">
+        <div className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={onClose}>
           <nav
             ref={navRef}
             className={
-              'flex flex-col transition-transform w-64 h-screen p-4 space-y-4 text-white bg-black ' + statusStyle
+              'flex flex-col transition-transform w-64 h-screen p-4 space-y-4 text-white bg-gray-900 ' + statusStyle
             }
           >
             {navItems.map(link => (

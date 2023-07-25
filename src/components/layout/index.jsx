@@ -29,7 +29,17 @@ export default function Layout() {
   const market = useLocation().pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
   const token = useFinMindToken();
-  const context = { keyword, setKeyword, watchList, setWatchList, market, token };
+  const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token };
+
+  function updateWatchList(market, newData) {
+    // console.log('updateWatchList');
+    return new Promise(resolve => {
+      const newList = { [market]: newData };
+      localStorage.setItem(`stocks_${market}`, JSON.stringify(newData));
+      setWatchList(list => ({ ...list, ...newList }));
+      setTimeout(resolve, 0);
+    });
+  }
 
   return (
     <StockContext.Provider value={context}>

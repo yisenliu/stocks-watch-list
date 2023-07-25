@@ -1,5 +1,3 @@
-import { createPortal } from 'react-dom';
-
 export default function PriceSummary({ currentPrice, startPrice, endDate, min, max }) {
   const diff = {
     value: parseFloat(Number(currentPrice - startPrice).toFixed(2)),
@@ -10,15 +8,11 @@ export default function PriceSummary({ currentPrice, startPrice, endDate, min, m
       <ul className="gap-x-4 inline-grid justify-center grid-cols-2 my-4">
         <li className="col-span-2">
           <p className="mx-2 text-3xl font-bold text-black"> {currentPrice}</p>
-          {/* {createPortal(
-            <div className="z-3 fixed bottom-0 left-0 w-full px-2 text-sm text-white bg-gray-900">
-              最後更新：{endDate}
-            </div>,
-            document.body,
-          )} */}
 
           <p className="space-x-2 text-lg font-bold">
-            <span className={diff.value > 0 ? 'text-green-600' : 'text-red-600'}>{diff.value}</span>
+            <span className={diff.value > 0 ? 'text-green-600 before:content-["+"]' : 'text-red-600'}>
+              {diff.value}
+            </span>
             <span className={diff.percent > 0 ? 'text-green-600' : 'text-red-600'}>({diff.percent + '%'})</span>
           </p>
         </li>

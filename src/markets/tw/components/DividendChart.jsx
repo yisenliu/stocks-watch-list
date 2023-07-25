@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
 import { Bar, ComposedChart, Line, LabelList, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import Loading from '@components/Loading';
-import useStockDividend from '@pages/stocks/tw/hooks/useStockDividend';
+import useStockDividend from '@markets/tw/hooks/useStockDividend';
 
 export default function DividendChart({ ticker, token }) {
   const { data, error, loading } = useStockDividend({ ticker, token });
   const dividend_policy = data?.dividend_policy;
-  const legendFormatter = (value) => {
+  const legendFormatter = value => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
   let [animate, setAnimate] = useState(false);

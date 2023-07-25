@@ -28,17 +28,17 @@ export default function SelectedStocksStatistics({ selectedRowIds, clearSelected
         height: 48,
         color: '#fff',
         position: 'fixed',
-        zIndex: 1,
+        zIndex: 10,
         left: 0,
         top: 0,
         background: '#aaa',
-        width: '100%',
+        width: '100vw',
       }}
     >
       <IconButton onClick={clearSelectedRowIds} aria-label="return" size="large" sx={{ color: 'white' }}>
         <KeyboardBackspaceIcon fontSize="small" />
       </IconButton>
-      {selectedRowIds.length} selected
+      {`${selectedRowIds.length} selected`}
       <IconButton
         onClick={removeStocksFromWatchList}
         aria-label="remove from watch list"

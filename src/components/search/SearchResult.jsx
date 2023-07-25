@@ -5,19 +5,17 @@ import { useContext } from 'react';
 import StockContext from '@contexts/StockContext';
 
 function Stock({ keyword, stock }) {
-  const { watchList, setWatchList, market } = useContext(StockContext);
+  const { watchList, updateWatchList, market } = useContext(StockContext);
   const stockList = watchList[market];
   const { stock_id, stock_name, industry_category, type } = stock;
   const addToWatchList = function () {
-    const newList = { [market]: [...stockList, { id: stock_id }] };
-    localStorage.setItem(`stocks_${market}`, JSON.stringify(newList[market]));
-    setWatchList(list => ({ ...list, ...newList }));
+    updateWatchList(market, [...stockList, { id: stock_id }]);
   };
   const removeFromWatchList = function () {
-    const newData = stockList.filter(list => list.id !== stock_id);
-    const newList = { [market]: newData };
-    localStorage.setItem(`stocks_${market}`, JSON.stringify(newList[market]));
-    setWatchList(list => ({ ...list, ...newList }));
+    updateWatchList(
+      market,
+      stockList.filter(stock => stock.id !== stock_id),
+    );
   };
   const isExist = stockList.some(stock => stock.id === stock_id);
 
@@ -36,12 +34,17 @@ function Stock({ keyword, stock }) {
         )}
       </p>
       {isExist && (
-        <IconButton onClick={removeFromWatchList} aria-label="add to stock list" size="large" sx={{ color: 'white' }}>
+        <IconButton
+          onClick={removeFromWatchList}
+          aria-label="remove from watch list"
+          size="large"
+          sx={{ color: 'white' }}
+        >
           <CheckCircleIcon fontSize="small" />
         </IconButton>
       )}
       {!isExist && (
-        <IconButton onClick={addToWatchList} aria-label="add to stock list" size="large" sx={{ color: 'white' }}>
+        <IconButton onClick={addToWatchList} aria-label="add to watch list" size="large" sx={{ color: 'white' }}>
           <AddCircleOutlineIcon fontSize="small" />
         </IconButton>
       )}

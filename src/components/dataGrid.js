@@ -36,8 +36,21 @@ export const gridStyles = {
     backgroundColor: 'black',
     borderRadius: 0,
   },
-  '& .MuiDataGrid-cell:focus': {
-    outline: 'none',
+  '& .MuiDataGrid-cell': {
+    border: 'none',
+    '&:focus': {
+      outline: 'none',
+    },
+  },
+  '& .MuiDataGrid-withBorderColor': {
+    borderColor: '#ccc',
+  },
+  '& .MuiDataGrid-virtualScrollerRenderZone': {
+    transform: 'none !important',
+  },
+  '& .MuiDataGrid-virtualScroller': {
+    width: '100%',
+    overflowX: 'hidden',
   },
   '& .MuiDataGrid-sortIcon,& .MuiTablePagination-root, & .MuiSelect-icon': {
     color: 'white',
@@ -47,15 +60,10 @@ export const gridStyles = {
   },
   '& .MuiDataGrid-row': {
     userSelect: 'none',
-    cursor: 'pointer',
-    transition: 'transform .2s',
+    cursor: 'drop',
+    transition: 'transform .2s linear 0s',
     '&.Mui-selected': {
-      boxShadow: '0 0 8px 4px rgba(0,0,0,.8)',
-      backgroundColor: 'rgba(255,255,255,.2)',
-      '&:hover': {
-        backgroundColor: 'rgba(255,255,255,.2)',
-      },
+      backgroundColor: 'transparent !important',
     },
   },
 };
-// export default { columns, gridStyles };
