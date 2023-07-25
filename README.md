@@ -15,7 +15,7 @@ VITE_FinMind_Password = Your_FinMind_Password
 
 ### How to use
 
-Install all dependencies
+Install Dependencies
 
 ```bash
 $ yarn install
