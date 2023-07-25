@@ -35,6 +35,7 @@ export default function KeywordSearch({ isShowInput, onOpen }) {
   };
   const clearInput = () => {
     keywordRef.current.value = '';
+    keywordRef.current.focus();
     setKeyword('');
   };
   const showInput = () => {
