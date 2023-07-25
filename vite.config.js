@@ -21,7 +21,6 @@ export default defineConfig(() => {
           index: resolve(root, 'index.html'),
         },
       },
-      sourcemap: true,
     },
     css: {
       preprocessorOptions: {
