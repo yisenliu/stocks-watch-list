@@ -23,10 +23,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
         run: |
-          yarn install
+          npm install
       - name: Production build
         run: |
-          yarn run build
+          npm run build
       - name: Commit files
         run: |
           cd $PUBLISH_DIR
