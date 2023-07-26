@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
+      'process.env.corsProxy': JSON.stringify('https://cors-anywhere.herokuapp.com/'),
       'process.env.isGithubPages': env.isGithubPages,
       'process.env.FINMIND_USER_ID': JSON.stringify(env.FINMIND_USER_ID),
       'process.env.FINMIND_PASSWORD': JSON.stringify(env.FINMIND_PASSWORD),
