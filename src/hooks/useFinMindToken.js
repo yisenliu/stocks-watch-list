@@ -6,9 +6,7 @@ export default function useFinMindToken() {
   useEffect(() => {
     fetch({
       method: 'post',
-      url: process.env.isGithubPages
-        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/login')
-        : '/api/token',
+      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/login' : '/api/token',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         user_id: process.env.isGithubPages ? process.env.FINMIND_USER_ID : import.meta.env.VITE_FinMind_User_Id,
