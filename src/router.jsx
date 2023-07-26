@@ -6,8 +6,6 @@ import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
 import StockUSDetails from '@routes/stockUSDetails';
 
-console.log(process.env);
-
 export const router = createBrowserRouter([
   {
     path: process.env.isGithubPages ? 'stocks-watch-list' : '/',
