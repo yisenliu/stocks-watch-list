@@ -6,9 +6,11 @@ import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
 import StockUSDetails from '@routes/stockUSDetails';
 
+console.log(process.env.mode);
+
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: process.env.mode === 'development' ? '/' : 'stocks-watch-list',
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     children: [

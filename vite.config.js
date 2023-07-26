@@ -10,7 +10,7 @@ const root = resolve(__dirname, 'src');
 const publicDir = resolve(__dirname, 'public');
 const outDir = resolve(__dirname, 'dist');
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
   return {
     base: './',
     build: {
@@ -36,6 +36,7 @@ export default defineConfig(() => {
     },
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
+      'process.env.mode': JSON.stringify(mode),
     },
     envDir: process.cwd(),
     plugins: [
