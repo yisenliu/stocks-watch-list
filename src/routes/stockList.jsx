@@ -24,7 +24,7 @@ export default function StockList() {
   function getStockPrice(ticker) {
     return fetch({
       url: process.env.isGithubPages
-        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/login')
+        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data')
         : '/api/stock',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
@@ -56,7 +56,7 @@ export default function StockList() {
   }
   function onRowClick(params) {
     if (selectedRowIds.length === 0) {
-      navigate(`/${market}/${params.id}`);
+      navigate(`${market}/${params.id}`);
     } else {
       updateSelectedRowIds(params.id);
     }

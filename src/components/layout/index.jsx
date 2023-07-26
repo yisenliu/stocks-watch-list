@@ -11,10 +11,10 @@ import useFinMindToken from '@hooks/useFinMindToken';
 const stocks = {
   tw: localStorage.getItem('stocks_tw')
     ? JSON.parse(localStorage.getItem('stocks_tw'))
-    : [{ id: '0050' }, { id: '0056' }, { id: '2886' }, { id: '00679B' }, { id: '00720B' }, { id: '6657' }],
+    : [{ id: '0050' }, { id: '0056' }, { id: '2886' }],
   us: localStorage.getItem('stocks_us')
     ? JSON.parse(localStorage.getItem('stocks_us'))
-    : [{ id: 'AAPL' }, { id: 'MSFT' }, { id: 'NFLX' }, { id: 'NVDA' }, { id: 'USO' }],
+    : [{ id: 'AAPL' }, { id: 'MSFT' }, { id: 'NFLX' }],
 };
 
 for (const [key, value] of Object.entries(stocks)) {
