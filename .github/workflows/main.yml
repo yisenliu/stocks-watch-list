@@ -1,13 +1,15 @@
 name: deploy gh-pages
 on:
   push:
-    branches: ['main']
+    branches:
+      - main
+
 jobs:
   build:
     name: Build and deploy gh-pages
     env:
       MY_SECRET: ${{secrets.commit_secret}}
-      USER_NAME: yisenliu
+      USER_NAME: Yisen
       USER_EMAIL: yisenliu@gmail.com
       PUBLISH_DIR: ./dist
     runs-on: ubuntu-latest
@@ -15,19 +17,21 @@ jobs:
       matrix:
         node-version: [18.x]
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install
+
+      - name: Install dependencies
+        run: yarn install
+
       - name: Production Build
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build
-      - name: Commit files
+        run: yarn run build
+
+      - name: Deploy to gh-pages
         run: |
           cd $PUBLISH_DIR
           git init
