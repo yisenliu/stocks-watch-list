@@ -56,7 +56,7 @@ export default function StockList() {
   }
   function onRowClick(params) {
     if (selectedRowIds.length === 0) {
-      navigate(`${market}/${params.id}`);
+      navigate(params.id);
     } else {
       updateSelectedRowIds(params.id);
     }
