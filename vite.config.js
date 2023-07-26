@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
-      'process.env.corsProxy': JSON.stringify('http://cors.io/'),
+      'process.env.corsProxy': JSON.stringify('https://cors.io/'),
       'process.env.isGithubPages': env.isGithubPages,
       'process.env.FINMIND_USER_ID': JSON.stringify(env.FINMIND_USER_ID),
       'process.env.FINMIND_PASSWORD': JSON.stringify(env.FINMIND_PASSWORD),
