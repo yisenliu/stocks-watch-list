@@ -5,9 +5,7 @@ export default function useStockDividend({ ticker = null, token }) {
   const today = moment().format('YYYY-MM-DD');
   const dividend = useFetch(
     {
-      url: process.env.isGithubPages
-        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data')
-        : '/api/stock',
+      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/data' : '/api/stock',
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {

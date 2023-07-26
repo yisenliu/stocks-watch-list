@@ -23,9 +23,7 @@ export default function StockList() {
   }
   function getStockPrice(ticker) {
     return fetch({
-      url: process.env.isGithubPages
-        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data')
-        : '/api/stock',
+      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/data' : '/api/stock',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         token,
