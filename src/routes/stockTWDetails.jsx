@@ -29,7 +29,7 @@ export default function StockTWDetails() {
 
   return createPortal(
     <div className="z-2 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
-      <BackToList to="/tw" />
+      <BackToList to={process.env.isGithubPages ? '/stocks-watch-list/tw' : '/tw'} />
       {state.loading && <Loading />}
       {state.ready && (
         <>

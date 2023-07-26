@@ -28,7 +28,7 @@ export default function StockUSDetails() {
 
   return createPortal(
     <div className="z-1 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
-      <BackToList to="/us" />
+      <BackToList to={process.env.isGithubPages ? '/stocks-watch-list/us' : '/us'} />
       {state.loading && <Loading />}
       {state.ready && (
         <>
