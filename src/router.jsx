@@ -8,7 +8,7 @@ import StockUSDetails from '@routes/stockUSDetails';
 
 export const router = createBrowserRouter([
   {
-    path: process.env.isGithubPages ? 'stocks-watch-list' : '/',
+    path: process.env.isGithubPages ? '/stocks-watch-list/' : '/',
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     children: [
