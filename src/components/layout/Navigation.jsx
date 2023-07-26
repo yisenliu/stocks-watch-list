@@ -7,7 +7,7 @@ const navStyles = {
   close: '-translate-x-full',
 };
 const navItems = [
-  { to: '/', text: 'Home' },
+  { to: process.env.isGithubPages ? '/stocks-watch-list/' : '/', text: 'Home' },
   { to: 'tw', text: '台股' },
   { to: 'us', text: '美股' },
 ];

@@ -1,6 +1,7 @@
 import useFetch from '@hooks/useFetch';
 
 export default function useStockInfo(token, dataset) {
+  console.log({ token });
   const info = useFetch(
     {
       url: process.env.isGithubPages

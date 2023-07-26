@@ -30,7 +30,6 @@ const naviTrigger = css`
 
 export default function Header() {
   const pathname = useLocation().pathname;
-  console.log({ pathname });
   const isRoot = process.env.isGithubPages ? pathname === '/stocks-watch-list/' : pathname === '/';
   const [isShowNavi, setIsShowNavi] = useState(false);
   const [isShowInput, setIsShowInput] = useState(false);
