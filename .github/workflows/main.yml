@@ -32,7 +32,7 @@ jobs:
           git init
           git config --local user.name $USER_NAME
           git config --local user.email $USER_EMAIL
-          git remote add origin https://${{secrets.ACCESS_TOKEN}}@github.com/$GITHUB_REPOSITORY.git
+          git remote add origin https://$ACCESS_TOKEN@github.com/$GITHUB_REPOSITORY.git
           git checkout -b gh-pages
           git add --all
           git commit -m "Deploy to gh-pages"
