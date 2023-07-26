@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-deploy:
     env:
-      ACCESS_TOKEN: ${{secrets.access_token}}
+      ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
       USER_NAME: yisenliu
       USER_EMAIL: yisenliu@gmail.com
       PUBLISH_DIR: dist
@@ -30,9 +30,9 @@ jobs:
         run: |
           cd $PUBLISH_DIR
           git init
-          git config --local user.name $USER_NAME
-          git config --local user.email $USER_EMAIL
-          git remote add origin https://$ACCESS_TOKEN@github.com/$GITHUB_REPOSITORY.git
+          git config --local user.name ${{env.USER_NAME}}
+          git config --local user.email ${{env.USER_EMAIL}}
+          git remote add origin https://${{env.ACCESS_TOKEN}}@github.com/$GITHUB_REPOSITORY.git
           git checkout -b gh-pages
           git add --all
           git commit -m "Deploy to gh-pages"
