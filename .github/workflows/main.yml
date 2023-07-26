@@ -1,43 +1,37 @@
-name: deploy gh-pages
+name: Build and deploy to gh-pages
 on:
   push:
     branches:
       - main
 
 jobs:
-  deploy:
-    name: Build and deploy gh-pages
+  build-and-deploy:
     env:
-      MY_SECRET: ${{secrets.commit_secret}}
+      ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
       USER_NAME: Yisen
       USER_EMAIL: yisenliu@gmail.com
-      PUBLISH_DIR: ./dist
+      PUBLISH_DIR: dist
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: '.nvmrc'
 
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Production Build
-        run: yarn run build
-
-      - name: Deploy to gh-pages
+      - name: Install and Build
         run: |
-          cd $PUBLISH_DIR
-          git init
-          git config --local user.name $USER_NAME
-          git config --local user.email $USER_EMAIL
-          git status
-          git remote add origin https://$MY_SECRET@github.com/$GITHUB_REPOSITORY.git
-          git checkout -b gh-pages
-          git add --all
-          git commit -m "deploy to Github pages"
-          git push origin gh-pages -f
-          echo 🤘 deploy gh-pages complete.
+          yarn install
+          yarn run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          branch: 'gh-pages'
+          folder: $PUBLISH_DIR
+          token: $ACCESS_TOKEN
+          git-config-name: $USER_NAME
+          git-config-email: $USER_EMAIL
+          commit-message: 'Deploy to gh-pages'
