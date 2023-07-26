@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-deploy:
     env:
-      ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
+      ACCESS_TOKEN: ${{secrets.access_token}}
       USER_NAME: yisenliu
       USER_EMAIL: yisenliu@gmail.com
       PUBLISH_DIR: dist
