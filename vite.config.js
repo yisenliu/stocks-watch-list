@@ -38,8 +38,8 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
       'process.env.isGithubPages': env.isGithubPages,
-      'process.env.FINMIND_USER_ID': env.FINMIND_USER_ID,
-      'process.env.FINMIND_PASSWORD': env.FINMIND_PASSWORD,
+      'process.env.FINMIND_USER_ID': JSON.stringify(env.FINMIND_USER_ID),
+      'process.env.FINMIND_PASSWORD': JSON.stringify(env.FINMIND_PASSWORD),
     },
     envDir: process.cwd(),
     plugins: [
