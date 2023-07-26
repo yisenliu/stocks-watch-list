@@ -26,7 +26,8 @@ for (const [key, value] of Object.entries(stocks)) {
 
 export default function Layout() {
   const [keyword, setKeyword] = useState('');
-  const market = useLocation().pathname.split('/')[1];
+  const pathname = useLocation().pathname;
+  const market = process.env.isGithubPages ? pathname.split('/')[2] : pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
   const token = useFinMindToken();
   const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token };
