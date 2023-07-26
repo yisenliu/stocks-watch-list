@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import { imagetools } from 'vite-imagetools';
 import macrosPlugin from 'vite-plugin-babel-macros';
 import myPackage from './package.json';
@@ -11,6 +11,7 @@ const publicDir = resolve(__dirname, 'public');
 const outDir = resolve(__dirname, 'dist');
 
 export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
   return {
     base: './',
     build: {
@@ -36,7 +37,9 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env.Breakpoints': myPackage.config.breakpoints,
-      'process.env.mode': JSON.stringify(mode),
+      'process.env.isGithubPages': env.isGithubPages,
+      'process.env.FINMIND_USER_ID': env.FINMIND_USER_ID,
+      'process.env.FINMIND_PASSWORD': env.FINMIND_PASSWORD,
     },
     envDir: process.cwd(),
     plugins: [

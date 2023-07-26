@@ -5,7 +5,7 @@ export default function useStockDividend({ ticker = null, token }) {
   const today = moment().format('YYYY-MM-DD');
   const dividend = useFetch(
     {
-      url: '/api/stock',
+      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/login' : '/api/stock',
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
@@ -30,7 +30,7 @@ export default function useStockDividend({ ticker = null, token }) {
       const dividendByQuarter = dividendOrigin.reduce((acc, current) => {
         const year = moment(current.date).year();
         const quarter = 'Q' + moment(current.date).format('Q');
-        const idx = acc.findIndex((item) => item.year === year);
+        const idx = acc.findIndex(item => item.year === year);
         if (acc === [] || idx === -1) {
           const data = {
             year,
@@ -50,7 +50,7 @@ export default function useStockDividend({ ticker = null, token }) {
         return acc;
       }, []);
       dividend.data = {
-        dividend_policy: dividendByQuarter.map((item) => ({
+        dividend_policy: dividendByQuarter.map(item => ({
           ...item,
           Q1: item.Q1 ? parseFloat(item.Q1.toFixed(3)) : null,
           Q2: item.Q2 ? parseFloat(item.Q2.toFixed(3)) : null,
