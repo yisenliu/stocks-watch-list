@@ -26,12 +26,15 @@ jobs:
           yarn install
           yarn run build
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
-        with:
-          branch: 'gh-pages'
-          folder: $PUBLISH_DIR
-          token: $ACCESS_TOKEN
-          git-config-name: $USER_NAME
-          git-config-email: $USER_EMAIL
-          commit-message: 'Deploy to gh-pages'
+      - name: Deploy to gh-pages
+        run: |
+          cd $PUBLISH_DIR
+          git init
+          git config --local user.name $USER_NAME
+          git config --local user.email $USER_EMAIL
+          git remote add origin https://$ACCESS_TOKEN@github.com/$USER_NAME/$GITHUB_REPOSITORY.git
+          git checkout -b gh-pages
+          git add --all
+          git commit -m "Deploy to gh-pages"
+          git push origin gh-pages -f
+          echo 🤘 deploy gh-pages complete.
