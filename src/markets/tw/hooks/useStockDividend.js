@@ -6,7 +6,7 @@ export default function useStockDividend({ ticker = null, token }) {
   const dividend = useFetch(
     {
       url: process.env.isGithubPages
-        ? process.env.corsProxy + 'https://api.finmindtrade.com/api/v4/login'
+        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/login')
         : '/api/stock',
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },

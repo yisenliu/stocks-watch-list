@@ -8,8 +8,8 @@ const navStyles = {
 };
 const navItems = [
   { to: '/', text: 'Home' },
-  { to: '/tw', text: '台股' },
-  { to: '/us', text: '美股' },
+  { to: 'tw', text: '台股' },
+  { to: 'us', text: '美股' },
 ];
 
 export default function Navigation({ isOpen, onClose }) {

@@ -7,7 +7,7 @@ export default function useFinMindToken() {
     fetch({
       method: 'post',
       url: process.env.isGithubPages
-        ? process.env.corsProxy + 'https://api.finmindtrade.com/api/v4/login'
+        ? process.env.corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/login')
         : '/api/token',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
