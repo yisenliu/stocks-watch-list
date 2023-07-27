@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { matchRoutes, Outlet, useLocation } from 'react-router-dom';
 import '@lib/pace';
 import Container from './Container';
 import Header from './Header.jsx';
+import Login from '@components/Login';
 import Main from './Main';
 import StockContext from '@contexts/StockContext';
-
-import useFinMindToken from '@hooks/useFinMindToken';
 
 const stocks = {
   tw: localStorage.getItem('stocks_tw')
@@ -26,12 +25,20 @@ for (const [key, value] of Object.entries(stocks)) {
 
 export default function Layout() {
   const [keyword, setKeyword] = useState('');
-  const pathname = useLocation().pathname;
+  const [userId, setUserId] = useState(null);
+  const [token, setToken] = useState(null);
+  const currentLocation = useLocation();
+  const pathname = currentLocation.pathname;
   const market = process.env.isGithubPages ? pathname.split('/')[2] : pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
-  const token = useFinMindToken();
-  const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token };
+  const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token, userId, logout };
+  const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
+  const isMatchMemberRoutes = Boolean(matchRoutes(memberOnlyRoutes, currentLocation));
 
+  function logout() {
+    setUserId(null);
+    setToken(null);
+  }
   function updateWatchList(market, newData) {
     // console.log('updateWatchList');
     return new Promise(resolve => {
@@ -42,13 +49,23 @@ export default function Layout() {
     });
   }
 
+  function onLoginSuccess(token, userId) {
+    setToken(token);
+    setUserId(userId);
+  }
+
   return (
     <StockContext.Provider value={context}>
       <Container>
-        <Header />
-        <Main>
-          <Outlet />
-        </Main>
+        {isMatchMemberRoutes && !userId && <Login onSuccess={onLoginSuccess} />}
+        {(!isMatchMemberRoutes || userId) && (
+          <>
+            <Header />
+            <Main>
+              <Outlet />
+            </Main>
+          </>
+        )}
       </Container>
     </StockContext.Provider>
   );

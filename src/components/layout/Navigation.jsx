@@ -1,5 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import NavItem from './NavItem';
+import StockContext from '@contexts/StockContext';
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const navContainerStyles = 'z-2 top-0 fixed bg-black/75 ';
 const navStyles = {
@@ -12,7 +15,8 @@ const navItems = [
   { to: 'us', text: '美股' },
 ];
 
-export default function Navigation({ isOpen, onClose }) {
+export default function Navigation({ isOpen, closeMenu }) {
+  const { logout, userId } = useContext(StockContext);
   const navRef = useRef();
   const statusStyle = isOpen ? navStyles.open : navStyles.close;
   const [animationEnd, SetAnimationEnd] = useState(false);
@@ -29,7 +33,7 @@ export default function Navigation({ isOpen, onClose }) {
   return (
     <>
       {!animationEnd && (
-        <div className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={onClose}>
+        <div className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
           <nav
             ref={navRef}
             className={
@@ -37,8 +41,21 @@ export default function Navigation({ isOpen, onClose }) {
             }
           >
             {navItems.map(link => (
-              <NavItem {...link} key={link.text} onClick={onClose} />
+              <NavItem {...link} key={link.text} onClick={closeMenu} />
             ))}
+            {userId && userId !== 'guest' && (
+              <Button
+                variant="contained"
+                endIcon={<LogoutIcon />}
+                sx={{ textTransform: 'none' }}
+                onClick={e => {
+                  logout();
+                  closeMenu(e);
+                }}
+              >
+                {`登出 ${userId}`}
+              </Button>
+            )}
           </nav>
         </div>
       )}

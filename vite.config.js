@@ -39,8 +39,6 @@ export default defineConfig(({ mode }) => {
       'process.env.Breakpoints': myPackage.config.breakpoints,
       'process.env.corsProxy': JSON.stringify('https://corsproxy.io/?'),
       'process.env.isGithubPages': env.isGithubPages,
-      'process.env.FINMIND_USER_ID': JSON.stringify(env.FINMIND_USER_ID),
-      'process.env.FINMIND_PASSWORD': JSON.stringify(env.FINMIND_PASSWORD),
     },
     envDir: process.cwd(),
     plugins: [
@@ -72,6 +70,7 @@ export default defineConfig(({ mode }) => {
     },
     root,
     server: {
+      cors: true,
       host: true,
       open: false,
       proxy: {

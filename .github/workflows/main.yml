@@ -8,8 +8,6 @@ jobs:
   build-and-deploy:
     env:
       ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
-      FINMIND_USER_ID: ${{secrets.FINMIND_USER_ID}}
-      FINMIND_PASSWORD: ${{secrets.FINMIND_PASSWORD}}
       USER_NAME: yisenliu
       USER_EMAIL: yisenliu@gmail.com
       PUBLISH_DIR: dist
@@ -26,7 +24,7 @@ jobs:
       - name: Install and Build
         run: |
           yarn install
-          isGithubPages=true FINMIND_USER_ID=$FINMIND_USER_ID FINMIND_PASSWORD=$FINMIND_PASSWORD yarn run build
+          isGithubPages=true yarn run build
 
       - name: Deploy to gh-pages
         run: |

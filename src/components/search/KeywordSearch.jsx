@@ -1,8 +1,8 @@
 import { useCallback, useContext, useRef } from 'react';
 import { debounce } from 'lodash';
-import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
 import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
 import Loading from '@components/Loading';
 import SearchResult from './SearchResult';
@@ -15,7 +15,7 @@ const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 export default function KeywordSearch({ isShowInput, onOpen }) {
   const { keyword, setKeyword, market, token } = useContext(StockContext);
   const dataset = getStockInfoDataSetByMarket(market);
-  const allStocks = useStockInfo(token, dataset);
+  const allStocks = useStockInfo(dataset, token);
   const matchedStocks =
     keyword && allStocks.data ? allStocks.data.filter(stock => stock.stock_id.startsWith(keyword)) : null;
   const keywordRef = useRef();

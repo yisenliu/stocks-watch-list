@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import tw, { css } from 'twin.macro';
+import Button from '@mui/material/Button';
 import Navigation from './Navigation';
-import { Stack, Button } from '@mui/material';
 import KeywordSearch from '@components/search/KeywordSearch';
+import Stack from '@mui/material/Stack';
+import tw, { css } from 'twin.macro';
 
 const naviTrigger = css`
   ${tw`before:origin-bottom-left after:origin-top-left flex flex-col items-center justify-center w-10 h-12 cursor-pointer`}
@@ -55,7 +56,7 @@ export default function Header() {
         </Button>
         {!isRoot && <KeywordSearch onOpen={onKeywordSearchOpen} isShowInput={isShowInput} />}
       </Stack>
-      <Navigation isOpen={isShowNavi} onClose={closeMenu} />
+      <Navigation isOpen={isShowNavi} closeMenu={closeMenu} />
     </header>
   );
 }

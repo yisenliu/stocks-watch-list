@@ -1,6 +1,6 @@
 import useFetch from '@hooks/useFetch';
 
-export default function useStockInfo(token, dataset) {
+export default function useStockInfo(dataset, token = null) {
   const info = useFetch(
     {
       url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/data' : '/api/stock',

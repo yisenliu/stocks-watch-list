@@ -4,14 +4,8 @@
 
 ## Getting Started
 
-### Create `.env` file
-
-本例使用 [FinMind 開源資料 API](https://finmindtrade.com)，可免費註冊
-
-```
-VITE_FinMind_User_Id = Your_FinMind_User_Id
-VITE_FinMind_Password = Your_FinMind_Password
-```
+- 本專案使用 [FinMind 開源資料 API](https://finmindtrade.com)，無需註冊即可免費使用 (API/下載限制 300 次 / 小時)。
+- [FinMind 使用權限說明](https://finmindtrade.com/analysis/#/Sponsor/sponsor)
 
 ### How to use
 

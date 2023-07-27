@@ -1,7 +1,7 @@
-import { IconButton } from '@mui/material';
+import { useContext } from 'react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useContext } from 'react';
+import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
 function Stock({ keyword, stock }) {

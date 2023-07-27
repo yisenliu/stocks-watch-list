@@ -12,7 +12,7 @@ import Loading from '@components/Loading';
 export default function StockTWDetails() {
   const { stock_id } = useParams();
   const { token } = useContext(StockContext);
-  const stocksInfo = useStockInfo(token, 'TaiwanStockInfo');
+  const stocksInfo = useStockInfo('TaiwanStockInfo', token);
   const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id)[0];
   const state = {
     loading: stocksInfo.loading,

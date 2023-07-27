@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import DraggableDataGrid from '@components/DraggableDataGrid';
 import { columns, gridStyles } from '@components/dataGrid';
 import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import fetch from '@utils/fetch';
+import moment from 'moment';
 import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 
