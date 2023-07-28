@@ -24,7 +24,7 @@ jobs:
       - name: Install and Build
         run: |
           yarn install
-          isGithubPages=true yarn run build
+          isGithubPages=true && yarn run build
 
       - name: Deploy to gh-pages
         run: |

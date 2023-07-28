@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     base: env.isGithubPages ? '/stocks-watch-list/' : '/',
-    // base: './',
+    // base: '/stocks-watch-list/',
     build: {
       emptyOutDir: true,
       outDir,
