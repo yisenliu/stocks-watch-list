@@ -13,8 +13,8 @@ const outDir = resolve(__dirname, 'dist');
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    base: env.isGithubPages ? '/stocks-watch-list' : '/',
-    // base: '/',
+    base: env.isGithubPages ? '/stocks-watch-list/' : '/',
+    // base: './',
     build: {
       emptyOutDir: true,
       outDir,

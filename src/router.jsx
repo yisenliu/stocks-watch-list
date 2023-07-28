@@ -42,7 +42,7 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    basename: process.env.isGithubPages ? '/stocks-watch-list' : '/',
-    // basename: process.env.PUBLIC_URL,
+    basename: process.env.isGithubPages ? '/stocks-watch-list/' : '/',
+    // basename: '/stocks-watch-list/',
   },
 );
