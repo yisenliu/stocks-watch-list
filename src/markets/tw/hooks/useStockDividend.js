@@ -1,22 +1,27 @@
+import concatParams from '@utils/concatParams';
 import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
 export default function useStockDividend({ ticker = null, token }) {
   const today = moment().format('YYYY-MM-DD');
+  const params = {
+    dataset: 'TaiwanStockDividendResult',
+    data_id: ticker,
+    start_date: `${moment().year() - 5}-01-01`,
+    end_date: today,
+  };
+  const paramsStr = concatParams(params);
   const dividend = useFetch(
     {
-      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/data' : '/api/stock',
+      url: process.env.GithubPages
+        ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
+        : '/api/stock' + paramsStr,
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         token,
       },
-      params: {
-        dataset: 'TaiwanStockDividendResult',
-        data_id: ticker,
-        start_date: `${moment().year() - 5}-01-01`,
-        end_date: today,
-      },
+      // params
     },
     [ticker],
   );

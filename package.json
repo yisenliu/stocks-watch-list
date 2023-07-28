@@ -37,6 +37,7 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "autoprefixer": "^10.4.14",
+    "cross-env": "^7.0.3",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -59,7 +60,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx",
     "clean-cache": "yarn cache clean",
-    "predeploy": "yarn run build",
+    "buildForGithub": "cross-env GithubPages=true yarn run build",
     "deploy": "gh-pages -d dist"
   }
 }

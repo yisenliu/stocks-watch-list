@@ -29,7 +29,7 @@ export default function Layout() {
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
-  const market = process.env.isGithubPages ? pathname.split('/')[2] : pathname.split('/')[1];
+  const market = pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
   const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token, userId, logout };
   const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];

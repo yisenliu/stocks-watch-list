@@ -5,7 +5,7 @@
 ## Getting Started
 
 - 本專案使用 [FinMind 開源資料 API](https://finmindtrade.com)，無需註冊即可免費使用 (API/下載限制 300 次 / 小時)。
-- [FinMind 使用權限說明](https://finmindtrade.com/analysis/#/Sponsor/sponsor)
+- <a href="https://finmindtrade.com/analysis/#/Sponsor/sponsor" target="_blank">FinMind 使用權限說明</a>
 
 ### How to use
 

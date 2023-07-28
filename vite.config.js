@@ -1,7 +1,6 @@
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import { imagetools } from 'vite-imagetools';
 import macrosPlugin from 'vite-plugin-babel-macros';
-import myPackage from './package.json';
 import mdPlugin from 'vite-plugin-markdown';
 import react from '@vitejs/plugin-react-swc';
 import { resolve } from 'path';
@@ -10,18 +9,16 @@ const root = resolve(__dirname, 'src');
 const publicDir = resolve(__dirname, 'public');
 const outDir = resolve(__dirname, 'dist');
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+export default defineConfig(() => {
   return {
-    // base: env.isGithubPages ? '/stocks-watch-list/' : '/',
-    base: '/stocks-watch-list/',
-    // base: '/',
+    base: process.env.GithubPages ? '/stocks-watch-list/' : './',
     build: {
       emptyOutDir: true,
       outDir,
       rollupOptions: {
         input: {
           index: resolve(root, 'index.html'),
+          404: resolve(root, '404.html'),
         },
       },
     },
@@ -38,10 +35,8 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'process.env.Breakpoints': myPackage.config.breakpoints,
-      'process.env.corsProxy': JSON.stringify('https://corsproxy.io/?'),
-      'process.env.isGithubPages': env.isGithubPages,
-      'process.env': JSON.stringify(env),
+      'process.env': process.env,
+      corsProxy: JSON.stringify('https://corsproxy.io/?'),
     },
     envDir: process.cwd(),
     plugins: [

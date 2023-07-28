@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
 import { columns, gridStyles } from '@components/dataGrid';
 import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
@@ -22,18 +23,23 @@ export default function StockList() {
     setSelectedRowIds([]);
   }
   function getStockPrice(ticker) {
+    const params = {
+      dataset,
+      data_id: ticker,
+      start_date: moment().subtract(7, 'days').format('YYYY-MM-DD'),
+      end_date: moment().format('YYYY-MM-DD'),
+    };
+    const paramsStr = concatParams(params);
+
     return fetch({
-      url: process.env.isGithubPages ? 'https://api.finmindtrade.com/api/v4/data' : '/api/stock',
+      url: process.env.GithubPages
+        ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
+        : '/api/stock' + paramsStr,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         token,
       },
-      params: {
-        dataset,
-        data_id: ticker,
-        start_date: moment().subtract(7, 'days').format('YYYY-MM-DD'),
-        end_date: moment().format('YYYY-MM-DD'),
-      },
+      // params
     })
       .then(res => res.data.data)
       .then(data => {
