@@ -47,11 +47,12 @@ $ yarn preview
 
 - 串接 FinMind API，可自訂台股與美股上市公司股票與 ETF 觀察名單。
 - 允許新增、刪除、排序觀察名單。
-- 圖表化呈現股票在不同時間區間的表現；另外，台股可查詢上市公司與 ETF 近六年股利。
+- 圖表化呈現每一筆觀察名單在不同時間區間的表現
+- 台股可查詢上市公司股票與 ETF 近六年股利。
 
 ## Experience
 
-- 股票觀察名單採用 `MUI DataGridPro` 協助自動排序與分頁，因其手動排序功能 `rowReordering` 並未支援行動裝置，暫不考慮使用，須仰賴第三方套件 `react-beautiful-dnd` 擴充其功能 (Drag and drop)，做法是在原始的 `<GridRow>` 外層加上一個 `<div>` 做為自訂的 `<DraggableGridRow>` 元件，由 `<DataGridPro>` 的 `slots` 與 `slotProps` 導入該元件。
+- 觀察名單採用 `MUI DataGridPro` 協助自動排序與分頁，因其手動排序功能 `rowReordering` 並未支援行動裝置，暫不考慮使用，須仰賴第三方套件 `react-beautiful-dnd` 擴充其功能 (Drag and drop)，做法是在原始的 `<GridRow>` 外層加上一個 `<div>` 做為自訂的 `<DraggableGridRow>` 元件，由 `<DataGridPro>` 的 `slots` 與 `slotProps` 導入該元件。
 
   另一個使用 `<DataGridPro>` 的原因在於允許多選( `<DataGrid>` 只能單選)，利用此特性可同時移除多檔股票。
 
@@ -76,4 +77,4 @@ $ yarn preview
 
 ## Browser Support
 
-Mobile Browsers
+Modern Browsers

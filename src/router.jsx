@@ -6,37 +6,42 @@ import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
 import StockUSDetails from '@routes/stockUSDetails';
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Dashboard />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: '',
+          element: <Index />,
+          index: true,
+        },
+        {
+          path: 'tw',
+          element: <StockList />,
+          children: [
+            {
+              path: ':stock_id',
+              element: <StockTWDetails />,
+            },
+          ],
+        },
+        {
+          path: 'us',
+          element: <StockList />,
+          children: [
+            {
+              path: ':stock_id',
+              element: <StockUSDetails />,
+            },
+          ],
+        },
+      ],
+    },
+  ],
   {
-    path: process.env.isGithubPages ? '/stocks-watch-list/' : '/',
-    element: <Dashboard />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '',
-        element: <Index />,
-        index: true,
-      },
-      {
-        path: 'tw',
-        element: <StockList />,
-        children: [
-          {
-            path: ':stock_id',
-            element: <StockTWDetails />,
-          },
-        ],
-      },
-      {
-        path: 'us',
-        element: <StockList />,
-        children: [
-          {
-            path: ':stock_id',
-            element: <StockUSDetails />,
-          },
-        ],
-      },
-    ],
+    basename: process.env.isGithubPages ? '/stocks-watch-list/' : '/',
   },
-]);
+);

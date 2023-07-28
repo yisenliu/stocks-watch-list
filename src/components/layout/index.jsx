@@ -25,22 +25,23 @@ for (const [key, value] of Object.entries(stocks)) {
 
 export default function Layout() {
   const [keyword, setKeyword] = useState('');
-  const [userId, setUserId] = useState(null);
-  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(sessionStorage.getItem('userId') || null);
+  const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
   const market = process.env.isGithubPages ? pathname.split('/')[2] : pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
   const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token, userId, logout };
   const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
-  const isMatchMemberRoutes = Boolean(matchRoutes(memberOnlyRoutes, currentLocation));
+  const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
 
   function logout() {
     setUserId(null);
     setToken(null);
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('token');
   }
   function updateWatchList(market, newData) {
-    // console.log('updateWatchList');
     return new Promise(resolve => {
       const newList = { [market]: newData };
       localStorage.setItem(`stocks_${market}`, JSON.stringify(newData));
@@ -52,13 +53,15 @@ export default function Layout() {
   function onLoginSuccess(token, userId) {
     setToken(token);
     setUserId(userId);
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('userId', userId);
   }
 
   return (
     <StockContext.Provider value={context}>
       <Container>
-        {isMatchMemberRoutes && !userId && <Login onSuccess={onLoginSuccess} />}
-        {(!isMatchMemberRoutes || userId) && (
+        {memberRouteMatch && !userId && <Login onSuccess={onLoginSuccess} />}
+        {(!memberRouteMatch || userId) && (
           <>
             <Header />
             <Main>

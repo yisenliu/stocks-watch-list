@@ -10,7 +10,7 @@ const navStyles = {
   close: '-translate-x-full',
 };
 const navItems = [
-  { to: process.env.isGithubPages ? '/stocks-watch-list/' : '/', text: 'Home' },
+  { to: '/', text: 'Home' },
   { to: 'tw', text: '台股' },
   { to: 'us', text: '美股' },
 ];
@@ -43,7 +43,7 @@ export default function Navigation({ isOpen, closeMenu }) {
             {navItems.map(link => (
               <NavItem {...link} key={link.text} onClick={closeMenu} />
             ))}
-            {userId && userId !== 'guest' && (
+            {sessionStorage.getItem('userId') && (
               <Button
                 variant="contained"
                 endIcon={<LogoutIcon />}

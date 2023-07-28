@@ -31,11 +31,16 @@ export default function Login({ onSuccess }) {
     setError({ userId: null, password: null, feedback: null });
   }
 
+  function handleTextFieldKeyDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      validateForm();
+    }
+  }
   async function validateForm() {
     resetError();
     if (userId.length > 0 && password.length > 0) {
       const fetchToken = await getFinMindToken(userId, password);
-      // console.log(fetchToken);
       if (fetchToken.status === 200) {
         setToken(fetchToken.token);
         setSuccess(true);
@@ -82,6 +87,7 @@ export default function Login({ onSuccess }) {
           error={error.userId !== null}
           helperText={error.userId}
           onChange={e => setUserId(e.target.value)}
+          onKeyDown={handleTextFieldKeyDown}
         />
         <TextField
           required
@@ -92,16 +98,17 @@ export default function Login({ onSuccess }) {
           error={error.password !== null}
           helperText={error.password}
           onChange={e => setPassword(e.target.value)}
+          onKeyDown={handleTextFieldKeyDown}
         />
         <Button variant="contained" size="large" sx={{ textTransform: 'none' }} onClick={validateForm}>
           Login
         </Button>
         <Button size="large" sx={{ textTransform: 'none', textDecoration: 'underline' }} onClick={loginByGuest}>
-          I&#39;m a Guest
+          I&#39;m a guest
         </Button>
       </Stack>
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} sx={{ mt: 2 }}>
-        <Link to={process.env.isGithubPages ? '/stocks-watch-list/' : '/'} className="text-blueGray-500 py-3 text-sm">
+        <Link to="/" className="text-blueGray-500 py-3 text-sm">
           <CottageOutlinedIcon sx={{ mr: 1 }} />
           Home
         </Link>
