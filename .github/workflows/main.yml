@@ -1,40 +1,51 @@
-name: Build and deploy to gh-pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    env:
-      ACCESS_TOKEN: ${{secrets.ACCESS_TOKEN}}
-      USER_NAME: yisenliu
-      USER_EMAIL: yisenliu@gmail.com
-      PUBLISH_DIR: dist
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
-      - name: Install and Build
-        run: |
-          yarn install
-          isGithubPages=true && yarn run build
-
-      - name: Deploy to gh-pages
-        run: |
-          cd $PUBLISH_DIR
-          git init
-          git config --local user.name $USER_NAME
-          git config --local user.email $USER_EMAIL
-          git remote add origin https://$ACCESS_TOKEN@github.com/$GITHUB_REPOSITORY.git
-          git checkout -b gh-pages
-          git add --all
-          git commit -m "Deploy to gh-pages"
-          git push origin gh-pages -f
-          echo 🤘 deploy gh-pages complete.
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload dist repository
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
