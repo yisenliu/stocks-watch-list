@@ -13,7 +13,8 @@ const outDir = resolve(__dirname, 'dist');
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    base: env.isGithubPages ? '/stocks-watch-list' : '/',
+    // base: env.isGithubPages ? '/stocks-watch-list' : '/',
+    base: '/',
     build: {
       emptyOutDir: true,
       outDir,
@@ -39,6 +40,7 @@ export default defineConfig(({ mode }) => {
       'process.env.Breakpoints': myPackage.config.breakpoints,
       'process.env.corsProxy': JSON.stringify('https://corsproxy.io/?'),
       'process.env.isGithubPages': env.isGithubPages,
+      'process.env': JSON.stringify(env),
     },
     envDir: process.cwd(),
     plugins: [

@@ -5,7 +5,7 @@ import Index from '@routes/Index';
 import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
 import StockUSDetails from '@routes/stockUSDetails';
-
+console.log(import.meta.env);
 export const router = createBrowserRouter(
   [
     {
@@ -41,7 +41,8 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  // {
-  //   basename: process.env.isGithubPages ? '/stocks-watch-list' : '/',
-  // },
+  {
+    basename: process.env.isGithubPages ? '/stocks-watch-list' : '/',
+    // basename: process.env.PUBLIC_URL,
+  },
 );
