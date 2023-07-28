@@ -41,7 +41,7 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  {
-    basename: process.env.isGithubPages ? '/stocks-watch-list/' : '/',
-  },
+  // {
+  //   basename: process.env.isGithubPages ? '/stocks-watch-list' : '/',
+  // },
 );

@@ -1,5 +1,6 @@
 {
-  "name": "stock-market",
+  "name": "stocks-watch-list",
+  "homepage": "https://yisenliu.github.io/stocks-watch-list",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -41,6 +42,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^5.0.0",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "prettier": "^2.8.7",
@@ -51,12 +53,13 @@
     "vite-plugin-babel-macros": "^1.0.6",
     "vite-plugin-markdown": "^2.1.0"
   },
-  "homepage": "https://yisenliu.github.io/stocks-watch-list",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx",
-    "clean-cache": "yarn cache clean"
+    "clean-cache": "yarn cache clean",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d dist"
   }
 }
