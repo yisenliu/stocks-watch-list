@@ -13,7 +13,7 @@ const outDir = resolve(__dirname, 'dist');
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    base: './',
+    base: '/',
     build: {
       emptyOutDir: true,
       outDir,
