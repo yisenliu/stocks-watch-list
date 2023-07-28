@@ -9,13 +9,6 @@
       1024
     ]
   },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext .js,.jsx",
-    "clean-cache": "yarn cache clean"
-  },
   "dependencies": {
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
@@ -57,5 +50,13 @@
     "vite-imagetools": "^4.0.18",
     "vite-plugin-babel-macros": "^1.0.6",
     "vite-plugin-markdown": "^2.1.0"
+  },
+  "homepage": "https://yisenliu.github.io/stocks-watch-list",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx",
+    "clean-cache": "yarn cache clean"
   }
 }
