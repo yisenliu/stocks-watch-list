@@ -12,7 +12,7 @@ import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 export default function StockList() {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [sortModel, setSortModel] = useState([]);
-  const { market, watchList, updateWatchList, token } = useContext(StockContext);
+  const { market, setIsShowInput, watchList, updateWatchList, token } = useContext(StockContext);
   const [apiRefCurrent, setApiRefCurrent] = useState(null);
   const dataset = getStockPriceDataSetByMarket(market);
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ export default function StockList() {
   function onRowClick(params) {
     if (selectedRowIds.length === 0) {
       navigate(params.id);
+      setIsShowInput(false);
     } else {
       updateSelectedRowIds(params.id);
     }

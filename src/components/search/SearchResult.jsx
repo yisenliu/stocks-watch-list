@@ -34,17 +34,12 @@ function Stock({ keyword, stock }) {
         )}
       </p>
       {isExist && (
-        <IconButton
-          onClick={removeFromWatchList}
-          aria-label="remove from watch list"
-          size="large"
-          sx={{ color: 'white' }}
-        >
+        <IconButton onClick={removeFromWatchList} aria-label="remove from watch list" sx={{ color: 'white' }}>
           <CheckCircleIcon fontSize="small" />
         </IconButton>
       )}
       {!isExist && (
-        <IconButton onClick={addToWatchList} aria-label="add to watch list" size="large" sx={{ color: 'white' }}>
+        <IconButton onClick={addToWatchList} aria-label="add to watch list" sx={{ color: 'white' }}>
           <AddCircleOutlineIcon fontSize="small" />
         </IconButton>
       )}

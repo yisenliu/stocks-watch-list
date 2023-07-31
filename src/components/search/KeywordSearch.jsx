@@ -12,12 +12,14 @@ import useStockInfo from '@hooks/useStockInfo';
 
 const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
-export default function KeywordSearch({ isShowInput, onOpen }) {
-  const { keyword, setKeyword, market, token } = useContext(StockContext);
+export default function KeywordSearch({ onOpen }) {
+  const { keyword, isShowInput, setKeyword, market, token } = useContext(StockContext);
   const dataset = getStockInfoDataSetByMarket(market);
   const allStocks = useStockInfo(dataset, token);
   const matchedStocks =
-    keyword && allStocks.data ? allStocks.data.filter(stock => stock.stock_id.startsWith(keyword)) : null;
+    keyword && allStocks.data
+      ? allStocks.data.filter(stock => stock.stock_id.startsWith(keyword) || stock.stock_name.includes(keyword))
+      : null;
   const keywordRef = useRef();
   const onChange = useCallback(
     debounce(e => {

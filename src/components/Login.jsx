@@ -11,11 +11,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'min(90vw,calc(100vw - 2rem))',
+  margin: '4rem auto',
+  width: 'min(90vw,320px)',
   bgcolor: '#fff',
   borderRadius: 1,
   p: 4,
@@ -101,16 +98,16 @@ export default function Login({ onSuccess }) {
           onKeyDown={handleTextFieldKeyDown}
         />
         <Button variant="contained" size="large" sx={{ textTransform: 'none' }} onClick={validateForm}>
-          Login
+          登入
         </Button>
         <Button size="large" sx={{ textTransform: 'none', textDecoration: 'underline' }} onClick={loginByGuest}>
-          I&#39;m a guest
+          以訪客身份登入
         </Button>
       </Stack>
       <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} sx={{ mt: 2 }}>
         <Link to="/" className="text-blueGray-500 py-3 text-sm">
           <CottageOutlinedIcon sx={{ mr: 1 }} />
-          Home
+          首頁
         </Link>
         <a
           href="https://finmindtrade.com/analysis/#/account/register"
@@ -119,7 +116,7 @@ export default function Login({ onSuccess }) {
           rel="noreferrer"
         >
           <PersonAddAltOutlinedIcon sx={{ mr: 1 }} />
-          Register
+          註冊
         </a>
       </Stack>
     </Box>

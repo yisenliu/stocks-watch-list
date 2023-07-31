@@ -8,12 +8,8 @@ import Main from './Main';
 import StockContext from '@contexts/StockContext';
 
 const stocks = {
-  tw: localStorage.getItem('stocks_tw')
-    ? JSON.parse(localStorage.getItem('stocks_tw'))
-    : [{ id: '0050' }, { id: '0056' }, { id: '2886' }],
-  us: localStorage.getItem('stocks_us')
-    ? JSON.parse(localStorage.getItem('stocks_us'))
-    : [{ id: 'AAPL' }, { id: 'MSFT' }, { id: 'NFLX' }],
+  tw: localStorage.getItem('stocks_tw') ? JSON.parse(localStorage.getItem('stocks_tw')) : [],
+  us: localStorage.getItem('stocks_us') ? JSON.parse(localStorage.getItem('stocks_us')) : [],
 };
 
 for (const [key, value] of Object.entries(stocks)) {
@@ -25,13 +21,26 @@ for (const [key, value] of Object.entries(stocks)) {
 
 export default function Layout() {
   const [keyword, setKeyword] = useState('');
+  const [isShowInput, setIsShowInput] = useState(false);
   const [userId, setUserId] = useState(sessionStorage.getItem('userId') || null);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
   const market = pathname.split('/')[1];
   const [watchList, setWatchList] = useState(stocks);
-  const context = { keyword, setKeyword, watchList, setWatchList, updateWatchList, market, token, userId, logout };
+  const context = {
+    keyword,
+    setKeyword,
+    watchList,
+    setWatchList,
+    updateWatchList,
+    market,
+    isShowInput,
+    setIsShowInput,
+    token,
+    userId,
+    logout,
+  };
   const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
 

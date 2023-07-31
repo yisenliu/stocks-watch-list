@@ -12,38 +12,24 @@ export default function StockUSDetails() {
   const { stock_id } = useParams();
   const { token } = useContext(StockContext);
   const stocksInfo = useStockInfo('USStockInfo', token);
-  const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id)[0];
-  const state = {
-    loading: stocksInfo.loading,
-    get ready() {
-      return !this.loading && Boolean(currentStock);
-    },
-    get error() {
-      return stocksInfo.error;
-    },
-    get notfound() {
-      return this.ready && Boolean(!currentStock.stock_id);
-    },
-  };
+  const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
+
+  if (stocksInfo.data && !currentStock) {
+    throw new Error(`查無 ${stock_id} 資料，請稍後再試。`);
+  }
 
   return createPortal(
-    <div className="z-1 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
-      <BackToList to="/us" />
-      {state.loading && <Loading />}
-      {state.ready && (
+    <div className="z-5 fixed top-0 left-0 w-screen h-screen overflow-auto bg-white">
+      {currentStock && <BackToList to="/us" currentStock={currentStock} />}
+      {stocksInfo.loading && <Loading />}
+      {stocksInfo.data && (
         <>
-          <p className="my-4 text-center">
-            {currentStock.stock_id} {currentStock.stock_name}
-          </p>
-          {stock_id && (
-            <div className="px-4 pb-8 space-y-12">
-              <PriceHistory ticker={stock_id} token={token} />
-            </div>
-          )}
+          <div className="px-4 py-8 space-y-12">
+            <PriceHistory ticker={stock_id.toUpperCase()} token={token} />
+          </div>
         </>
       )}
-      {state.error && <p className="my-4 text-center text-red-800">{state.error.message}</p>}
-      {state.notfound && <p className="my-4 text-center">查無 {stock_id} 資料，請稍後再試。</p>}
+      {stocksInfo.error && <p className="my-8 text-center text-red-800">{stocksInfo.error.message}</p>}
     </div>,
     document.body,
   );

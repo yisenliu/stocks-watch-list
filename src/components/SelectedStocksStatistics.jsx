@@ -6,17 +6,13 @@ import { useContext } from 'react';
 import StockContext from '@contexts/StockContext';
 
 export default function SelectedStocksStatistics({ selectedRowIds, clearSelectedRowIds }) {
-  const { setWatchList, market } = useContext(StockContext);
-  // console.log({ selectedRowIds });
+  const { updateWatchList, market, watchList } = useContext(StockContext);
+  const stockList = watchList[market];
   function removeStocksFromWatchList() {
-    setWatchList(list => {
-      const newList = {
-        [market]: list[market].filter(stock => {
-          return selectedRowIds.every(id => id !== stock.id);
-        }),
-      };
-      return { ...list, ...newList };
-    });
+    updateWatchList(
+      market,
+      stockList.filter(stock => selectedRowIds.every(id => id !== stock.id)),
+    );
     clearSelectedRowIds();
   }
 
@@ -36,7 +32,7 @@ export default function SelectedStocksStatistics({ selectedRowIds, clearSelected
         width: '100vw',
       }}
     >
-      <IconButton onClick={clearSelectedRowIds} aria-label="return" size="large" sx={{ color: 'white' }}>
+      <IconButton onClick={clearSelectedRowIds} aria-label="return" sx={{ color: 'white' }}>
         <KeyboardBackspaceIcon fontSize="small" />
       </IconButton>
       {`${selectedRowIds.length} selected`}

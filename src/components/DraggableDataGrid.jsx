@@ -5,10 +5,9 @@ import DraggableGridRow from './DraggableGridRow';
 
 export default function DraggableDataGrid({
   market,
-  onDraggableClick,
   rows,
   selectedRowIds,
-  setSelectedRowIds,
+  // setSelectedRowIds,
   setApiRefCurrent,
   updateSelectedRowIds,
   updateWatchList,

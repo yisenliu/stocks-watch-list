@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Navigation from './Navigation';
 import KeywordSearch from '@components/search/KeywordSearch';
 import Stack from '@mui/material/Stack';
+import StockContext from '@contexts/StockContext';
 import tw, { css } from 'twin.macro';
 
 const naviTrigger = css`
@@ -30,10 +31,10 @@ const naviTrigger = css`
 `;
 
 export default function Header() {
+  const { isShowInput, setIsShowInput } = useContext(StockContext);
   const pathname = useLocation().pathname;
   const isRoot = pathname === '/';
   const [isShowNavi, setIsShowNavi] = useState(false);
-  const [isShowInput, setIsShowInput] = useState(false);
   const closeMenu = e => {
     if (e.target === e.currentTarget) {
       setIsShowNavi(false);
@@ -54,7 +55,7 @@ export default function Header() {
         <Button css={naviTrigger} className={isShowInput ? 'active' : ''} onClick={handleMenuBtnClick} disableRipple>
           <span>Open Navigation</span>
         </Button>
-        {!isRoot && <KeywordSearch onOpen={onKeywordSearchOpen} isShowInput={isShowInput} />}
+        {!isRoot && <KeywordSearch onOpen={onKeywordSearchOpen} />}
       </Stack>
       <Navigation isOpen={isShowNavi} closeMenu={closeMenu} />
     </header>

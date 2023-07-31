@@ -34,7 +34,7 @@ export default function Navigation({ isOpen, closeMenu }) {
     <>
       {!animationEnd && (
         <div className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
-          <nav
+          <div
             ref={navRef}
             className={
               'flex flex-col transition-transform w-64 h-screen p-4 space-y-4 text-white bg-gray-900 ' + statusStyle
@@ -56,7 +56,7 @@ export default function Navigation({ isOpen, closeMenu }) {
                 {`登出 ${userId}`}
               </Button>
             )}
-          </nav>
+          </div>
         </div>
       )}
     </>
