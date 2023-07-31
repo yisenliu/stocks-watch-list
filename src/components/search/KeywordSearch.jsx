@@ -62,7 +62,7 @@ export default function KeywordSearch({ onOpen }) {
           )}
           {isShowInput && (
             <>
-              <Input type="text" autoFocus placeholder="鍵入，然後按ENTER" onChange={onChange} ref={keywordRef} />
+              <Input type="text" autoFocus placeholder="輸入代碼或關鍵字" onChange={onChange} ref={keywordRef} />
               {keyword !== '' && (
                 <IconButton onClick={clearInput} aria-label="clear input" size="large" sx={{ color: 'white' }}>
                   <ClearIcon fontSize="inherit" />

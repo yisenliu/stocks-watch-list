@@ -7,7 +7,6 @@ export default function DraggableDataGrid({
   market,
   rows,
   selectedRowIds,
-  // setSelectedRowIds,
   setApiRefCurrent,
   updateSelectedRowIds,
   updateWatchList,

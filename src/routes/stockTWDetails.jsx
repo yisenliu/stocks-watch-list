@@ -16,7 +16,7 @@ export default function StockTWDetails() {
   const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
 
   if (stocksInfo.data && !currentStock) {
-    throw new Error(`查無 ${stock_id} 資料，請稍後再試。`);
+    throw new Error(`查無 ${stock_id} 資料。`);
   }
 
   return createPortal(

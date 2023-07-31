@@ -96,13 +96,13 @@ export default function StockList() {
   useEffect(() => {
     apiRefCurrent?.setRowSelectionModel(selectedRowIds);
   }, [selectedRowIds, pathname]);
-
+  console.log({ stockList });
   return (
     <>
       {selectedRowIds.length > 0 && (
         <SelectedStocksStatistics clearSelectedRowIds={clearSelectedRowIds} selectedRowIds={selectedRowIds} />
       )}
-      {stockList !== null && (
+      {stockList.length > 0 && (
         <DraggableDataGrid
           className="-m-4"
           columns={columns}
@@ -127,6 +127,7 @@ export default function StockList() {
           updateWatchList={updateWatchList}
         />
       )}
+      {stockList.length === 0 && <p className="my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>}
       <Outlet />
     </>
   );
