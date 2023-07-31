@@ -19,7 +19,7 @@ export default function KeywordSearch({ onOpen }) {
   const matchedStocks =
     keyword && allStocks.data
       ? allStocks.data.filter(
-          stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toLowerCase().includes(keyword.toLowerCase()),
+          stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toUpperCase().includes(keyword),
         )
       : null;
   const keywordRef = useRef();
@@ -31,12 +31,6 @@ export default function KeywordSearch({ onOpen }) {
     }, 500),
     [keyword],
   );
-  const onKeyDown = e => {
-    if (e.key === 'Enter' && keywordRef.current.value !== '') {
-      setKeyword(e.target.value);
-      keywordRef.current.value = '';
-    }
-  };
   const clearInput = () => {
     keywordRef.current.value = '';
     keywordRef.current.focus();
@@ -68,14 +62,7 @@ export default function KeywordSearch({ onOpen }) {
           )}
           {isShowInput && (
             <>
-              <Input
-                type="text"
-                autoFocus
-                placeholder="鍵入，然後按ENTER"
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                ref={keywordRef}
-              />
+              <Input type="text" autoFocus placeholder="鍵入，然後按ENTER" onChange={onChange} ref={keywordRef} />
               {keyword !== '' && (
                 <IconButton onClick={clearInput} aria-label="clear input" size="large" sx={{ color: 'white' }}>
                   <ClearIcon fontSize="inherit" />
