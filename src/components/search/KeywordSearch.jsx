@@ -18,7 +18,9 @@ export default function KeywordSearch({ onOpen }) {
   const allStocks = useStockInfo(dataset, token);
   const matchedStocks =
     keyword && allStocks.data
-      ? allStocks.data.filter(stock => stock.stock_id.startsWith(keyword) || stock.stock_name.includes(keyword))
+      ? allStocks.data.filter(
+          stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toLowerCase().includes(keyword.toLowerCase()),
+        )
       : null;
   const keywordRef = useRef();
   const onChange = useCallback(
