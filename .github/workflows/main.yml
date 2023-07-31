@@ -24,7 +24,7 @@ jobs:
       - name: Install and Build
         run: |
           yarn install
-          cross-env GithubPages=true yarn run build
+          GithubPages=true yarn run build
 
       - name: Deploy to gh-pages
         run: |
