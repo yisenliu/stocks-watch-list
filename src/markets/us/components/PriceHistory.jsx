@@ -10,11 +10,11 @@ import usePriceHistory from '@hooks/usePriceHistory';
 export default function PriceHistory({ ticker, token }) {
   const durations = [
     { startDate: moment().subtract(moment().dayOfYear() - 1, 'days'), text: 'YTD' },
-    { startDate: moment().subtract(1, 'months'), text: '1M' },
-    { startDate: moment().subtract(2, 'months'), text: '3M' },
-    { startDate: moment().subtract(6, 'months'), text: '6M' },
-    { startDate: moment().subtract(1, 'years'), text: '1Y' },
-    { startDate: moment().subtract(3, 'years'), text: '3Y' },
+    { startDate: moment().subtract(1, 'months'), text: '1月' },
+    { startDate: moment().subtract(2, 'months'), text: '3月' },
+    { startDate: moment().subtract(6, 'months'), text: '6月' },
+    { startDate: moment().subtract(1, 'years'), text: '1年' },
+    { startDate: moment().subtract(3, 'years'), text: '3年' },
   ];
   const [currentDurationIdx, setCurrentDurationIdx] = useState(0);
   const [range, setRange] = useState({ min: null, max: null });
@@ -28,6 +28,7 @@ export default function PriceHistory({ ticker, token }) {
   const allPriceHistory = data ? data.price_history : [];
   const dataLength = allPriceHistory.length;
   const businessDays = business.weekDays(durations[currentDurationIdx].startDate, moment());
+  const currentDuration = durations[currentDurationIdx].text;
   const offsetFromEnd = dataLength - businessDays;
   const currentPriceHistory = useMemo(
     () => allPriceHistory.slice(offsetFromEnd > 0 ? offsetFromEnd : 0, dataLength),
@@ -67,6 +68,7 @@ export default function PriceHistory({ ticker, token }) {
       {currentPriceHistory.length > 0 && (
         <>
           <PriceSummary
+            currentDuration={currentDuration}
             currentPrice={currentPriceHistory[currentPriceHistory.length - 1].Close}
             startPrice={currentPriceHistory[0].Close}
             endDate={currentPriceHistory[currentPriceHistory.length - 1].date}

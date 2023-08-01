@@ -8,13 +8,15 @@ function Stock({ keyword, stock }) {
   const { dispatch, watchList, market } = useContext(StockContext);
   const stockList = watchList[market];
   const { stock_id, stock_name, industry_category, type } = stock;
-  const addToWatchList = function () {
-    dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
-  };
-  const removeFromWatchList = function () {
-    dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
-  };
   const isExist = stockList.some(stock => stock.id === stock_id);
+
+  function addToWatchList() {
+    dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
+  }
+
+  function removeFromWatchList() {
+    dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
+  }
 
   return (
     <div className="flex items-center justify-between p-2 space-x-4">

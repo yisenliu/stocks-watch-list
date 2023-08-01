@@ -14,7 +14,7 @@ export default function usePriceHistory({ ticker = null, token, dataset, startDa
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
         : '/api/stock' + paramsStr,
-      timeout: 3000,
+      timeout: 5000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: {
         token,

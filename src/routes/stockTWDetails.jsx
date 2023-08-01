@@ -11,7 +11,7 @@ import Loading from '@components/Loading';
 
 export default function StockTWDetails() {
   const { stock_id } = useParams();
-  const { token } = useContext(StockContext);
+  const { market, token } = useContext(StockContext);
   const stocksInfo = useStockInfo('TaiwanStockInfo', token);
   const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
 
@@ -27,7 +27,7 @@ export default function StockTWDetails() {
         <>
           <div className="px-4 pb-8 space-y-12">
             <DividendChart ticker={stock_id} token={token} />
-            <PriceHistory ticker={stock_id} token={token} />
+            <PriceHistory ticker={stock_id} token={token} market={market} />
           </div>
         </>
       )}

@@ -21,7 +21,7 @@ export default function PriceHistoryChart({ history }) {
   const hideRefLine = () => {
     setRefLineY(-100);
   };
-  const legendFormatter = (value) => {
+  const legendFormatter = value => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
 
@@ -50,7 +50,7 @@ export default function PriceHistoryChart({ history }) {
             left: 'auto',
             width: '120px',
           }}
-          formatter={(value) => [value, '收盤價']}
+          formatter={value => [value, '收盤價']}
         />
         <Legend formatter={legendFormatter} />
         <Area

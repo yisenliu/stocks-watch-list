@@ -1,4 +1,4 @@
-export default function PriceSummary({ currentPrice, startPrice, endDate, min, max }) {
+export default function PriceSummary({ currentDuration, currentPrice, startPrice, endDate, min, max }) {
   const diff = {
     value: parseFloat(Number(currentPrice - startPrice).toFixed(2)),
     percent: parseFloat(Number(((currentPrice - startPrice) / startPrice) * 100).toFixed(2)),
@@ -14,6 +14,7 @@ export default function PriceSummary({ currentPrice, startPrice, endDate, min, m
               {diff.value}
             </span>
             <span className={diff.percent > 0 ? 'text-green-600' : 'text-red-600'}>({diff.percent + '%'})</span>
+            <span className="text-lg text-black">{currentDuration}</span>
           </p>
         </li>
         <li>

@@ -10,7 +10,7 @@ import Loading from '@components/Loading';
 
 export default function StockUSDetails() {
   const { stock_id } = useParams();
-  const { token } = useContext(StockContext);
+  const { market, token } = useContext(StockContext);
   const stocksInfo = useStockInfo('USStockInfo', token);
   const currentStock = stocksInfo?.data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
 
@@ -25,7 +25,7 @@ export default function StockUSDetails() {
       {stocksInfo.data && (
         <>
           <div className="px-4 py-8 space-y-12">
-            <PriceHistory ticker={stock_id.toUpperCase()} token={token} />
+            <PriceHistory ticker={stock_id.toUpperCase()} token={token} market={market} />
           </div>
         </>
       )}

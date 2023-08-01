@@ -13,15 +13,13 @@ export default function BackToList({ to, currentStock }) {
   const stockList = watchList[market];
   const isExist = stockList.some(stock => stock.id === stock_id);
   const [toAdd, setToAdd] = useState(isExist);
-  const addToWatchList = () => {
-    dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
-  };
-  const removeFromWatchList = () => {
-    dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
-  };
   const backToList = () => {
-    if (toAdd && !isExist) addToWatchList();
-    if (!toAdd && isExist) removeFromWatchList();
+    if (toAdd && !isExist) {
+      dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
+    }
+    if (!toAdd && isExist) {
+      dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
+    }
 
     navigate(to);
   };

@@ -7,20 +7,8 @@ import Login from '@components/Login';
 import Main from './Main';
 import StockContext from '@contexts/StockContext';
 
-const stocks = {
-  tw: JSON.parse(localStorage.getItem('stocks_tw')) || [],
-  us: JSON.parse(localStorage.getItem('stocks_us')) || [],
-};
-
-for (const [key, value] of Object.entries(stocks)) {
-  const hasLocalStorageKey = localStorage.getItem(`stocks_${key}`);
-  if (!hasLocalStorageKey) {
-    localStorage.setItem(`stocks_${key}`, JSON.stringify(value));
-  }
-}
-
 function reducer(state, action) {
-  const { type, market, stocks } = action;
+  const { market, stocks, type } = action;
   let newList = null;
 
   switch (type) {
@@ -38,6 +26,22 @@ function reducer(state, action) {
   return { ...state, [market]: newList };
 }
 
+function createInitialState() {
+  const watchList = {
+    tw: JSON.parse(localStorage.getItem('stocks_tw')) || [],
+    us: JSON.parse(localStorage.getItem('stocks_us')) || [],
+  };
+
+  for (const [key, value] of Object.entries(watchList)) {
+    const hasLocalStorageKey = localStorage.getItem(`stocks_${key}`);
+    if (!hasLocalStorageKey) {
+      localStorage.setItem(`stocks_${key}`, JSON.stringify(value));
+    }
+  }
+
+  return watchList;
+}
+
 export default function Layout() {
   const [keyword, setKeyword] = useState('');
   const [isShowInput, setIsShowInput] = useState(false);
@@ -46,7 +50,7 @@ export default function Layout() {
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
   const market = pathname.split('/')[1];
-  const [watchList, dispatch] = useReducer(reducer, stocks);
+  const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
   const context = {
     dispatch,
     isShowInput,
