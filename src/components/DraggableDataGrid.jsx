@@ -4,12 +4,12 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import DraggableGridRow from './DraggableGridRow';
 
 export default function DraggableDataGrid({
+  dispatch,
   market,
   rows,
   selectedRowIds,
   setApiRefCurrent,
   updateSelectedRowIds,
-  updateWatchList,
   ...restProps
 }) {
   const [gridRows, setGridRows] = useState(rows);
@@ -22,7 +22,7 @@ export default function DraggableDataGrid({
     const newGridRows = reorder(gridRows, source.index, destination.index);
     await apiRef.current.setSortModel([]);
     setGridRows(newGridRows);
-    updateWatchList(market, newGridRows);
+    dispatch({ type: 'update_stocks', market, stocks: newGridRows });
   };
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);

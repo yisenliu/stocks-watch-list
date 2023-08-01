@@ -12,7 +12,7 @@ import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 export default function StockList() {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [sortModel, setSortModel] = useState([]);
-  const { market, setIsShowInput, watchList, updateWatchList, token } = useContext(StockContext);
+  const { dispatch, market, setIsShowInput, watchList, token } = useContext(StockContext);
   const [apiRefCurrent, setApiRefCurrent] = useState(null);
   const dataset = getStockPriceDataSetByMarket(market);
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export default function StockList() {
   }
   async function onSortModelChange(newSortModel) {
     await setSortModel(newSortModel);
-    await updateWatchList(market, apiRefCurrent.getSortedRows());
+    dispatch({ type: 'update_stocks', market, stocks: apiRefCurrent.getSortedRows() });
   }
   function updateSelectedRowIds(draggableId) {
     if (selectedRowIds.includes(draggableId)) {
@@ -88,7 +88,7 @@ export default function StockList() {
         return getStockPrice(item.id);
       });
       Promise.all(rowsPromise).then(data => {
-        updateWatchList(market, data);
+        dispatch({ type: 'update_stocks', market, stocks: data });
       });
     }
   }, [stocksNum]);
@@ -96,7 +96,7 @@ export default function StockList() {
   useEffect(() => {
     apiRefCurrent?.setRowSelectionModel(selectedRowIds);
   }, [selectedRowIds, pathname]);
-  console.log({ stockList });
+
   return (
     <>
       {selectedRowIds.length > 0 && (
@@ -108,6 +108,7 @@ export default function StockList() {
           columns={columns}
           disableColumnMenu
           disableColumnResize={true}
+          dispatch={dispatch}
           hideFooter
           initialState={{
             pagination: {
@@ -122,9 +123,9 @@ export default function StockList() {
           selectedRowIds={selectedRowIds}
           setApiRefCurrent={setApiRefCurrent}
           sortModel={sortModel}
+          sortingOrder={['asc', 'desc']}
           sx={gridStyles}
           updateSelectedRowIds={updateSelectedRowIds}
-          updateWatchList={updateWatchList}
         />
       )}
       {stockList.length === 0 && <p className="my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>}

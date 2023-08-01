@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { matchRoutes, Outlet, useLocation } from 'react-router-dom';
 import '@lib/pace';
 import Container from './Container';
@@ -8,8 +8,8 @@ import Main from './Main';
 import StockContext from '@contexts/StockContext';
 
 const stocks = {
-  tw: localStorage.getItem('stocks_tw') ? JSON.parse(localStorage.getItem('stocks_tw')) : [],
-  us: localStorage.getItem('stocks_us') ? JSON.parse(localStorage.getItem('stocks_us')) : [],
+  tw: JSON.parse(localStorage.getItem('stocks_tw')) || [],
+  us: JSON.parse(localStorage.getItem('stocks_us')) || [],
 };
 
 for (const [key, value] of Object.entries(stocks)) {
@@ -17,6 +17,25 @@ for (const [key, value] of Object.entries(stocks)) {
   if (!hasLocalStorageKey) {
     localStorage.setItem(`stocks_${key}`, JSON.stringify(value));
   }
+}
+
+function reducer(state, action) {
+  const { type, market, stocks } = action;
+  let newList = null;
+
+  switch (type) {
+    case 'add_stocks':
+      newList = [...state[market], ...stocks];
+      break;
+    case 'remove_stocks':
+      newList = state[market].filter(stock => stocks.every(s => s.id !== stock.id));
+      break;
+    case 'update_stocks':
+      newList = stocks;
+      break;
+  }
+  localStorage.setItem(`stocks_${market}`, JSON.stringify(newList));
+  return { ...state, [market]: newList };
 }
 
 export default function Layout() {
@@ -27,19 +46,18 @@ export default function Layout() {
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
   const market = pathname.split('/')[1];
-  const [watchList, setWatchList] = useState(stocks);
+  const [watchList, dispatch] = useReducer(reducer, stocks);
   const context = {
-    keyword,
-    setKeyword,
-    watchList,
-    setWatchList,
-    updateWatchList,
-    market,
+    dispatch,
     isShowInput,
+    keyword,
+    logout,
+    market,
     setIsShowInput,
+    setKeyword,
     token,
     userId,
-    logout,
+    watchList,
   };
   const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
@@ -49,14 +67,6 @@ export default function Layout() {
     setToken(null);
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('token');
-  }
-  function updateWatchList(market, newData) {
-    return new Promise(resolve => {
-      const newList = { [market]: newData };
-      localStorage.setItem(`stocks_${market}`, JSON.stringify(newData));
-      setWatchList(list => ({ ...list, ...newList }));
-      setTimeout(resolve, 0);
-    });
   }
 
   function onLoginSuccess(token, userId) {

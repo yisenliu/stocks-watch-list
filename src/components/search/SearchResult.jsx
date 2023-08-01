@@ -5,17 +5,14 @@ import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
 function Stock({ keyword, stock }) {
-  const { watchList, updateWatchList, market } = useContext(StockContext);
+  const { dispatch, watchList, market } = useContext(StockContext);
   const stockList = watchList[market];
   const { stock_id, stock_name, industry_category, type } = stock;
   const addToWatchList = function () {
-    updateWatchList(market, [...stockList, { id: stock_id }]);
+    dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
   };
   const removeFromWatchList = function () {
-    updateWatchList(
-      market,
-      stockList.filter(stock => stock.id !== stock_id),
-    );
+    dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
   };
   const isExist = stockList.some(stock => stock.id === stock_id);
 

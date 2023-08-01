@@ -6,13 +6,10 @@ import { useContext } from 'react';
 import StockContext from '@contexts/StockContext';
 
 export default function SelectedStocksStatistics({ selectedRowIds, clearSelectedRowIds }) {
-  const { updateWatchList, market, watchList } = useContext(StockContext);
-  const stockList = watchList[market];
+  const { dispatch, market } = useContext(StockContext);
   function removeStocksFromWatchList() {
-    updateWatchList(
-      market,
-      stockList.filter(stock => selectedRowIds.every(id => id !== stock.id)),
-    );
+    const stocks = selectedRowIds.map(id => ({ id }));
+    dispatch({ type: 'remove_stocks', market, stocks });
     clearSelectedRowIds();
   }
 

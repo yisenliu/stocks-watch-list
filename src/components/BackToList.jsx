@@ -8,19 +8,16 @@ import StockContext from '@contexts/StockContext';
 
 export default function BackToList({ to, currentStock }) {
   const stock_id = currentStock?.stock_id;
-  const { market, watchList, updateWatchList } = useContext(StockContext);
+  const { market, watchList, dispatch } = useContext(StockContext);
   const navigate = useNavigate();
   const stockList = watchList[market];
   const isExist = stockList.some(stock => stock.id === stock_id);
   const [toAdd, setToAdd] = useState(isExist);
   const addToWatchList = () => {
-    updateWatchList(market, [...stockList, { id: stock_id }]);
+    dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
   };
   const removeFromWatchList = () => {
-    updateWatchList(
-      market,
-      stockList.filter(stock => stock.id !== stock_id),
-    );
+    dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
   };
   const backToList = () => {
     if (toAdd && !isExist) addToWatchList();

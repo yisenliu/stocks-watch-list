@@ -20,7 +20,7 @@ export default function useStockInfo(dataset, token = null) {
   );
 
   if (info.error) {
-    console.log(`%c${info.error.message}`, 'color: red');
+    console.error(info.error.message);
   }
   if (info.data) {
     info.data = info.data.data;

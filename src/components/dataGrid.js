@@ -32,6 +32,7 @@ export const columns = [
 export const gridStyles = {
   border: 'none',
   color: 'white',
+  height: 'calc(100vh - 48px)',
   '& .MuiDataGrid-columnHeaders': {
     backgroundColor: 'black',
     borderRadius: 0,

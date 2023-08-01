@@ -26,9 +26,6 @@ export default function useStockDividend({ ticker = null, token }) {
     [ticker],
   );
 
-  if (dividend.error) {
-    console.log(dividend.data);
-  }
   if (dividend.data) {
     const dividendOrigin = dividend.data.data;
     if (dividendOrigin.length) {

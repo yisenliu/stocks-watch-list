@@ -6,8 +6,6 @@ import StockList from '@routes/stockList';
 import StockTWDetails from '@routes/stockTWDetails';
 import StockUSDetails from '@routes/stockUSDetails';
 
-// console.log(import.meta.env);
-
 export const router = createBrowserRouter(
   [
     {
