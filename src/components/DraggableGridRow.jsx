@@ -1,9 +1,11 @@
+import { memo } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { GridRow } from '@mui/x-data-grid-pro';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import tw, { css } from 'twin.macro';
 
-export default function DraggableGridRow(props) {
+function DraggableGridRow(props) {
+  console.log('component: DraggableGridRow');
   const { market, selectedRowIds, updateSelectedRowIds, ...rowProps } = props;
   const draggableCSS = css`
     ${tw`relative flex items-center`}
@@ -35,3 +37,5 @@ export default function DraggableGridRow(props) {
     </Draggable>
   );
 }
+const MemoDraggableDataRow = memo(DraggableGridRow);
+export default MemoDraggableDataRow;

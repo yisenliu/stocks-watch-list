@@ -1,4 +1,5 @@
 export default function PriceSummary({ currentDuration, currentPrice, startPrice, endDate, min, max }) {
+  console.log('component: PriceSummary');
   const diff = {
     value: parseFloat(Number(currentPrice - startPrice).toFixed(2)),
     percent: parseFloat(Number(((currentPrice - startPrice) / startPrice) * 100).toFixed(2)),

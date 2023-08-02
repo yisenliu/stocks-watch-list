@@ -4,6 +4,7 @@ import Loading from '@components/Loading';
 import useStockDividend from '@markets/tw/hooks/useStockDividend';
 
 export default function DividendChart({ ticker, token }) {
+  console.log('component: DividendChart');
   const { data, error, loading } = useStockDividend({ ticker, token });
   const dividend_policy = data?.dividend_policy;
   const legendFormatter = value => {

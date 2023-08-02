@@ -7,6 +7,7 @@ const spin = css`
     ${tw`animate-spin border-primary/40 border-t-primary border-3 w-4 h-4 mr-1 rounded-full`}
   }
 `;
-export default function loading() {
+export default function Loading() {
+  console.log('component: Loading');
   return <p css={spin}>Loading...</p>;
 }

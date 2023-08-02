@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
-import { columns, gridStyles } from '@components/dataGrid';
+import { columns, gridStyles } from '@components/muiDataGrid';
 import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import fetch from '@utils/fetch';
 import moment from 'moment';

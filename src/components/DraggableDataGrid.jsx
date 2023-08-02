@@ -12,6 +12,7 @@ export default function DraggableDataGrid({
   updateSelectedRowIds,
   ...restProps
 }) {
+  console.log('component: DraggableDataGrid');
   const [gridRows, setGridRows] = useState(rows);
   const apiRef = useGridApiRef();
   const onDragEnd = async ({ destination, source }) => {

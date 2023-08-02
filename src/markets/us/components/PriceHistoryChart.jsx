@@ -12,6 +12,7 @@ import {
 import { useState } from 'react';
 
 export default function PriceHistoryChart({ history }) {
+  console.log('component: PriceHistoryChart');
   const [refLineY, setRefLineY] = useState(-100);
   const showRefLine = ({ activePayload }) => {
     if (activePayload) {

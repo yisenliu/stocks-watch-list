@@ -8,6 +8,7 @@ import StackDuration from '@components/StackDuration';
 import usePriceHistory from '@hooks/usePriceHistory';
 
 export default function PriceHistory({ ticker, token }) {
+  console.log('component: PriceHistory');
   const durations = [
     { startDate: moment().subtract(moment().dayOfYear() - 1, 'days'), text: 'YTD' },
     { startDate: moment().subtract(1, 'months'), text: '1月' },

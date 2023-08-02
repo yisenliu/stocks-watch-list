@@ -1,4 +1,5 @@
 export default function StackDuration({ options, currentIdx, onChange }) {
+  console.log('component: StackDuration');
   return (
     <div className="w-96 sm:w-full flex mx-auto border border-gray-400 rounded">
       {options.map(({ text }, index) => {
