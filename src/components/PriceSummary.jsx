@@ -6,23 +6,23 @@ export default function PriceSummary({ currentDuration, currentPrice, startPrice
   };
   return (
     <>
-      <ul className="gap-x-4 inline-grid justify-center grid-cols-2 my-4">
+      <ul className="gap-x-4 inline-grid justify-center grid-cols-2 text-white">
         <li className="col-span-2">
-          <p className="mx-2 text-3xl font-bold text-black"> {currentPrice}</p>
+          <p className="mx-2 text-3xl font-bold"> {currentPrice}</p>
 
           <p className="space-x-2 text-lg font-bold">
-            <span className={diff.value > 0 ? 'text-green-600 before:content-["+"]' : 'text-red-600'}>
+            <span className={diff.value > 0 ? 'text-green-400 before:content-["+"]' : 'text-red-400'}>
               {diff.value}
             </span>
-            <span className={diff.percent > 0 ? 'text-green-600' : 'text-red-600'}>({diff.percent + '%'})</span>
-            <span className="text-lg text-black">{currentDuration}</span>
+            <span className={diff.percent > 0 ? 'text-green-400' : 'text-red-400'}>({diff.percent + '%'})</span>
+            <span className=" text-lg">{currentDuration}</span>
           </p>
         </li>
         <li>
-          min: <span className="mx-1 font-bold text-red-600">{min}</span>
+          高: <span className="mx-1 font-bold text-green-400">{max}</span>
         </li>
         <li>
-          max: <span className="mx-1 font-bold text-green-600">{max}</span>
+          低: <span className="mx-1 font-bold text-red-400">{min}</span>
         </li>
       </ul>
       <div className="z-3 fixed bottom-0 left-0 w-full px-2 text-sm text-white bg-gray-900">最後更新：{endDate}</div>

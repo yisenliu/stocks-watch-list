@@ -1,4 +1,4 @@
-import fetch, { createInstance } from '@utils/fetch';
+import fetch from '@utils/fetch';
 import { useState, useEffect } from 'react';
 
 export default function useFetch(options, dependency) {
@@ -52,5 +52,3 @@ export default function useFetch(options, dependency) {
 
   return { data, error, loading };
 }
-
-export { createInstance };

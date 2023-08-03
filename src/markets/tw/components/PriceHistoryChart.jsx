@@ -1,7 +1,7 @@
 import {
   Area,
   AreaChart,
-  CartesianGrid,
+  // CartesianGrid,
   Legend,
   ReferenceLine,
   ResponsiveContainer,
@@ -12,33 +12,43 @@ import {
 import { useState } from 'react';
 
 export default function PriceHistoryChart({ history }) {
-  console.log('component: PriceHistoryChart');
+  console.log('component: PriceHistoryChart:tw');
   const [refLineY, setRefLineY] = useState(-100);
-  const showRefLine = ({ activePayload }) => {
+
+  function showRefLine({ activePayload }) {
     if (activePayload) {
       setRefLineY(activePayload[0].value);
     }
-  };
-  const hideRefLine = () => {
+  }
+
+  function hideRefLine() {
     setRefLineY(-100);
-  };
-  const legendFormatter = value => {
+  }
+
+  function legendFormatter(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
-  };
+  }
 
   return (
     <ResponsiveContainer height={300} debounce={300}>
       <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine} margin={{ right: 30 }}>
-        <defs>
+        {/* <defs>
           <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#b2ebf2" stopOpacity={0.8} />
             <stop offset="95%" stopColor="#e0f7fa" stopOpacity={0} />
           </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" />
+        </defs> 
+        <CartesianGrid strokeDasharray="3 3" /> */}
         <ReferenceLine stroke="red" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
-        <XAxis dataKey="date" />
-        <YAxis domain={[0, 'auto']} width={40} padding={{ top: 50 }} />
+        <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={value => value.slice(5)} minTickGap={24} />
+        <YAxis
+          domain={['auto', 'auto']}
+          width={50}
+          padding={{ top: 50 }}
+          axisLine={false}
+          tickLine={false}
+          tick={{ fill: '#ccc' }}
+        />
         <Tooltip
           isAnimationActive={false}
           position={{ x: 0, y: 0 }}
@@ -59,8 +69,8 @@ export default function PriceHistoryChart({ history }) {
           dataKey="close"
           stroke="#00acc1"
           strokeWidth={2}
-          fillOpacity={1}
-          fill="url(#colorPrice)"
+          fillOpacity={0}
+          // fill="url(#colorPrice)"
         />
       </AreaChart>
     </ResponsiveContainer>

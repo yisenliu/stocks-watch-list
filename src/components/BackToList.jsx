@@ -14,7 +14,8 @@ export default function BackToList({ to, currentStock }) {
   const stockList = watchList[market];
   const isExist = stockList.some(stock => stock.id === stock_id);
   const [toAdd, setToAdd] = useState(isExist);
-  const backToList = () => {
+
+  function backToList() {
     if (toAdd && !isExist) {
       dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
     }
@@ -23,14 +24,14 @@ export default function BackToList({ to, currentStock }) {
     }
 
     navigate(to);
-  };
+  }
 
   return (
-    <div className="z-5 items-center sticky top-0 grid w-full h-12 grid-cols-[60px_1fr_60px] bg-black">
+    <div className="items-center grid w-full h-12 grid-cols-[60px_1fr_60px] bg-primary">
       <IconButton onClick={backToList} aria-label="back to watch list" sx={{ color: 'white' }}>
         <ArrowBackIcon />
       </IconButton>
-      <h2 className="leading-tight text-white">{currentStock?.stock_name}</h2>
+      <h2 className="text-lg leading-tight text-white">{currentStock?.stock_name}</h2>
       {toAdd && (
         <IconButton onClick={() => setToAdd(false)} aria-label="remove from watch list" sx={{ color: 'white' }}>
           <CheckCircleIcon fontSize="small" />

@@ -16,6 +16,7 @@ export default function PriceHistory({ ticker, token }) {
     { startDate: moment().subtract(6, 'months'), text: '6月' },
     { startDate: moment().subtract(1, 'years'), text: '1年' },
     { startDate: moment().subtract(3, 'years'), text: '3年' },
+    { startDate: moment().subtract(5, 'years'), text: '5年' },
   ];
   const [currentDurationIdx, setCurrentDurationIdx] = useState(0);
   const [range, setRange] = useState({ min: null, max: null });
@@ -23,7 +24,7 @@ export default function PriceHistory({ ticker, token }) {
     ticker,
     token,
     dataset: 'TaiwanStockPrice',
-    startDate: moment().subtract(3, 'years').format('YYYY-MM-DD'),
+    startDate: moment().subtract(5, 'years').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD'),
   });
   const allPriceHistory = data ? data.price_history : [];
@@ -35,6 +36,7 @@ export default function PriceHistory({ ticker, token }) {
     () => allPriceHistory.slice(offsetFromEnd > 0 ? offsetFromEnd : 0, dataLength),
     [offsetFromEnd],
   );
+  const darkTheme = true;
   const isReady = dataLength > 0;
   const handleChangeDuration = e => {
     setCurrentDurationIdx(Number(e.target.value));
@@ -58,12 +60,11 @@ export default function PriceHistory({ ticker, token }) {
   }, [isReady, currentDurationIdx]);
 
   return (
-    <div className="text-center">
-      <StackDuration options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
-      {loading && <Loading />}
+    <div className="py-4 mx-4 text-center bg-gray-800">
+      {loading && <Loading darkTheme={darkTheme} />}
       {error && (
         <p className="my-4">
-          <span className="text-red-800">{error.message}</span>
+          <span className={darkTheme ? 'text-white' : 'text-red-800'}>{error.message}</span>
         </p>
       )}
       {currentPriceHistory.length > 0 && (
@@ -77,6 +78,7 @@ export default function PriceHistory({ ticker, token }) {
             max={range.max}
           />
           <PriceHistoryChart history={currentPriceHistory} />
+          <StackDuration options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
         </>
       )}
     </div>

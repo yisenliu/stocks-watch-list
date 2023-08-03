@@ -23,7 +23,9 @@ export default function Navigation({ isOpen, closeMenu }) {
 
   useEffect(() => {
     const navigation = navRef.current;
-    const closeNavi = () => SetAnimationEnd(true);
+    function closeNavi() {
+      SetAnimationEnd(true);
+    }
     if (animationEnd) {
       navigation.addEventListener('transitionend', closeNavi);
     }

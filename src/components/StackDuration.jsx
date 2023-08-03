@@ -1,11 +1,11 @@
 export default function StackDuration({ options, currentIdx, onChange }) {
   console.log('component: StackDuration');
   return (
-    <div className="w-96 sm:w-full flex mx-auto border border-gray-400 rounded">
+    <div className="w-96 sm:w-full flex mx-auto -mb-4">
       {options.map(({ text }, index) => {
-        const activeCSS = index === currentIdx ? 'bg-info text-white' : '';
+        const activeCSS = index === currentIdx ? 'border-white text-white' : 'border-transparent text-primary';
         return (
-          <label className={'flex-1 p-2 text-center cursor-pointer ' + activeCSS} key={text}>
+          <label className={'flex-1 p-2 text-center cursor-pointer border-b-3 ' + activeCSS} key={text}>
             <input
               type="radio"
               name="duration"

@@ -15,7 +15,8 @@ export default function DraggableDataGrid({
   console.log('component: DraggableDataGrid');
   const [gridRows, setGridRows] = useState(rows);
   const apiRef = useGridApiRef();
-  const onDragEnd = async ({ destination, source }) => {
+
+  async function onDragEnd({ destination, source }) {
     if (!destination) {
       return;
     }
@@ -24,14 +25,15 @@ export default function DraggableDataGrid({
     await apiRef.current.setSortModel([]);
     setGridRows(newGridRows);
     dispatch({ type: 'update_stocks', market, stocks: newGridRows });
-  };
-  const reorder = (list, startIndex, endIndex) => {
+  }
+
+  function reorder(list, startIndex, endIndex) {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
     return result;
-  };
+  }
 
   useEffect(() => {
     setApiRefCurrent(apiRef.current);

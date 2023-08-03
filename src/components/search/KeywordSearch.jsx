@@ -31,15 +31,6 @@ export default function KeywordSearch({ onOpen }) {
     }, 500),
     [keyword],
   );
-  const clearInput = () => {
-    keywordRef.current.value = '';
-    keywordRef.current.focus();
-    setKeyword('');
-  };
-  const showInput = () => {
-    onOpen();
-    setKeyword('');
-  };
   const state = {
     loading: allStocks.loading,
     get ready() {
@@ -49,6 +40,17 @@ export default function KeywordSearch({ onOpen }) {
       return allStocks.error;
     },
   };
+
+  function clearInput() {
+    keywordRef.current.value = '';
+    keywordRef.current.focus();
+    setKeyword('');
+  }
+
+  function showInput() {
+    onOpen();
+    setKeyword('');
+  }
 
   return (
     <>

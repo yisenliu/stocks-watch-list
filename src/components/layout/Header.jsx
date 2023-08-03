@@ -35,19 +35,24 @@ export default function Header() {
   const pathname = useLocation().pathname;
   const isRoot = pathname === '/';
   const [isShowNavi, setIsShowNavi] = useState(false);
-  const closeMenu = e => {
+
+  function closeMenu(e) {
     if (e.target === e.currentTarget) {
       setIsShowNavi(false);
     }
-  };
-  const onKeywordSearchOpen = () => setIsShowInput(true);
-  const handleMenuBtnClick = () => {
+  }
+
+  function onKeywordSearchOpen() {
+    setIsShowInput(true);
+  }
+
+  function handleMenuBtnClick() {
     if (isShowInput) {
       setIsShowInput(false);
     } else {
       setIsShowNavi(true);
     }
-  };
+  }
 
   return (
     <header className="z-1 sticky top-0 w-full text-white bg-gray-900">
