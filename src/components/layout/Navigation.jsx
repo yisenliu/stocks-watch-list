@@ -35,7 +35,7 @@ export default function Navigation({ isOpen, closeMenu }) {
   return (
     <>
       {!animationEnd && (
-        <div className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
+        <div data-name="navigation" className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
           <div
             ref={navRef}
             className={
