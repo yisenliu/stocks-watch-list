@@ -1,5 +1,5 @@
-export default function StackDuration({ options, currentIdx, onChange }) {
-  console.log('component: StackDuration');
+export default function DurationPicker({ options, currentIdx, onChange }) {
+  // console.log('component: DurationPicker');
   return (
     <div className="w-96 sm:w-full flex mx-auto -mb-4">
       {options.map(({ text }, index) => {

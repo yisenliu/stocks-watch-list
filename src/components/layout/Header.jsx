@@ -55,7 +55,7 @@ export default function Header() {
   }
 
   return (
-    <header className="z-1 sticky top-0 w-full text-white bg-gray-900">
+    <header data-name="header" className="z-1 sticky top-0 w-full text-white bg-gray-900">
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ height: 48 }}>
         <Button css={naviTrigger} className={isShowInput ? 'active' : ''} onClick={handleMenuBtnClick} disableRipple>
           <span>Open Navigation</span>

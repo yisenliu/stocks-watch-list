@@ -1,18 +1,8 @@
-import {
-  Area,
-  AreaChart,
-  // CartesianGrid,
-  Legend,
-  ReferenceLine,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Area, AreaChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
 
 export default function PriceHistoryChart({ history }) {
-  console.log('component: PriceHistoryChart:tw');
+  // console.log('component: PriceHistoryChart:tw');
   const [refLineY, setRefLineY] = useState(-100);
 
   function showRefLine({ activePayload }) {
@@ -25,21 +15,10 @@ export default function PriceHistoryChart({ history }) {
     setRefLineY(-100);
   }
 
-  function legendFormatter(value) {
-    return value.charAt(0).toUpperCase() + value.slice(1);
-  }
-
   return (
     <ResponsiveContainer height={300} debounce={300}>
       <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine} margin={{ right: 30 }}>
-        {/* <defs>
-          <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#b2ebf2" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#e0f7fa" stopOpacity={0} />
-          </linearGradient>
-        </defs> 
-        <CartesianGrid strokeDasharray="3 3" /> */}
-        <ReferenceLine stroke="red" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
+        <ReferenceLine stroke="#ccc" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
         <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={value => value.slice(5)} minTickGap={24} />
         <YAxis
           domain={['auto', 'auto']}
@@ -50,28 +29,20 @@ export default function PriceHistoryChart({ history }) {
           tick={{ fill: '#ccc' }}
         />
         <Tooltip
+          active={false}
+          contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ccc' }}
+          formatter={value => [value, '收盤價']}
+          itemStyle={{ color: '#fff' }}
           isAnimationActive={false}
           position={{ x: 0, y: 0 }}
-          contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+          cursor={{ stroke: '#ccc', strokeWidth: 0.5, strokeDasharray: '1 1' }}
           wrapperStyle={{
-            position: 'absolute',
-            zIndex: '1',
-            top: '0',
-            right: '0',
+            zIndex: 1,
+            right: 16,
             left: 'auto',
-            width: '120px',
           }}
-          formatter={value => [value, '收盤價']}
         />
-        <Legend formatter={legendFormatter} />
-        <Area
-          animationDuration={500}
-          dataKey="close"
-          stroke="#00acc1"
-          strokeWidth={2}
-          fillOpacity={0}
-          // fill="url(#colorPrice)"
-        />
+        <Area animationDuration={500} dataKey="close" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
       </AreaChart>
     </ResponsiveContainer>
   );

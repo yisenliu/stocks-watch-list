@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
 export default function BackToList({ to, currentStock }) {
-  console.log('component: BackToList');
+  // console.log('component: BackToList');
   const stock_id = currentStock?.stock_id;
   const { market, watchList, dispatch } = useContext(StockContext);
   const navigate = useNavigate();

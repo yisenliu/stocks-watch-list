@@ -33,16 +33,6 @@ Production Preview
 $ yarn preview
 ```
 
-## Technology
-
-- [Vite 4](https://vitejs.dev/)
-- [React 18](https://react.dev/reference/react)
-- [React Router 6](https://reactrouter.com/)
-- [Tailwind CSS 3](https://tailwindcss.com) / SASS / PostCSS
-- [MUI](https://mui.com/)
-- [twin.macro](https://www.npmjs.com/package/twin.macro)
-- [FindMind API](https://finmindtrade.com/)
-
 ## Features
 
 - 串接 FinMind API，可自訂台股與美股上市公司股票與 ETF 觀察名單。
@@ -74,6 +64,16 @@ $ yarn preview
   > 或許是專案規模太小，無法確認編譯效能是否有顯著提升。
 - twin.macro 這個工具雖然可以結合 tailwind css， styled-components 與 zero-runtime CSS-in-JS 特性，但面對複雜的 css，最好還是採用外部 css/sass/scss, 避免 jsx 內容太過冗長而難以閱讀(如果擔心命名重覆，可採用 CSS Modules)。
   > 以本專案的規模而言，嘗試的經驗遠大於實質意義。
+
+## Technology
+
+- [Vite 4](https://vitejs.dev/)
+- [React 18](https://react.dev/reference/react)
+- [React Router 6](https://reactrouter.com/)
+- [Tailwind CSS 3](https://tailwindcss.com) / SASS / PostCSS
+- [MUI](https://mui.com/)
+- [twin.macro](https://www.npmjs.com/package/twin.macro)
+- [FindMind API](https://finmindtrade.com/)
 
 ## Browser Support
 

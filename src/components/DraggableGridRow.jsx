@@ -5,7 +5,7 @@ import DragHandleIcon from '@mui/icons-material/DragHandle';
 import tw, { css } from 'twin.macro';
 
 function DraggableGridRow(props) {
-  console.log('component: DraggableGridRow');
+  // console.log('component: DraggableGridRow');
   const { market, selectedRowIds, updateSelectedRowIds, ...rowProps } = props;
   const draggableCSS = css`
     ${tw`relative flex items-center`}

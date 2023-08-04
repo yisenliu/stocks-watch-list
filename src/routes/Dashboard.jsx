@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Layout from '@components/layout';
 
 export default function Dashboard() {
+  console.log('route: Dashboard');
   const location = useLocation().pathname;
 
   useEffect(() => {
