@@ -1,24 +1,21 @@
 import { useCallback, useContext, useRef } from 'react';
 import { debounce } from 'lodash';
-import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import ErrorMsg from '@components/ErrorMsg';
 import IconButton from '@mui/material/IconButton';
 import Loading from '@components/Loading';
 import SearchResult from './SearchResult';
 import StockContext from '@contexts/StockContext';
 import tw from 'twin.macro';
-import useStockInfo from '@hooks/useStockInfo';
 
 const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
 export default function KeywordSearch({ onOpen }) {
-  const { keyword, isShowInput, setKeyword, market, token } = useContext(StockContext);
-  const dataset = getStockInfoDataSetByMarket(market);
-  const allStocks = useStockInfo(dataset, token);
+  const { keyword, isShowInput, setKeyword, stocksInfo } = useContext(StockContext);
   const matchedStocks =
-    keyword && allStocks.data
-      ? allStocks.data.filter(
+    keyword && stocksInfo.data
+      ? stocksInfo.data.filter(
           stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toUpperCase().includes(keyword),
         )
       : null;
@@ -31,15 +28,6 @@ export default function KeywordSearch({ onOpen }) {
     }, 500),
     [keyword],
   );
-  const state = {
-    loading: allStocks.loading,
-    get ready() {
-      return !this.loading && !this.error;
-    },
-    get error() {
-      return allStocks.error;
-    },
-  };
 
   function clearInput() {
     keywordRef.current.value = '';
@@ -54,8 +42,8 @@ export default function KeywordSearch({ onOpen }) {
 
   return (
     <>
-      {state.loading && <Loading />}
-      {state.ready && (
+      {stocksInfo.loading && <Loading />}
+      {stocksInfo.data && (
         <>
           {!isShowInput && (
             <IconButton onClick={showInput} aria-label="show input" size="large" sx={{ color: 'white' }}>
@@ -75,7 +63,7 @@ export default function KeywordSearch({ onOpen }) {
           )}
         </>
       )}
-      {state.error && <p>{state.error.message}</p>}
+      {stocksInfo.error && <ErrorMsg>{stocksInfo.error.message}</ErrorMsg>}
     </>
   );
 }

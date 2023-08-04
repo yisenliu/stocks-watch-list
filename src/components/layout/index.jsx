@@ -1,11 +1,13 @@
 import { useReducer, useState } from 'react';
 import { matchRoutes, Outlet, useLocation } from 'react-router-dom';
+import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
 import '@lib/pace';
 import Container from './Container';
 import Header from './Header.jsx';
 import Login from '@components/Login';
 import Main from './Main';
 import StockContext from '@contexts/StockContext';
+import useStockInfo from '@hooks/useStockInfo';
 
 function reducer(state, action) {
   const { market, stocks, type } = action;
@@ -43,6 +45,7 @@ function createInitialState() {
 }
 
 export default function Layout() {
+  // console.log('component: Layout');
   const [keyword, setKeyword] = useState('');
   const [isShowInput, setIsShowInput] = useState(false);
   const [userId, setUserId] = useState(sessionStorage.getItem('userId') || null);
@@ -51,6 +54,8 @@ export default function Layout() {
   const pathname = currentLocation.pathname;
   const market = pathname.split('/')[1];
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
+  const dataset = getStockInfoDataSetByMarket(market);
+  const stocksInfo = useStockInfo(dataset, token);
   const context = {
     dispatch,
     isShowInput,
@@ -59,6 +64,7 @@ export default function Layout() {
     market,
     setIsShowInput,
     setKeyword,
+    stocksInfo,
     token,
     userId,
     watchList,

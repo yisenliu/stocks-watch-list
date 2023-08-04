@@ -7,7 +7,7 @@ function Container({ children }) {
   return <div className="pt-4 mx-4 bg-gray-800">{children}</div>;
 }
 export default function DividendChart({ ticker, token }) {
-  console.log('component: DividendChart');
+  // console.log('component: DividendChart');
   const { data, error, loading } = useStockDividend({ ticker, token });
   const dividend_policy = data?.dividend_policy;
   const legendFormatter = value => {

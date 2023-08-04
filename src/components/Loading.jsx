@@ -8,6 +8,6 @@ const spin = css`
   }
 `;
 export default function Loading({ darkTheme = false }) {
-  console.log('component: Loading');
+  // console.log('component: Loading');
   return <p css={[spin, darkTheme && tw`text-white`]}>Loading...</p>;
 }

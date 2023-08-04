@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
 import { columns, gridStyles } from '@components/muiDataGrid';
@@ -10,6 +10,8 @@ import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 
 export default function StockList() {
+  console.log('route: Index');
+  const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [sortModel, setSortModel] = useState([]);
   const { dispatch, market, setIsShowInput, watchList, token } = useContext(StockContext);
@@ -99,36 +101,40 @@ export default function StockList() {
 
   return (
     <>
-      {selectedRowIds.length > 0 && (
-        <SelectedStocksStatistics clearSelectedRowIds={clearSelectedRowIds} selectedRowIds={selectedRowIds} />
+      {!stock_id && (
+        <>
+          {selectedRowIds.length > 0 && (
+            <SelectedStocksStatistics clearSelectedRowIds={clearSelectedRowIds} selectedRowIds={selectedRowIds} />
+          )}
+          {stockList.length > 0 && (
+            <DraggableDataGrid
+              className="-m-4"
+              columns={columns}
+              disableColumnMenu
+              disableColumnResize={true}
+              dispatch={dispatch}
+              hideFooter
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              market={market}
+              onRowClick={onRowClick}
+              onSortModelChange={onSortModelChange}
+              rows={stockList}
+              setSelectedRowIds={setSelectedRowIds}
+              selectedRowIds={selectedRowIds}
+              setApiRefCurrent={setApiRefCurrent}
+              sortModel={sortModel}
+              sortingOrder={['asc', 'desc']}
+              sx={gridStyles}
+              updateSelectedRowIds={updateSelectedRowIds}
+            />
+          )}
+          {stockList.length === 0 && <p className="my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>}
+        </>
       )}
-      {stockList.length > 0 && (
-        <DraggableDataGrid
-          className="-m-4"
-          columns={columns}
-          disableColumnMenu
-          disableColumnResize={true}
-          dispatch={dispatch}
-          hideFooter
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          market={market}
-          onRowClick={onRowClick}
-          onSortModelChange={onSortModelChange}
-          rows={stockList}
-          setSelectedRowIds={setSelectedRowIds}
-          selectedRowIds={selectedRowIds}
-          setApiRefCurrent={setApiRefCurrent}
-          sortModel={sortModel}
-          sortingOrder={['asc', 'desc']}
-          sx={gridStyles}
-          updateSelectedRowIds={updateSelectedRowIds}
-        />
-      )}
-      {stockList.length === 0 && <p className="my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>}
       <Outlet />
     </>
   );

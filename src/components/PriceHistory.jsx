@@ -6,7 +6,7 @@ import Loading from '@components/Loading';
 import PriceHistoryChartTW from '@markets/tw/components/PriceHistoryChart';
 import PriceHistoryChartUS from '@markets/us/components/PriceHistoryChart';
 import PriceSummary from '@components/PriceSummary';
-import StackDuration from '@components/StackDuration';
+import DurationPicker from '@components/DurationPicker';
 import StockContext from '@contexts/StockContext';
 import usePriceHistory from '@hooks/usePriceHistory';
 
@@ -55,7 +55,7 @@ function getPriceSummaryPropsByMarket(market, currentDuration, currentPriceHisto
 }
 
 export default function PriceHistory({ ticker }) {
-  console.log('component: PriceHistory');
+  // console.log('component: PriceHistory');
   const { market, token } = useContext(StockContext);
   const dataset = getStockPriceDataSetByMarket(market);
   const PriceHistoryChart = getPriceHistoryChartByMarket(market);
@@ -124,7 +124,7 @@ export default function PriceHistory({ ticker }) {
         <>
           <PriceSummary {...props} />
           <PriceHistoryChart history={currentPriceHistory} />
-          <StackDuration options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
+          <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
         </>
       )}
     </div>

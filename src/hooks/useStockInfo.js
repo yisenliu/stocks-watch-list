@@ -1,7 +1,7 @@
 import useFetch from '@hooks/useFetch';
 
 export default function useStockInfo(dataset, token = null) {
-  const stockInfo = sessionStorage.getItem(dataset);
+  console.log('hook: useStockInfo');
   const params = `?dataset=${dataset}`;
   const result = useFetch(
     {
@@ -20,20 +20,11 @@ export default function useStockInfo(dataset, token = null) {
     [dataset],
   );
 
-  if (stockInfo) {
-    return {
-      data: JSON.parse(stockInfo),
-      error: null,
-      loading: false,
-    };
-  } else {
-    if (result.error) {
-      console.log(`%c${result.error.message}`, 'color: red');
-    }
-    if (result.data) {
-      result.data = result.data.data;
-      sessionStorage.setItem(dataset, JSON.stringify(result.data));
-    }
-    return { ...result };
+  if (result.error) {
+    console.log(`%c${result.error.message}`, 'color: red');
   }
+  if (result.data) {
+    result.data = result.data.data;
+  }
+  return { ...result };
 }

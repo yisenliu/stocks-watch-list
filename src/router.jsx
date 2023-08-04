@@ -3,8 +3,8 @@ import ErrorPage from '@/error-page';
 import Dashboard from '@routes/Dashboard';
 import Index from '@routes/Index';
 import StockList from '@routes/stockList';
-import StockTWDetails from '@routes/stockTWDetails';
-import StockUSDetails from '@routes/stockUSDetails';
+import StockDetailsTW from '@routes/StockDetailsTW';
+import StockDetailsUS from '@routes/StockDetailsUS';
 
 export const router = createBrowserRouter(
   [
@@ -24,7 +24,7 @@ export const router = createBrowserRouter(
           children: [
             {
               path: ':stock_id',
-              element: <StockTWDetails />,
+              element: <StockDetailsTW />,
             },
           ],
         },
@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
           children: [
             {
               path: ':stock_id',
-              element: <StockUSDetails />,
+              element: <StockDetailsUS />,
             },
           ],
         },

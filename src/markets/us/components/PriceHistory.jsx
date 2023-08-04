@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import StackDuration from '@components/StackDuration';
+import DurationPicker from '@components/DurationPicker';
 import moment from 'moment';
 import business from 'moment-business';
 import Loading from '@components/Loading';
@@ -8,7 +8,7 @@ import PriceSummary from '@components/PriceSummary';
 import usePriceHistory from '@hooks/usePriceHistory';
 
 export default function PriceHistory({ ticker, token }) {
-  console.log('component: PriceHistory');
+  // console.log('component: PriceHistory');
   const durations = [
     { startDate: moment().subtract(moment().dayOfYear() - 1, 'days'), text: 'YTD' },
     { startDate: moment().subtract(1, 'months'), text: '1月' },
@@ -78,7 +78,7 @@ export default function PriceHistory({ ticker, token }) {
             max={range.max}
           />
           <PriceHistoryChart history={currentPriceHistory} />
-          <StackDuration options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
+          <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
         </>
       )}
     </div>
