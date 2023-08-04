@@ -3,30 +3,34 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
 import { columns, gridStyles } from '@components/muiDataGrid';
-import { getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
+import { getStockInfoDataSetByMarket, getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import fetch from '@utils/fetch';
 import moment from 'moment';
 import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
+import useStockInfo from '@hooks/useStockInfo';
 
 export default function StockList() {
-  console.log('route: Index');
+  console.log('route: StockList');
   const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const { dispatch, market, setIsShowInput, setStocksInfo, token, watchList } = useContext(StockContext);
   const [sortModel, setSortModel] = useState([]);
-  const { dispatch, market, setIsShowInput, watchList, token } = useContext(StockContext);
+  const stockInfoDataset = getStockInfoDataSetByMarket(market);
+  const fetchedStocksInfo = useStockInfo(stockInfoDataset, token);
   const [apiRefCurrent, setApiRefCurrent] = useState(null);
-  const dataset = getStockPriceDataSetByMarket(market);
+  const stockPriceDataset = getStockPriceDataSetByMarket(market);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const stockList = watchList[market];
   let stocksNum = stockList?.length;
+
   function clearSelectedRowIds() {
     setSelectedRowIds([]);
   }
   function getStockPrice(ticker) {
     const params = {
-      dataset,
+      dataset: stockPriceDataset,
       data_id: ticker,
       start_date: moment().subtract(7, 'days').format('YYYY-MM-DD'),
       end_date: moment().format('YYYY-MM-DD'),
@@ -83,6 +87,10 @@ export default function StockList() {
       apiRefCurrent.selectRow(draggableId, true);
     }
   }
+
+  useEffect(() => {
+    setStocksInfo(fetchedStocksInfo);
+  }, [fetchedStocksInfo.error, fetchedStocksInfo.data]);
 
   useEffect(() => {
     if (stocksNum > 0) {

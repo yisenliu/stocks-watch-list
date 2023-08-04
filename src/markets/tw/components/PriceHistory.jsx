@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import business from 'moment-business';
+import Collapse from '@mui/material/Collapse';
 import DurationPicker from '@components/DurationPicker';
-import moment from 'moment';
 import Loading from '@components/Loading';
+import moment from 'moment';
 import PriceHistoryChart from '@markets/tw/components/PriceHistoryChart';
 import PriceSummary from '@components/PriceSummary';
 import usePriceHistory from '@hooks/usePriceHistory';
@@ -60,27 +61,29 @@ export default function PriceHistory({ ticker, token }) {
   }, [isReady, currentDurationIdx]);
 
   return (
-    <div className="py-4 mx-4 text-center bg-gray-800">
-      {loading && <Loading darkTheme={darkTheme} />}
-      {error && (
-        <p className="my-4">
-          <span className={darkTheme ? 'text-white' : 'text-red-800'}>{error.message}</span>
-        </p>
-      )}
-      {currentPriceHistory.length > 0 && (
-        <>
-          <PriceSummary
-            currentDuration={currentDuration}
-            currentPrice={currentPriceHistory[currentPriceHistory.length - 1].close}
-            startPrice={currentPriceHistory[0].close}
-            endDate={currentPriceHistory[currentPriceHistory.length - 1].date}
-            min={range.min}
-            max={range.max}
-          />
-          <PriceHistoryChart history={currentPriceHistory} />
-          <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
-        </>
-      )}
-    </div>
+    <Collapse in={currentPriceHistory.length > 0} collapsedSize={90}>
+      <div className="py-4 mx-4 text-center bg-gray-800">
+        {loading && <Loading darkTheme={darkTheme} />}
+        {error && (
+          <p className="my-4">
+            <span className={darkTheme ? 'text-white' : 'text-red-800'}>{error.message}</span>
+          </p>
+        )}
+        {currentPriceHistory.length > 0 && (
+          <>
+            <PriceSummary
+              currentDuration={currentDuration}
+              currentPrice={currentPriceHistory[currentPriceHistory.length - 1].close}
+              startPrice={currentPriceHistory[0].close}
+              endDate={currentPriceHistory[currentPriceHistory.length - 1].date}
+              min={range.min}
+              max={range.max}
+            />
+            <PriceHistoryChart history={currentPriceHistory} />
+            <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
+          </>
+        )}
+      </div>
+    </Collapse>
   );
 }
