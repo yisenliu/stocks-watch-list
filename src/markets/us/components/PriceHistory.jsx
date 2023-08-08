@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import BlockSection from '@components/BlockSection';
 import business from 'moment-business';
 import Collapse from '@mui/material/Collapse';
 import DurationPicker from '@components/DurationPicker';
+import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
 import moment from 'moment';
 import PriceHistoryChart from '@markets/us/components/PriceHistoryChart';
@@ -19,9 +21,11 @@ export default function PriceHistory({ ticker, token }) {
     { startDate: moment().subtract(3, 'years'), text: '3年' },
     { startDate: moment().subtract(5, 'years'), text: '5年' },
   ];
-  const [currentDurationIdx, setCurrentDurationIdx] = useState(0);
+  const [currentDurationIdx, setCurrentDurationIdx] = useState(
+    Number(localStorage.getItem('current_duration_idx')) || 0,
+  );
   const [range, setRange] = useState({ min: null, max: null });
-  const { data, error, loading } = usePriceHistory({
+  const { data, error, stage } = usePriceHistory({
     ticker,
     token,
     dataset: 'USStockPrice',
@@ -37,11 +41,13 @@ export default function PriceHistory({ ticker, token }) {
     () => allPriceHistory.slice(offsetFromEnd > 0 ? offsetFromEnd : 0, dataLength),
     [offsetFromEnd],
   );
-  const darkTheme = true;
   const isReady = dataLength > 0;
-  const handleChangeDuration = e => {
-    setCurrentDurationIdx(Number(e.target.value));
-  };
+
+  function handleChangeDuration(e) {
+    const newIdx = Number(e.target.value);
+    setCurrentDurationIdx(newIdx);
+    localStorage.setItem('current_duration_idx', newIdx);
+  }
 
   useEffect(() => {
     let min = null;
@@ -62,13 +68,9 @@ export default function PriceHistory({ ticker, token }) {
 
   return (
     <Collapse in={currentPriceHistory.length > 0} collapsedSize={90}>
-      <div className="py-4 mx-4 text-center bg-gray-800">
-        {loading && <Loading darkTheme={darkTheme} />}
-        {error && (
-          <p className="my-4">
-            <span className={darkTheme ? 'text-white' : 'text-red-800'}>{error.message}</span>
-          </p>
-        )}
+      <BlockSection data-name="price_history" className="text-center">
+        {stage === 'fetching' && <Loading />}
+        {error && <ErrorMsg>{error.message}</ErrorMsg>}
         {currentPriceHistory.length > 0 && (
           <>
             <PriceSummary
@@ -83,7 +85,7 @@ export default function PriceHistory({ ticker, token }) {
             <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
           </>
         )}
-      </div>
+      </BlockSection>
     </Collapse>
   );
 }

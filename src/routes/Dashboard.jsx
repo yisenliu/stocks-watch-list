@@ -51,7 +51,7 @@ export default function Dashboard() {
   const market = pathname.split('/')[1];
   const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
-  const [stocksInfo, setStocksInfo] = useState({ data: null, error: null, loading: false });
+  const [stocksInfo, setStocksInfo] = useState({ data: null, error: null, stage: 'idle' });
   const context = {
     dispatch,
     isShowInput,

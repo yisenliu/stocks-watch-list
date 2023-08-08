@@ -25,6 +25,7 @@ export const router = createBrowserRouter(
             {
               path: ':stock_id',
               element: <StockDetailsTW />,
+              loader: ({ params }) => params.stock_id.toUpperCase(),
             },
           ],
         },
@@ -35,6 +36,7 @@ export const router = createBrowserRouter(
             {
               path: ':stock_id',
               element: <StockDetailsUS />,
+              loader: ({ params }) => params.stock_id.toUpperCase(),
             },
           ],
         },

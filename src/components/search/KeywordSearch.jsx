@@ -13,11 +13,10 @@ const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
 export default function KeywordSearch({ onOpen }) {
   const { keyword, isShowInput, setKeyword, stocksInfo } = useContext(StockContext);
+  const { data, error, stage } = stocksInfo;
   const matchedStocks =
-    keyword && stocksInfo.data
-      ? stocksInfo.data.filter(
-          stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toUpperCase().includes(keyword),
-        )
+    keyword && stage === 'fetched'
+      ? data.filter(stock => stock.stock_id.startsWith(keyword) || stock.stock_name.toUpperCase().includes(keyword))
       : null;
   const keywordRef = useRef();
   const onChange = useCallback(
@@ -42,8 +41,8 @@ export default function KeywordSearch({ onOpen }) {
 
   return (
     <>
-      {stocksInfo.loading && <Loading />}
-      {stocksInfo.data && (
+      {stage === 'fetching' && <Loading />}
+      {stage === 'fetched' && (
         <>
           {!isShowInput && (
             <IconButton onClick={showInput} aria-label="show input" size="large" sx={{ color: 'white' }}>
@@ -63,7 +62,7 @@ export default function KeywordSearch({ onOpen }) {
           )}
         </>
       )}
-      {stocksInfo.error && <ErrorMsg>{stocksInfo.error.message}</ErrorMsg>}
+      {error && <ErrorMsg>{error.message}</ErrorMsg>}
     </>
   );
 }

@@ -16,34 +16,36 @@ export default function PriceHistoryChart({ history }) {
   }
 
   return (
-    <ResponsiveContainer height={300} debounce={300}>
-      <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine} margin={{ right: 30 }}>
-        <ReferenceLine stroke="#ccc" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
-        <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={value => value.slice(5)} minTickGap={24} />
-        <YAxis
-          domain={['auto', 'auto']}
-          width={50}
-          padding={{ top: 50 }}
-          axisLine={false}
-          tickLine={false}
-          tick={{ fill: '#ccc' }}
-        />
-        <Tooltip
-          active={false}
-          contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ccc' }}
-          formatter={value => [value, '收盤價']}
-          itemStyle={{ color: '#fff' }}
-          isAnimationActive={false}
-          position={{ x: 0, y: 0 }}
-          cursor={{ stroke: '#ccc', strokeWidth: 0.5, strokeDasharray: '1 1' }}
-          wrapperStyle={{
-            zIndex: 1,
-            right: 16,
-            left: 'auto',
-          }}
-        />
-        <Area animationDuration={500} dataKey="close" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div data-name="price_history_chart" className="-ml-2">
+      <ResponsiveContainer height={300} debounce={300}>
+        <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine}>
+          <ReferenceLine stroke="#ccc" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
+          <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={value => value.slice(5)} minTickGap={24} />
+          <YAxis
+            domain={['auto', 'auto']}
+            width={50}
+            padding={{ top: 50, bottom: 20 }}
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: '#ccc' }}
+          />
+          <Tooltip
+            active={false}
+            contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ccc' }}
+            formatter={value => [value, '收盤價']}
+            itemStyle={{ color: '#fff' }}
+            isAnimationActive={false}
+            position={{ x: 0, y: 0 }}
+            cursor={{ stroke: '#ccc', strokeWidth: 0.5, strokeDasharray: '1 1' }}
+            wrapperStyle={{
+              zIndex: 1,
+              right: 16,
+              left: 'auto',
+            }}
+          />
+          <Area animationDuration={500} dataKey="close" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

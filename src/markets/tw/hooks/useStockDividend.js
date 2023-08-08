@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import concatParams from '@utils/concatParams';
 import moment from 'moment';
 import useFetch from '@hooks/useFetch';
@@ -7,11 +8,11 @@ export default function useStockDividend({ ticker = null, token }) {
   const params = {
     dataset: 'TaiwanStockDividendResult',
     data_id: ticker,
-    start_date: `${moment().year() - 5}-01-01`,
+    start_date: `${moment().year() - 4}-01-01`,
     end_date: today,
   };
   const paramsStr = concatParams(params);
-  const dividend = useFetch(
+  const fetchedData = useFetch(
     {
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
@@ -25,44 +26,52 @@ export default function useStockDividend({ ticker = null, token }) {
     },
     [ticker],
   );
+  const [dividend, setDividend] = useState(null);
 
-  if (dividend.data) {
-    const dividendOrigin = dividend.data.data;
-    if (dividendOrigin.length) {
-      const dividendByQuarter = dividendOrigin.reduce((acc, current) => {
-        const year = moment(current.date).year();
-        const quarter = 'Q' + moment(current.date).format('Q');
-        const idx = acc.findIndex(item => item.year === year);
-        if (acc === [] || idx === -1) {
-          const data = {
-            year,
-          };
-          data[quarter] = current.stock_and_cache_dividend;
-          data.total = current.stock_and_cache_dividend;
-          acc.push(data);
-        } else {
-          if (acc[idx][quarter]) {
-            acc[idx][quarter] += current.stock_and_cache_dividend;
+  useEffect(() => {
+    function getDividendData() {
+      let result = null;
+      const dividendOrigin = fetchedData.data.data;
+      if (dividendOrigin.length) {
+        const dividendByQuarter = dividendOrigin.reduce((acc, current) => {
+          const year = moment(current.date).year();
+          const quarter = 'Q' + moment(current.date).format('Q');
+          const idx = acc.findIndex(item => item.year === year);
+          if (acc === [] || idx === -1) {
+            const data = {
+              year,
+            };
+            data[quarter] = current.stock_and_cache_dividend;
+            data.total = current.stock_and_cache_dividend;
+            acc.push(data);
           } else {
-            acc[idx][quarter] = current.stock_and_cache_dividend;
+            if (acc[idx][quarter]) {
+              acc[idx][quarter] += current.stock_and_cache_dividend;
+            } else {
+              acc[idx][quarter] = current.stock_and_cache_dividend;
+            }
+            acc[idx].total += current.stock_and_cache_dividend;
           }
-          acc[idx].total += current.stock_and_cache_dividend;
-        }
 
-        return acc;
-      }, []);
-      dividend.data = {
-        dividend_policy: dividendByQuarter.map(item => ({
-          ...item,
-          Q1: item.Q1 ? parseFloat(item.Q1.toFixed(3)) : null,
-          Q2: item.Q2 ? parseFloat(item.Q2.toFixed(3)) : null,
-          Q3: item.Q3 ? parseFloat(item.Q3.toFixed(3)) : null,
-          Q4: item.Q4 ? parseFloat(item.Q4.toFixed(3)) : null,
-          total: item.total ? parseFloat(item.total.toFixed(3)) : null,
-        })),
-      };
+          return acc;
+        }, []);
+        result = {
+          dividend_policy: dividendByQuarter.map(item => ({
+            ...item,
+            Q1: item.Q1 ? parseFloat(item.Q1.toFixed(3)) : null,
+            Q2: item.Q2 ? parseFloat(item.Q2.toFixed(3)) : null,
+            Q3: item.Q3 ? parseFloat(item.Q3.toFixed(3)) : null,
+            Q4: item.Q4 ? parseFloat(item.Q4.toFixed(3)) : null,
+            total: item.total ? parseFloat(item.total.toFixed(3)) : null,
+          })),
+        };
+        setDividend(result);
+      }
     }
-  }
+    if (fetchedData.data) {
+      getDividendData();
+    }
+  }, [fetchedData.data]);
 
-  return { ...dividend };
+  return { ...fetchedData, data: dividend };
 }

@@ -1,9 +1,9 @@
+import { columns, gridStyles } from '@components/muiDataGrid';
+import { getStockInfoDataSetByMarket, getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
-import { columns, gridStyles } from '@components/muiDataGrid';
-import { getStockInfoDataSetByMarket, getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import fetch from '@utils/fetch';
 import moment from 'moment';
 import StockContext from '@contexts/StockContext';
@@ -140,7 +140,9 @@ export default function StockList() {
               updateSelectedRowIds={updateSelectedRowIds}
             />
           )}
-          {stockList.length === 0 && <p className="my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>}
+          {stockList.length === 0 && (
+            <p className="mx-4 my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>
+          )}
         </>
       )}
       <Outlet />
