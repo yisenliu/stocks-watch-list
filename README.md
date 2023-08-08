@@ -56,7 +56,7 @@ $ yarn preview
   plugins: [mdPlugin.plugin({ mode: ['html'] })];
   ```
 
-- 在架構設計上將 `<Layout>` 內部區分為 `<Header>` 與 `<Main>` ， `<Header>` 為固定顯示的元件， `<Main>` 則用於載入 child route element, 由於 `<Header>` 提供股票搜尋並加入觀察名單的功能，其結果會影響 child route element 的內容，因此在 `<Header>` 與 `<Main>` 外層加上 `<StockContext.Provider>` 統一管理狀態，利用 `useContext` 讓所有的 child route element 都能取得即時狀態。
+- 在架構設計上將 `<Layout>` 內部區分為 `<Header>` 與 `<Main>` ， `<Header>` 為固定顯示的元件， `<Main>` 則用於載入 child route element, 由於 `<Header>` 提供股票搜尋並加入觀察名單的功能，其結果會影響 child route element 的內容，因此在 root route (`Dashboard.jsx`) 最外層加上 `<StockContext.Provider>` 統一管理狀態，利用 `useContext` 讓所有的 child route element 都能取得即時狀態。
 
   之所以不考慮 `useOutletContext()` 是因為它只能取得 parent route 的狀態，並不適合多層 child route 的狀態傳遞，因此 `<Outlet />` 只用於切換 child route element，本身並不使用 `context` 傳遞狀態。
 
