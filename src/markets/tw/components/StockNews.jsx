@@ -5,8 +5,8 @@ import NewsItem from '@components/NewsItem';
 import useTaiwanStockNews from '@markets/tw/hooks/useTaiwanStockNews';
 
 export default function StockNews({ ticker, token }) {
-  const newsResult = useTaiwanStockNews(ticker, token);
-  const { data: news, error, stage } = newsResult;
+  const fetchedNews = useTaiwanStockNews(ticker, token);
+  const { data, error, stage } = fetchedNews;
   let Result = null;
 
   if (stage === 'fetching') {
@@ -23,9 +23,9 @@ export default function StockNews({ ticker, token }) {
       </BlockSection>
     );
   }
-  if (news) {
-    if (news.length > 0) {
-      Result = news.reverse().map((props, index) => <NewsItem {...props} key={index + props.date} />);
+  if (data) {
+    if (data.length > 0) {
+      Result = data.map((props, index) => <NewsItem {...props} key={index + props.date} />);
     } else {
       Result = (
         <BlockSection>

@@ -31,8 +31,8 @@ export default function useTaiwanStockNews(ticker, token = null) {
     console.log(`%c${result.error.message}`, 'color: red');
   }
   if (result.data) {
-    result.data = result.data.data;
+    const newsData = [...result.data.data];
+    result.data = newsData.reverse();
   }
-
   return { ...result };
 }
