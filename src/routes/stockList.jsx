@@ -1,4 +1,4 @@
-import { columns, gridStyles } from '@components/muiDataGrid';
+import { stockColumns, gridStyles } from '@lib/muiDataGrid';
 import { getStockInfoDataSetByMarket, getStockPriceDataSetByMarket } from '@utils/getDataSetByMarket';
 import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 import useStockInfo from '@hooks/useStockInfo';
 
 export default function StockList() {
-  console.log('route: StockList');
+  // console.log('route: StockList');
   const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const { dispatch, market, setIsShowInput, setStocksInfo, token, watchList } = useContext(StockContext);
@@ -117,16 +117,11 @@ export default function StockList() {
           {stockList.length > 0 && (
             <DraggableDataGrid
               className="-m-4"
-              columns={columns}
+              columns={stockColumns}
               disableColumnMenu
               disableColumnResize={true}
               dispatch={dispatch}
               hideFooter
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
-                },
-              }}
               market={market}
               onRowClick={onRowClick}
               onSortModelChange={onSortModelChange}

@@ -1,22 +1,18 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import NavItem from './NavItem';
-import StockContext from '@contexts/StockContext';
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
+import NavGroup from './NavGroup';
+import NavItem from './NavItem';
+import StockContext from '@contexts/StockContext';
 
 const navContainerStyles = 'z-2 top-0 fixed bg-black/75 ';
 const navStyles = {
   open: 'translate-x-0',
   close: '-translate-x-full',
 };
-const navItems = [
-  { to: '/', text: 'Home' },
-  { to: 'tw', text: '台股' },
-  { to: 'us', text: '美股' },
-];
 
 export default function Navigation({ isOpen, closeMenu }) {
-  const { logout, userId } = useContext(StockContext);
+  const { logout, userId, watchList } = useContext(StockContext);
   const navRef = useRef();
   const statusStyle = isOpen ? navStyles.open : navStyles.close;
   const [animationEnd, SetAnimationEnd] = useState(false);
@@ -38,13 +34,16 @@ export default function Navigation({ isOpen, closeMenu }) {
         <div data-name="navigation" className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
           <div
             ref={navRef}
-            className={
-              'flex flex-col transition-transform w-64 h-screen p-4 space-y-4 text-white bg-gray-900 ' + statusStyle
-            }
+            className={'flex flex-col transition-transform w-64 h-screen p-4  text-white bg-gray-900 ' + statusStyle}
           >
-            {navItems.map(link => (
-              <NavItem {...link} key={link.text} onClick={closeMenu} />
-            ))}
+            <NavItem to="/" text="Home" onClick={closeMenu} />
+            <NavGroup name="股票觀察表">
+              <NavItem to="stock_market/tw" text="台股" count={watchList.tw.length} onClick={closeMenu} />
+              <NavItem to="stock_market/us" text="美股" count={watchList.us.length} onClick={closeMenu} />
+            </NavGroup>
+            <NavGroup name="其他資料集">
+              <NavItem to="us_treasury_bound" text="美國公債殖利率" onClick={closeMenu} />
+            </NavGroup>
             {sessionStorage.getItem('userId') && (
               <Button
                 variant="contained"

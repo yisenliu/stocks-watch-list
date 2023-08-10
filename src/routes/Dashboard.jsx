@@ -1,6 +1,6 @@
 import { useReducer, useState } from 'react';
-import { matchRoutes, useLocation } from 'react-router-dom';
-import Layout from '@components/layout';
+import { matchRoutes, useLocation, useParams } from 'react-router-dom';
+import Layout from '@components/Layout';
 import Login from '@components/Login';
 import StockContext from '@contexts/StockContext';
 
@@ -40,16 +40,15 @@ function createInitialState() {
 }
 
 export default function Dashboard() {
-  console.log('route: Dashboard');
+  // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
   const [isShowInput, setIsShowInput] = useState(false);
   const [userId, setUserId] = useState(sessionStorage.getItem('userId') || null);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
   const currentLocation = useLocation();
-  const pathname = currentLocation.pathname;
-  const market = pathname.split('/')[1];
-  const memberOnlyRoutes = [{ path: 'tw/' }, { path: 'tw/:stock_id' }, { path: 'us/' }, { path: 'us/:stock_id' }];
+  const { market } = useParams();
+  const memberOnlyRoutes = [{ path: 'stock_market/:market' }, { path: 'stock_market/:market/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
   const [stocksInfo, setStocksInfo] = useState({ data: null, error: null, stage: 'idle' });
   const context = {

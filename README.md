@@ -62,7 +62,7 @@ $ yarn preview
 
 - 採用 SWC 取代 Babel
   > 或許是專案規模太小，無法確認編譯效能是否有顯著提升。
-- twin.macro 這個工具雖然可以結合 tailwind css， styled-components 與 zero-runtime CSS-in-JS 特性，但面對複雜的 css，最好還是採用外部 css/sass/scss, 避免 jsx 內容太過冗長而難以閱讀(如果擔心命名重覆，可採用 CSS Modules)。
+- twin.macro 這個工具雖然可以結合 tailwind css， styled-components 與 zero-runtime CSS-in-JS 特性，但面對複雜的 css，最好還是採用外部 css/sass/scss，避免 jsx 內容太過冗長而難以閱讀(如果擔心命名重覆，可採用 CSS Modules)。
   > 以本專案的規模而言，嘗試的經驗遠大於實質意義。
 - 目前串接的 API 均為非即時性的資料，因此在自訂的 `useFetch.js` 採用 `new Map()` 作為 cache 以減少非必要的串接。
 

@@ -12,8 +12,8 @@ import StockNews from '@markets/tw/components/StockNews';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-export default function StockDetailsTW() {
-  // console.log('route: StockDetailsTW');
+export default function StockDetails() {
+  // console.log('route: StockDetails');
   const stock_id = useLoaderData();
   const { market, stocksInfo, token } = useContext(StockContext);
   const { data, error, stage } = stocksInfo;
@@ -40,7 +40,7 @@ export default function StockDetailsTW() {
 
   return (
     <Portal>
-      {currentStock && <BackToStockList to="/stock_market/tw" currentStock={currentStock} />}
+      {currentStock && <BackToStockList to={`/stock_market/${market}`} currentStock={currentStock} />}
       {stage === 'fetching' && <Loading />}
       {stage === 'fetched' && (
         <div className="min-h-full pb-8 bg-gray-900">
@@ -52,9 +52,21 @@ export default function StockDetailsTW() {
               textColor="inherit"
               aria-label="tabs for the stock details"
             >
-              <Tab label="走勢" value="PriceHistory" sx={{ fontSize: 16 }} />
-              <Tab label="股息" value="Dividend" sx={{ fontSize: 16 }} />
-              <Tab label="新聞" value="StockNews" sx={{ fontSize: 16 }} />
+              <Tab disableRipple label="走勢" value="PriceHistory" sx={{ fontSize: 16 }} />
+              <Tab
+                disableRipple
+                label="股息"
+                value="Dividend"
+                sx={{ fontSize: 16, display: market !== 'tw' ? 'none' : 'flex' }}
+                disabled={market !== 'tw'}
+              />
+              <Tab
+                disableRipple
+                label="新聞"
+                value="StockNews"
+                sx={{ fontSize: 16, display: market !== 'tw' ? 'none' : 'flex' }}
+                disabled={market !== 'tw'}
+              />
             </Tabs>
           </div>
           <div

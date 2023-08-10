@@ -7,7 +7,7 @@ import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
 import moment from 'moment';
 import PriceHistoryChart from '@markets/us/components/PriceHistoryChart';
-import PriceSummary from '@components/PriceSummary';
+import Summary from '@components/Summary';
 import usePriceHistory from '@hooks/usePriceHistory';
 
 export default function PriceHistory({ ticker, token }) {
@@ -73,10 +73,10 @@ export default function PriceHistory({ ticker, token }) {
         {error && <ErrorMsg>{error.message}</ErrorMsg>}
         {currentPriceHistory.length > 0 && (
           <>
-            <PriceSummary
+            <Summary
               currentDuration={currentDuration}
-              currentPrice={currentPriceHistory[currentPriceHistory.length - 1].Close}
-              startPrice={currentPriceHistory[0].Close}
+              currentValue={currentPriceHistory[currentPriceHistory.length - 1].Close}
+              startValue={currentPriceHistory[0].Close}
               endDate={currentPriceHistory[currentPriceHistory.length - 1].date}
               min={range.min}
               max={range.max}

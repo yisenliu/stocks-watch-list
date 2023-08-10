@@ -2,16 +2,32 @@ import { useEffect, useMemo, useState } from 'react';
 import BlockSection from '@components/BlockSection';
 import business from 'moment-business';
 import Collapse from '@mui/material/Collapse';
-import DurationPicker from '@components/DurationPicker';
+import DurationPicker from './DurationPicker';
 import ErrorMsg from '@components/ErrorMsg';
+import HistoryChart from './HistoryChart';
 import Loading from '@components/Loading';
 import moment from 'moment';
-import PriceHistoryChart from '@markets/tw/components/PriceHistoryChart';
 import Summary from '@components/Summary';
 import usePriceHistory from '@hooks/usePriceHistory';
 
-export default function PriceHistory({ ticker, token }) {
+function getMarketData(market) {
+  let fn;
+  let component = {
+    tw: () => ({ dataset: 'TaiwanStockPrice', closeKey: 'close' }),
+    us: () => ({ dataset: 'USStockPrice', closeKey: 'Close' }),
+    default() {
+      throw new Error('unknown market');
+    },
+  };
+
+  fn = market ? component[market] : component['default'];
+
+  return fn();
+}
+
+export default function PriceHistory({ market, ticker, token }) {
   // console.log('component: PriceHistory');
+  const { dataset, closeKey } = getMarketData(market);
   const durations = [
     { startDate: moment().subtract(moment().dayOfYear() - 1, 'days'), text: 'YTD' },
     { startDate: moment().subtract(1, 'months'), text: '1月' },
@@ -28,7 +44,7 @@ export default function PriceHistory({ ticker, token }) {
   const { data, error, stage } = usePriceHistory({
     ticker,
     token,
-    dataset: 'TaiwanStockPrice',
+    dataset,
     startDate: moment().subtract(5, 'years').format('YYYY-MM-DD'),
     endDate: moment().format('YYYY-MM-DD'),
   });
@@ -54,7 +70,7 @@ export default function PriceHistory({ ticker, token }) {
     let max = null;
 
     currentPriceHistory.forEach(history => {
-      const close = history.close;
+      const close = history[closeKey];
       if (!max || close > max) {
         max = close;
       }
@@ -75,13 +91,13 @@ export default function PriceHistory({ ticker, token }) {
           <>
             <Summary
               currentDuration={currentDuration}
-              currentValue={currentPriceHistory[currentPriceHistory.length - 1].close}
-              startValue={currentPriceHistory[0].close}
+              currentValue={currentPriceHistory[currentPriceHistory.length - 1][closeKey]}
+              startValue={currentPriceHistory[0][closeKey]}
               endDate={currentPriceHistory[currentPriceHistory.length - 1].date}
               min={range.min}
               max={range.max}
             />
-            <PriceHistoryChart history={currentPriceHistory} />
+            <HistoryChart history={currentPriceHistory} closeKey={closeKey} />
             <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
           </>
         )}

@@ -8,11 +8,8 @@ function DraggableGridRow(props) {
   // console.log('component: DraggableGridRow');
   const { market, selectedRowIds, updateSelectedRowIds, ...rowProps } = props;
   const draggableCSS = css`
-    ${tw`relative flex items-center`}
+    ${tw`flex items-center`}
     ${selectedRowIds.includes(props.rowId) ? tw`bg-white/25` : ''}
-    &::before {
-      ${tw`content-[''] border-b border-gray-500 absolute bottom-0 w-full`}
-    }
   `;
 
   return (

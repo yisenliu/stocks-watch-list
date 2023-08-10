@@ -1,29 +1,28 @@
 import './stockDetails.sass';
 import { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import BackToList from '@components/BackToList';
+import BackToStockList from '@components/BackToStockList';
 import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
-import PriceHistory from '@markets/us/components/PriceHistory';
+import PriceHistory from '@components/PriceHistory';
 import StockContext from '@contexts/StockContext';
-import StockDetailsPortal from '@components/StockDetailsPortal';
+import Portal from '@components/Portal';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 export default function StockDetailsUS() {
-  console.log('route: StockDetailsUS');
+  // console.log('route: StockDetailsUS');
   const stock_id = useLoaderData();
   const { market, stocksInfo, token } = useContext(StockContext);
   const { data, error, stage } = stocksInfo;
   const currentStock = data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
   const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'PriceHistory');
   const TabPanelComponents = {
-    PriceHistory,
+    PriceHistory: <PriceHistory market={market} ticker={stock_id} token={token} />,
   };
 
-  function DynamicTabPanelComponent({ component, ...restProps }) {
-    let Component = TabPanelComponents[component];
-    return <Component {...restProps} />;
+  function DynamicTabPanelComponent({ component }) {
+    return TabPanelComponents[component];
   }
 
   function handleTabChange(event, newValue) {
@@ -36,8 +35,8 @@ export default function StockDetailsUS() {
   }
 
   return (
-    <StockDetailsPortal>
-      {currentStock && <BackToList to="/us" currentStock={currentStock} />}
+    <Portal>
+      {currentStock && <BackToStockList to="/us" currentStock={currentStock} />}
       {stage === 'fetching' && <Loading />}
       {stage === 'fetched' && (
         <div className="min-h-full pb-8 bg-gray-900">
@@ -56,11 +55,11 @@ export default function StockDetailsUS() {
             data-name="tab-panel"
             className="bg-gray-900 bg-gradient-to-b from-primary from-[60px] via-transparent via-[60px] pt-8 px-2"
           >
-            <DynamicTabPanelComponent component={component} ticker={stock_id} token={token} key={component} />
+            <DynamicTabPanelComponent component={component} key={component} />
           </div>
         </div>
       )}
       {error && <ErrorMsg>{error.message}</ErrorMsg>}
-    </StockDetailsPortal>
+    </Portal>
   );
 }

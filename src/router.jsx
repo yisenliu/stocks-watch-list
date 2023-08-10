@@ -2,9 +2,12 @@ import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '@/error-page';
 import Dashboard from '@routes/Dashboard';
 import Index from '@routes/Index';
-import StockList from '@routes/stockList';
-import StockDetailsTW from '@routes/StockDetailsTW';
-import StockDetailsUS from '@routes/StockDetailsUS';
+import StockList from '@routes/StockList';
+import StockDetails from '@routes/StockDetails';
+// import StockDetailsTW from '@routes/StockDetailsTW';
+// import StockDetailsUS from '@routes/StockDetailsUS';
+import TreasuryBound from '@routes/TreasuryBound';
+import TreasuryBoundList from '@routes/TreasuryBoundList';
 
 export const router = createBrowserRouter(
   [
@@ -19,24 +22,45 @@ export const router = createBrowserRouter(
           index: true,
         },
         {
-          path: 'tw',
+          path: 'stock_market/:market',
           element: <StockList />,
           children: [
             {
               path: ':stock_id',
-              element: <StockDetailsTW />,
+              element: <StockDetails />,
               loader: ({ params }) => params.stock_id.toUpperCase(),
             },
           ],
         },
+        // {
+        //   path: 'tw',
+        //   element: <StockList />,
+        //   children: [
+        //     {
+        //       path: ':stock_id',
+        //       element: <StockDetailsTW />,
+        //       loader: ({ params }) => params.stock_id.toUpperCase(),
+        //     },
+        //   ],
+        // },
+        // {
+        //   path: 'us',
+        //   element: <StockList />,
+        //   children: [
+        //     {
+        //       path: ':stock_id',
+        //       element: <StockDetailsUS />,
+        //       loader: ({ params }) => params.stock_id.toUpperCase(),
+        //     },
+        //   ],
+        // },
         {
-          path: 'us',
-          element: <StockList />,
+          path: 'us_treasury_bound',
+          element: <TreasuryBoundList />,
           children: [
             {
-              path: ':stock_id',
-              element: <StockDetailsUS />,
-              loader: ({ params }) => params.stock_id.toUpperCase(),
+              path: ':bound_data_id',
+              element: <TreasuryBound />,
             },
           ],
         },

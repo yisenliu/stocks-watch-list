@@ -1,8 +1,8 @@
 import { Area, AreaChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
 
-export default function PriceHistoryChart({ history }) {
-  // console.log('component: PriceHistoryChart:us');
+export default function HistoryChart({ history, closeKey }) {
+  // console.log('component: HistoryChart');
   const [refLineY, setRefLineY] = useState(-100);
 
   function showRefLine({ activePayload }) {
@@ -20,7 +20,7 @@ export default function PriceHistoryChart({ history }) {
       <ResponsiveContainer height={300} debounce={300}>
         <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine}>
           <ReferenceLine stroke="#ccc" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
-          <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={value => value.slice(5)} minTickGap={24} />
+          <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={d => d.slice(5)} minTickGap={24} />
           <YAxis
             domain={['auto', 'auto']}
             width={50}
@@ -43,7 +43,7 @@ export default function PriceHistoryChart({ history }) {
               left: 'auto',
             }}
           />
-          <Area animationDuration={500} dataKey="Close" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
+          <Area animationDuration={500} dataKey={closeKey} stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

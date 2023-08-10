@@ -8,8 +8,7 @@ export function getStockInfoDataSetByMarket(market) {
       return 'USStockInfo';
     },
     default() {
-      console.log('unknown market');
-      return null;
+      throw new Error(`Unavailable service in ${market.toUpperCase()} market.`);
     },
   };
   fn = dataset[market] ? dataset[market] : dataset['default'];
@@ -26,8 +25,7 @@ export function getStockPriceDataSetByMarket(market) {
       return 'USStockPrice';
     },
     default() {
-      console.log('unknown market');
-      return null;
+      throw new Error(`Unavailable service in ${market.toUpperCase()} market.`);
     },
   };
   fn = dataset[market] ? dataset[market] : dataset['default'];

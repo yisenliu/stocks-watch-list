@@ -6,8 +6,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
-export default function BackToList({ to, currentStock }) {
-  // console.log('component: BackToList');
+export default function BackToStockList({ to, currentStock }) {
+  // console.log('component: BackToStockList');
   const stock_id = currentStock?.stock_id;
   const { market, watchList, dispatch } = useContext(StockContext);
   const navigate = useNavigate();
