@@ -84,7 +84,7 @@ export const boundColumns = [
   {
     field: 'id',
     flex: 1,
-    headerName: '美國公債殖利率',
+    headerName: '美國國債殖利率',
     sortable: false,
     valueFormatter: params => {
       const str = params.value;

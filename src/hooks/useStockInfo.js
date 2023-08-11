@@ -1,7 +1,7 @@
 import useFetch from '@hooks/useFetch';
 
 export default function useStockInfo(dataset, token = null) {
-  console.log('hook: useStockInfo');
+  // console.log('hook: useStockInfo');
   const paramsStr = `?dataset=${dataset}`;
   const result = useFetch(
     {

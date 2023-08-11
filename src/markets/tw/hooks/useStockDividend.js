@@ -4,7 +4,7 @@ import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
 export default function useStockDividend({ ticker, token = null }) {
-  console.log('hook: useStockDividend');
+  // console.log('hook: useStockDividend');
   const today = moment().format('YYYY-MM-DD');
   const params = {
     dataset: 'TaiwanStockDividendResult',

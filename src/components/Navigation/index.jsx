@@ -42,7 +42,8 @@ export default function Navigation({ isOpen, closeMenu }) {
               <NavItem to="stock_market/us" text="美股" count={watchList.us.length} onClick={closeMenu} />
             </NavGroup>
             <NavGroup name="其他資料集">
-              <NavItem to="us_treasury_bound" text="美國公債殖利率" onClick={closeMenu} />
+              <NavItem to="us_treasury_bound" text="美國政府公債殖利率" onClick={closeMenu} />
+              <NavItem to="gold_price" text="黃金價格" onClick={closeMenu} />
             </NavGroup>
             {sessionStorage.getItem('user_id') && (
               <Button

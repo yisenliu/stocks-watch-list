@@ -3,7 +3,7 @@ import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
 export default function useTaiwanStockNews(ticker, token = null) {
-  console.log('hook: useTaiwanStockNews');
+  // console.log('hook: useTaiwanStockNews');
   const today = moment().format('YYYY-MM-DD');
   const params = {
     dataset: 'TaiwanStockNews',

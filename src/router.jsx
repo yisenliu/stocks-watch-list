@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '@/error-page';
 import Dashboard from '@routes/Dashboard';
+import GoldPrice from '@routes/GoldPrice';
 import Index from '@routes/Index';
 import StockList from '@routes/StockList';
 import StockDetails from '@routes/StockDetails';
@@ -39,6 +40,10 @@ export const router = createBrowserRouter(
               element: <TreasuryBound />,
             },
           ],
+        },
+        {
+          path: 'gold_price',
+          element: <GoldPrice />,
         },
       ],
     },

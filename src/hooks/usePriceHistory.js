@@ -2,7 +2,7 @@ import concatParams from '@utils/concatParams';
 import useFetch from '@hooks/useFetch';
 
 export default function usePriceHistory({ ticker = null, token, dataset, startDate, endDate }) {
-  console.log('hook: usePriceHistory');
+  // console.log('hook: usePriceHistory');
   const params = {
     dataset,
     data_id: ticker,

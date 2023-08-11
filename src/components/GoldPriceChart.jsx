@@ -1,13 +1,13 @@
 import { Area, AreaChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
 
-export default function TreasuryBoundHistoryChart({ history }) {
-  // console.log('component: TreasuryBoundHistoryChart');
+export default function GoldPriceChart({ history }) {
+  // console.log('component: GoldPriceChart');
   const [refLineY, setRefLineY] = useState(-100);
 
   function showRefLine({ activePayload }) {
     if (activePayload) {
-      setRefLineY(activePayload[0].value);
+      setRefLineY(activePayload[0].close);
     }
   }
 
@@ -16,14 +16,14 @@ export default function TreasuryBoundHistoryChart({ history }) {
   }
 
   return (
-    <div data-name={history.name} className="-ml-2">
+    <div data-name="gold_price_chart" className="-ml-2">
       <ResponsiveContainer height={300} debounce={300}>
         <AreaChart data={history} onMouseMove={showRefLine} onMouseLeave={hideRefLine}>
           <ReferenceLine stroke="#ccc" strokeDasharray="1 1" strokeWidth="0.5" y={refLineY} />
           <XAxis dataKey="date" tick={{ fill: '#ccc' }} tickFormatter={d => d.slice(5)} minTickGap={24} />
           <YAxis
             domain={['dataMin', 'dataMax']}
-            width={40}
+            width={70}
             padding={{ top: 50, bottom: 20 }}
             axisLine={false}
             tickLine={false}
@@ -32,7 +32,7 @@ export default function TreasuryBoundHistoryChart({ history }) {
           <Tooltip
             active={false}
             contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ccc' }}
-            formatter={value => [value, '殖利率']}
+            formatter={value => [value, '收盤價']}
             itemStyle={{ color: '#fff' }}
             isAnimationActive={false}
             position={{ x: 0, y: 0 }}
@@ -43,7 +43,7 @@ export default function TreasuryBoundHistoryChart({ history }) {
               left: 'auto',
             }}
           />
-          <Area animationDuration={500} dataKey="value" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
+          <Area animationDuration={500} dataKey="close" stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

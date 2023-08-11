@@ -18,6 +18,7 @@ const style = {
   p: 4,
 };
 export default function Login({ onSuccess }) {
+  // console.log('component: Login');
   const theme = useTheme();
   const [success, setSuccess] = useState(false);
   const [userId, setUserId] = useState('');
