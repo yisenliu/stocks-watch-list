@@ -40,7 +40,13 @@ export default function StockDetails() {
 
   return (
     <Portal>
-      {currentStock && <BackToStockList to={`/stock_market/${market}`} currentStock={currentStock} />}
+      {currentStock && (
+        <BackToStockList
+          to={`/stock_market/${market}`}
+          stock_id={currentStock.stock_id}
+          title={currentStock.stock_name}
+        />
+      )}
       {stage === 'fetching' && <Loading />}
       {stage === 'fetched' && (
         <div className="min-h-full pb-8 bg-gray-900">

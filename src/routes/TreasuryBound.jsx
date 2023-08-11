@@ -1,7 +1,7 @@
 import './stockDetails.sass';
 import { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useParams } from 'react-router-dom';
+import BackToStockList from '@components/BackToStockList';
 import BlockSection from '@components/BlockSection';
 import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
@@ -41,12 +41,7 @@ export default function TreasuryBound() {
 
   return (
     <Portal>
-      <div className="items-center grid w-full h-12 grid-cols-[60px_1fr_60px] bg-primary">
-        <Link to="/us_treasury_bound" className="py-3 text-sm text-center text-white">
-          <ArrowBackIcon />
-        </Link>
-        <h2 className="text-lg leading-tight text-white">{bound_data_id}</h2>
-      </div>
+      <BackToStockList to="/us_treasury_bound" title={bound_data_id} />
       <div className="min-h-full pb-8 bg-gray-900">
         <div className="z-5 bg-primary sticky top-0 text-white">
           <Tabs
