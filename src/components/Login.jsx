@@ -61,7 +61,7 @@ export default function Login({ onSuccess }) {
 
   useEffect(() => {
     if (success) {
-      onSuccess(token, userId);
+      onSuccess(userId, token);
     }
   }, [success]);
 
@@ -87,6 +87,7 @@ export default function Login({ onSuccess }) {
           onKeyDown={handleTextFieldKeyDown}
         />
         <TextField
+          autoComplete="true"
           required
           id="password"
           label="密碼"

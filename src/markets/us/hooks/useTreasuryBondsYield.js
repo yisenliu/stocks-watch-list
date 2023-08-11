@@ -9,7 +9,7 @@ export default function useTreasuryBondsYield(data_id = null, token) {
     start_date: moment().subtract(1, 'year').format('YYYY-MM-DD'),
     end_date: moment().format('YYYY-MM-DD'),
   };
-  const paramsStr = concatParams(params);
+  const paramsStr = concatParams(token ? { ...params, token } : params);
   const result = useFetch(
     {
       url: process.env.GithubPages
@@ -17,10 +17,6 @@ export default function useTreasuryBondsYield(data_id = null, token) {
         : '/api/stock' + paramsStr,
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {
-        token,
-      },
-      // params
     },
     [data_id],
   );

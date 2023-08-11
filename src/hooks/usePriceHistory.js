@@ -2,13 +2,14 @@ import concatParams from '@utils/concatParams';
 import useFetch from '@hooks/useFetch';
 
 export default function usePriceHistory({ ticker = null, token, dataset, startDate, endDate }) {
+  console.log('hook: usePriceHistory');
   const params = {
     dataset,
     data_id: ticker,
     start_date: startDate,
     end_date: endDate,
   };
-  const paramsStr = concatParams(params);
+  const paramsStr = concatParams(token ? { ...params, token } : params);
   const price = useFetch(
     {
       url: process.env.GithubPages
@@ -16,10 +17,6 @@ export default function usePriceHistory({ ticker = null, token, dataset, startDa
         : '/api/stock' + paramsStr,
       timeout: 5000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {
-        token,
-      },
-      // params
     },
     [ticker, dataset],
   );

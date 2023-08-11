@@ -3,7 +3,8 @@ import concatParams from '@utils/concatParams';
 import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
-export default function useStockDividend({ ticker = null, token }) {
+export default function useStockDividend({ ticker, token = null }) {
+  console.log('hook: useStockDividend');
   const today = moment().format('YYYY-MM-DD');
   const params = {
     dataset: 'TaiwanStockDividendResult',
@@ -11,7 +12,7 @@ export default function useStockDividend({ ticker = null, token }) {
     start_date: `${moment().year() - 4}-01-01`,
     end_date: today,
   };
-  const paramsStr = concatParams(params);
+  const paramsStr = concatParams(token ? { ...params, token } : params);
   const fetchedData = useFetch(
     {
       url: process.env.GithubPages
@@ -19,10 +20,6 @@ export default function useStockDividend({ ticker = null, token }) {
         : '/api/stock' + paramsStr,
       timeout: 3000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {
-        token,
-      },
-      // params
     },
     [ticker],
   );

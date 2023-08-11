@@ -11,6 +11,7 @@ export default function useFetch(options, dependency) {
     if (cacheMap.has(options.url)) {
       setData(cacheMap.get(options.url));
       setStage('fetched');
+
       return;
     }
     let fetchTimeoutId;

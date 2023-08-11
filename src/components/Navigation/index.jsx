@@ -44,7 +44,7 @@ export default function Navigation({ isOpen, closeMenu }) {
             <NavGroup name="其他資料集">
               <NavItem to="us_treasury_bound" text="美國公債殖利率" onClick={closeMenu} />
             </NavGroup>
-            {sessionStorage.getItem('userId') && (
+            {sessionStorage.getItem('user_id') && (
               <Button
                 variant="contained"
                 endIcon={<LogoutIcon />}

@@ -35,17 +35,13 @@ export default function StockList() {
       start_date: moment().subtract(7, 'days').format('YYYY-MM-DD'),
       end_date: moment().format('YYYY-MM-DD'),
     };
-    const paramsStr = concatParams(params);
+    const paramsStr = concatParams(token ? { ...params, token } : params);
 
     return fetch({
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
         : '/api/stock' + paramsStr,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: {
-        token,
-      },
-      // params
     })
       .then(res => res.data.data)
       .then(data => {
