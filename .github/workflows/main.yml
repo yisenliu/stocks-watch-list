@@ -23,8 +23,8 @@ jobs:
 
       - name: Install and Build
         run: |
-          npm install
-          GithubPages=true npm run build
+          yarn install
+          GithubPages=true yarn run build
 
       - name: Deploy to gh-pages
         run: |
