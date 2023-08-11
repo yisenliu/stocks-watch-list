@@ -7,9 +7,10 @@ import tw, { css } from 'twin.macro';
 function DraggableGridRow(props) {
   // console.log('component: DraggableGridRow');
   const { market, selectedRowIds, updateSelectedRowIds, ...rowProps } = props;
+  const activeColor = tw`bg-primary`;
   const draggableCSS = css`
-    ${tw`flex items-center`}
-    ${selectedRowIds.includes(props.rowId) ? tw`bg-white/25` : ''}
+    ${tw`flex items-center !w-auto`}
+    ${selectedRowIds.includes(props.rowId) ? activeColor : ''}
   `;
 
   return (
@@ -23,11 +24,12 @@ function DraggableGridRow(props) {
             {...provided.dragHandleProps}
             style={{
               ...provided.draggableProps.style,
-              backgroundColor: snapshot.isDragging ? 'rgba(255,255,255,.4)' : '',
+              backgroundColor: snapshot.isDragging ? activeColor : '',
+              backgroundImage: 'linear-gradient(to top,#666 1px,transparent 1px)',
             }}
           >
             {snapshot.isDragging && <DragHandleIcon fontSize="small" />}
-            <GridRow {...rowProps} />
+            <GridRow {...rowProps} sx={{ borderBottom: 'none' }} />
           </div>
         );
       }}

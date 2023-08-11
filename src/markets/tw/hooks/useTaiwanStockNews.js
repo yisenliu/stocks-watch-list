@@ -11,7 +11,7 @@ export default function useTaiwanStockNews(ticker, token = null) {
     start_date: moment().subtract(90, 'days').format('YYYY-MM-DD'),
     end_date: today,
   };
-  const paramsStr = concatParams(params);
+  const paramsStr = concatParams(token ? { ...params, token } : params);
   const result = useFetch(
     {
       url: process.env.GithubPages
@@ -19,10 +19,6 @@ export default function useTaiwanStockNews(ticker, token = null) {
         : '/api/stock' + paramsStr,
       timeout: 5000,
       headers: { 'content-type': 'application/x-www-form-urlencoded', accept: 'application / json' },
-      data: {
-        token,
-      },
-      // params
     },
     [ticker],
   );

@@ -43,7 +43,7 @@ export default function Dashboard() {
   // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
   const [isShowInput, setIsShowInput] = useState(false);
-  const [userId, setUserId] = useState(sessionStorage.getItem('userId') || null);
+  const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
   const currentLocation = useLocation();
@@ -69,15 +69,17 @@ export default function Dashboard() {
   function logout() {
     setUserId(null);
     setToken(null);
-    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('user_id');
     sessionStorage.removeItem('token');
   }
 
-  function onLoginSuccess(token, userId) {
-    setToken(token);
+  function onLoginSuccess(userId, token) {
     setUserId(userId);
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('userId', userId);
+    sessionStorage.setItem('user_id', userId);
+    if (token) {
+      setToken(token);
+      sessionStorage.setItem('token', token);
+    }
   }
 
   return (

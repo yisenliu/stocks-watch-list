@@ -9,7 +9,6 @@ export default function Summary({ currentDuration = null, currentValue, startVal
       <ul className="gap-x-4 inline-grid justify-center grid-cols-2 text-white">
         <li className="col-span-2">
           <p className="mx-2 text-3xl font-bold"> {currentValue}</p>
-
           <p className="space-x-2 text-lg font-bold">
             <span className={diff.value > 0 ? 'text-green-400 before:content-["+"]' : 'text-red-400'}>
               {diff.value}
