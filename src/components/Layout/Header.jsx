@@ -1,14 +1,16 @@
 import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Navigation from '@components/Navigation';
 import KeywordSearch from '@components/KeywordSearch';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import StockContext from '@contexts/StockContext';
 import tw, { css } from 'twin.macro';
 
 const naviTrigger = css`
-  ${tw`before:origin-bottom-left after:origin-top-left flex flex-col items-center justify-center w-10 h-12 cursor-pointer`}
+  ${tw`before:origin-bottom-left after:origin-top-left flex flex-col items-center justify-center h-12 cursor-pointer`}
   &::before,
   &::after {
     content: '';
@@ -31,7 +33,7 @@ const naviTrigger = css`
 `;
 
 export default function Header() {
-  const { isShowInput, setIsShowInput } = useContext(StockContext);
+  const { market, isShowKeywordSearch, setKeyword, setIsShowKeywordSearch } = useContext(StockContext);
   const pathname = useLocation().pathname;
   const inStockMarket = pathname.includes('stock_market');
   const [isShowNavi, setIsShowNavi] = useState(false);
@@ -42,13 +44,14 @@ export default function Header() {
     }
   }
 
-  function onKeywordSearchOpen() {
-    setIsShowInput(true);
+  function openKeywordSearch() {
+    setIsShowKeywordSearch(true);
   }
 
   function handleMenuBtnClick() {
-    if (isShowInput) {
-      setIsShowInput(false);
+    if (isShowKeywordSearch) {
+      setIsShowKeywordSearch(false);
+      setKeyword('');
     } else {
       setIsShowNavi(true);
     }
@@ -57,10 +60,23 @@ export default function Header() {
   return (
     <header data-name="header" className="z-1 sticky top-0 w-full text-white bg-gray-900">
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ height: 48 }}>
-        <Button css={naviTrigger} className={isShowInput ? 'active' : ''} onClick={handleMenuBtnClick} disableRipple>
+        <Button
+          css={naviTrigger}
+          className={isShowKeywordSearch ? 'active' : ''}
+          onClick={handleMenuBtnClick}
+          disableRipple
+        >
           <span>Open Navigation</span>
         </Button>
-        {inStockMarket && <KeywordSearch onOpen={onKeywordSearchOpen} />}
+        {inStockMarket && !isShowKeywordSearch && (
+          <>
+            <h3 className="flex-1 text-left">{market === 'tw' ? '台股' : '美股'}</h3>
+            <IconButton onClick={openKeywordSearch} aria-label="show input" size="large" sx={{ color: 'white' }}>
+              <AddIcon fontSize="medium" />
+            </IconButton>
+          </>
+        )}
+        {inStockMarket && isShowKeywordSearch && <KeywordSearch />}
       </Stack>
       <Navigation isOpen={isShowNavi} closeMenu={closeMenu} />
     </header>

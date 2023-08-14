@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { matchRoutes, useLocation, useParams } from 'react-router-dom';
 import Layout from '@components/Layout';
 import Login from '@components/Login';
@@ -42,7 +42,8 @@ function createInitialState() {
 export default function Dashboard() {
   // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
-  const [isShowInput, setIsShowInput] = useState(false);
+  // const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
+  const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
   const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
@@ -53,8 +54,8 @@ export default function Dashboard() {
   const [stocksInfo, setStocksInfo] = useState({ data: null, error: null, stage: 'idle' });
   const context = {
     dispatch,
-    isShowInput,
-    setIsShowInput,
+    isShowKeywordSearch,
+    setIsShowKeywordSearch,
     keyword,
     setKeyword,
     logout,
@@ -82,6 +83,14 @@ export default function Dashboard() {
     }
   }
 
+  function closeKeywordSearch() {
+    setKeyword('');
+    setIsShowKeywordSearch(false);
+  }
+
+  useEffect(() => {
+    closeKeywordSearch();
+  }, [currentLocation]);
   return (
     <StockContext.Provider value={context}>
       {memberRouteMatch && !userId && <Login onSuccess={onLoginSuccess} />}
