@@ -14,7 +14,7 @@ export default function StockList() {
   // console.log('route: StockList');
   const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const { dispatch, market, setIsShowInput, setStocksInfo, token, watchList } = useContext(StockContext);
+  const { dispatch, market, setStocksInfo, token, watchList } = useContext(StockContext);
   const [sortModel, setSortModel] = useState([]);
   const stockInfoDataset = getStockInfoDataSetByMarket(market);
   const fetchedStocksInfo = useStockInfo(stockInfoDataset, token);
@@ -63,7 +63,6 @@ export default function StockList() {
   function onRowClick(params) {
     if (selectedRowIds.length === 0) {
       navigate(params.id);
-      setIsShowInput(false);
     } else {
       updateSelectedRowIds(params.id);
     }
