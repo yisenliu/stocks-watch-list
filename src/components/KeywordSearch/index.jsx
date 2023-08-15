@@ -19,11 +19,7 @@ export default function KeywordSearch() {
       : null;
   const keywordRef = useRef();
   const onChange = useCallback(
-    debounce(e => {
-      const newValue = e.target.value;
-      keywordRef.current.value = newValue;
-      setKeyword(newValue.toUpperCase());
-    }, 500),
+    debounce(e => setKeyword(e.target.value.toUpperCase()), 500),
     [keyword],
   );
 

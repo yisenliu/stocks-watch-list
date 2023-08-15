@@ -43,7 +43,8 @@ export default function Navigation({ isOpen, closeMenu }) {
             </NavGroup>
             <NavGroup name="其他資料集">
               <NavItem to="us_treasury_bound" text="美國政府公債殖利率" onClick={closeMenu} />
-              <NavItem to="gold_price" noEffect text="黃金價格" onClick={closeMenu} />
+              <NavItem to="gold_price" noEffect text="黃金現貨價格" onClick={closeMenu} />
+              <NavItem to="crude_oil_prices" noEffect text="原油價格" onClick={closeMenu} />
             </NavGroup>
             {sessionStorage.getItem('user_id') && (
               <Button

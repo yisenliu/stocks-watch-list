@@ -1,10 +1,9 @@
 import { boundColumns, gridStyles } from '@lib/muiDataGrid';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import fetch from '@utils/fetch';
 import moment from 'moment';
-import StockContext from '@contexts/StockContext';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 
 const data_ids = [
@@ -25,7 +24,6 @@ let boundCacheMap = new Map();
 export default function TreasuryBoundList() {
   // console.log('route: TreasuryBoundList');
   const { bound_data_id } = useParams();
-  const { token } = useContext(StockContext);
   const navigate = useNavigate();
   const [formattedBoundColumns, setFormattedBoundColumns] = useState(null);
   const [list, setList] = useState(null);
@@ -38,9 +36,8 @@ export default function TreasuryBoundList() {
       dataset: 'GovernmentBondsYield',
       data_id,
       start_date: moment().subtract(10, 'days').format('YYYY-MM-DD'),
-      end_date: moment().format('YYYY-MM-DD'),
     };
-    const paramsStr = concatParams(token ? { ...params, token } : params);
+    const paramsStr = concatParams(params);
 
     return fetch({
       url: process.env.GithubPages

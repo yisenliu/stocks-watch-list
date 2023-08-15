@@ -1,7 +1,7 @@
 import { Area, AreaChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
 
-export default function HistoryChart({ history, closeKey }) {
+export default function HistoryChart({ history, dataKey, tooltipValueLabel = '收盤價' }) {
   // console.log('component: HistoryChart');
   const [refLineY, setRefLineY] = useState(-100);
 
@@ -32,7 +32,7 @@ export default function HistoryChart({ history, closeKey }) {
           <Tooltip
             active={false}
             contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ccc' }}
-            formatter={value => [value, '收盤價']}
+            formatter={value => [value, tooltipValueLabel]}
             itemStyle={{ color: '#fff' }}
             isAnimationActive={false}
             position={{ x: 0, y: 0 }}
@@ -43,7 +43,7 @@ export default function HistoryChart({ history, closeKey }) {
               left: 'auto',
             }}
           />
-          <Area animationDuration={500} dataKey={closeKey} stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
+          <Area animationDuration={500} dataKey={dataKey} stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

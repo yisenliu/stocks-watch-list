@@ -1,4 +1,4 @@
-export default function Summary({ currentDuration = null, currentValue, startValue, endDate, min, max }) {
+export default function Summary({ currentDurationLabel = null, currentValue, startValue, endDate, min, max }) {
   // console.log('component: Summary');
   const diff = {
     value: parseFloat(Number(currentValue - startValue).toFixed(2)),
@@ -14,7 +14,7 @@ export default function Summary({ currentDuration = null, currentValue, startVal
               {diff.value}
             </span>
             <span className={diff.percent > 0 ? 'text-green-400' : 'text-red-400'}>({diff.percent + '%'})</span>
-            {currentDuration && <span className=" text-lg">{currentDuration}</span>}
+            {currentDurationLabel && <span className=" text-lg">{currentDurationLabel}</span>}
           </p>
         </li>
         <li>

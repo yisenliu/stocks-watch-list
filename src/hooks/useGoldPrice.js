@@ -3,7 +3,7 @@ import concatParams from '@utils/concatParams';
 import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
-export default function useGoldPrice(token) {
+export default function useGoldPrice() {
   // console.log('hook: useGoldPrice');
 
   const params = {
@@ -11,7 +11,7 @@ export default function useGoldPrice(token) {
     start_date: moment().subtract(1, 'year').format('YYYY-MM-DD'),
     end_date: moment().format('YYYY-MM-DD'),
   };
-  const paramsStr = concatParams(token ? { ...params, token } : params);
+  const paramsStr = concatParams(params);
   const fetchedData = useFetch(
     {
       url: process.env.GithubPages

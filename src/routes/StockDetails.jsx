@@ -5,22 +5,38 @@ import BackToStockList from '@components/BackToStockList';
 import Dividend from '@markets/tw/components/Dividend';
 import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
-import PriceHistory from '@components/PriceHistory';
+import HistoryInfo from '@components/HistoryInfo';
 import StockContext from '@contexts/StockContext';
 import Portal from '@components/Portal';
 import StockNews from '@markets/tw/components/StockNews';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
+function getMarketData(market) {
+  let fn;
+  let component = {
+    tw: () => ({ dataset: 'TaiwanStockPrice', dataKey: 'close' }),
+    us: () => ({ dataset: 'USStockPrice', dataKey: 'Close' }),
+    default() {
+      throw new Error('unknown market');
+    },
+  };
+
+  fn = market ? component[market] : component['default'];
+
+  return fn();
+}
+
 export default function StockDetails() {
   // console.log('route: StockDetails');
   const stock_id = useLoaderData();
   const { market, stocksInfo, token } = useContext(StockContext);
+  const { dataset, dataKey } = getMarketData(market);
   const { data, error, stage } = stocksInfo;
   const currentStock = data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
-  const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'PriceHistory');
+  const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'HistoryInfo');
   const TabPanelComponents = {
-    PriceHistory: <PriceHistory market={market} ticker={stock_id} token={token} />,
+    HistoryInfo: <HistoryInfo dataset={dataset} data_id={stock_id} token={token} dataKey={dataKey} />,
     Dividend: <Dividend ticker={stock_id} token={token} />,
     StockNews: <StockNews ticker={stock_id} token={token} />,
   };
@@ -39,7 +55,7 @@ export default function StockDetails() {
   }
 
   return (
-    <Portal>
+    <Portal name="stock_details_portal">
       {currentStock && (
         <BackToStockList
           to={`/stock_market/${market}`}
@@ -58,7 +74,7 @@ export default function StockDetails() {
               textColor="inherit"
               aria-label="tabs for the stock details"
             >
-              <Tab disableRipple label="走勢" value="PriceHistory" sx={{ fontSize: 16 }} />
+              <Tab disableRipple label="走勢" value="HistoryInfo" sx={{ fontSize: 16 }} />
               <Tab
                 disableRipple
                 label="股息"

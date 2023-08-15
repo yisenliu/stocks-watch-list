@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import ErrorPage from '@/error-page';
+import CrudeOilPrices from '@routes/CrudeOilPrices';
 import Dashboard from '@routes/Dashboard';
+import ErrorPage from '@/error-page';
 import GoldPrice from '@routes/GoldPrice';
 import Index from '@routes/Index';
 import StockList from '@routes/StockList';
@@ -44,6 +45,10 @@ export const router = createBrowserRouter(
         {
           path: 'gold_price',
           element: <GoldPrice />,
+        },
+        {
+          path: 'crude_oil_prices',
+          element: <CrudeOilPrices />,
         },
       ],
     },

@@ -1,16 +1,29 @@
 import concatParams from '@utils/concatParams';
+import moment from 'moment';
 import useFetch from '@hooks/useFetch';
 
-export default function usePriceHistory({ ticker = null, token, dataset, startDate, endDate }) {
+export default function usePriceHistory({
+  dataset,
+  data_id = null,
+  token = null,
+  start_date = moment().subtract(5, 'year').format('YYYY-MM-DD'),
+  end_date = moment().format('YYYY-MM-DD'),
+}) {
   // console.log('hook: usePriceHistory');
   const params = {
     dataset,
-    data_id: ticker,
-    start_date: startDate,
-    end_date: endDate,
+    data_id,
+    token,
+    start_date,
+    end_date,
   };
-  const paramsStr = concatParams(token ? { ...params, token } : params);
-  const price = useFetch(
+  for (const [key, value] of Object.entries(params)) {
+    if (!value) {
+      delete params[key];
+    }
+  }
+  const paramsStr = concatParams(params);
+  const result = useFetch(
     {
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
@@ -18,14 +31,11 @@ export default function usePriceHistory({ ticker = null, token, dataset, startDa
       timeout: 5000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
     },
-    [ticker, dataset],
+    [data_id, dataset],
   );
 
-  if (price.data) {
-    price.data = {
-      price_history: price.data.data,
-    };
+  if (result.data) {
+    result.data = result.data.data;
   }
-
-  return { ...price };
+  return { ...result };
 }

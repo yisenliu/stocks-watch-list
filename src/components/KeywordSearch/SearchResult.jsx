@@ -9,7 +9,6 @@ function HighlightWords({ text, query }) {
   const chunks = highlightWords({
     text,
     query,
-    matchExactly: true,
   });
   return chunks.map(({ text, match, key }) =>
     match ? (
@@ -62,6 +61,7 @@ function Stock({ keyword, stock }) {
     </div>
   );
 }
+
 export default function SearchResult({ keyword, stocks }) {
   return (
     <div className="z-1 top-12 fixed left-0 w-full shadow-md">
