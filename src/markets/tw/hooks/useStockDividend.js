@@ -52,8 +52,35 @@ export default function useStockDividend({ ticker, token = null }) {
 
           return acc;
         }, []);
+        const dividendPolicy = dividendOrigin.reduce((acc, current) => {
+          const year = current.date.slice(0, 4);
+          const monthday = current.date.slice(5);
+          const idx = acc.findIndex(item => item.year === year);
+
+          if (acc === [] || idx === -1) {
+            const data = {
+              stock_id: current.stock_id,
+              year,
+              dividends: [
+                {
+                  date: monthday,
+                  value: current.stock_and_cache_dividend,
+                },
+              ],
+            };
+            acc.push(data);
+          } else {
+            acc[idx].dividends.push({
+              date: monthday,
+              value: current.stock_and_cache_dividend,
+            });
+          }
+
+          return acc;
+        }, []);
+
         result = {
-          dividend_policy: dividendByQuarter.map(item => ({
+          dividend_quarter: dividendByQuarter.map(item => ({
             ...item,
             Q1: item.Q1 ? parseFloat(item.Q1.toFixed(3)) : null,
             Q2: item.Q2 ? parseFloat(item.Q2.toFixed(3)) : null,
@@ -61,6 +88,7 @@ export default function useStockDividend({ ticker, token = null }) {
             Q4: item.Q4 ? parseFloat(item.Q4.toFixed(3)) : null,
             total: item.total ? parseFloat(item.total.toFixed(3)) : null,
           })),
+          dividend_policy: dividendPolicy,
         };
         setDividend(result);
       }

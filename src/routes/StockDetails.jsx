@@ -63,6 +63,7 @@ export function StockDetails() {
         />
       )}
       {stage === 'fetching' && <Loading />}
+      {error && <ErrorMsg>{error.message}</ErrorMsg>}
       {stage === 'fetched' && (
         <div className="min-h-full pb-8 bg-gray-900">
           <div data-name="tabs" className="z-5 bg-primary sticky top-0 text-white">
@@ -98,7 +99,6 @@ export function StockDetails() {
           </div>
         </div>
       )}
-      {error && <ErrorMsg>{error.message}</ErrorMsg>}
     </Portal>
   );
 }
