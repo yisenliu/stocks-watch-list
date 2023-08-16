@@ -1,6 +1,6 @@
 import './stockDetails.sass';
 import { useEffect, useState } from 'react';
-import BackToStockList from '@components/BackToStockList';
+import BackToRouteBar from '@components/BackToRouteBar';
 import BlockSection from '@components/BlockSection';
 import Collapse from '@mui/material/Collapse';
 import ErrorMsg from '@components/ErrorMsg';
@@ -38,7 +38,7 @@ export default function GoldPrice() {
 
   return (
     <Portal>
-      <BackToStockList to="/" title="Gold Price" />
+      <BackToRouteBar to={-1} title="Gold Price" />
       <div className="min-h-full pb-8 bg-gray-900">
         <div className="z-5 bg-primary sticky top-0 text-white">
           <Tabs

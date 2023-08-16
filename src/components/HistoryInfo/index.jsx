@@ -23,7 +23,7 @@ const durations = [
 export default function HistoryInfo({ dataset, data_id, dataKey, token, tooltipValueLabel }) {
   // console.log('component: HistoryInfo');
   const [currentDurationIdx, setCurrentDurationIdx] = useState(
-    Number(localStorage.getItem('current_duration_idx')) || 0,
+    parseInt(localStorage.getItem('current_duration_idx')) || 0,
   );
   const [range, setRange] = useState({ min: null, max: null });
   const { data, error, stage } = usePriceHistory({
@@ -43,7 +43,7 @@ export default function HistoryInfo({ dataset, data_id, dataKey, token, tooltipV
   const isReady = dataLength > 0;
 
   function handleChangeDuration(e) {
-    const newIdx = Number(e.target.value);
+    const newIdx = parseInt(e.target.value);
     setCurrentDurationIdx(newIdx);
     localStorage.setItem('current_duration_idx', newIdx);
   }

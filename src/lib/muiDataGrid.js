@@ -2,6 +2,7 @@ export const gridStyles = {
   border: 'none',
   color: 'white',
   height: 'calc(100vh - 48px)',
+  fontSize: '1rem',
   '& .MuiDataGrid-columnHeaders': {
     backgroundColor: 'black',
     borderRadius: 0,
@@ -64,7 +65,7 @@ export const stockColumns = [
   },
   {
     align: 'right',
-    cellClassName: params => (params.row.spread < 0 ? 'text-red-500' : 'text-green-500'),
+    cellClassName: params => (params.row.spread < 0 ? 'text-red-300' : 'text-green-400'),
     field: 'percent',
     headerName: '漲幅 %',
     headerAlign: 'right',

@@ -1,8 +1,8 @@
 export default function Summary({ currentDurationLabel = null, currentValue, startValue, endDate, min, max }) {
   // console.log('component: Summary');
   const diff = {
-    value: parseFloat(Number(currentValue - startValue).toFixed(2)),
-    percent: parseFloat(Number(((currentValue - startValue) / startValue) * 100).toFixed(2)),
+    value: parseFloat(currentValue - startValue).toFixed(2),
+    percent: parseFloat(((currentValue - startValue) / startValue) * 100).toFixed(2),
   };
   return (
     <>

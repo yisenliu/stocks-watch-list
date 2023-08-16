@@ -1,7 +1,7 @@
 import './stockDetails.sass';
 import { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import BackToStockList from '@components/BackToStockList';
+import BackToRouteBar from '@components/BackToRouteBar';
 import Dividend from '@markets/tw/components/Dividend';
 import ErrorMsg from '@components/ErrorMsg';
 import Loading from '@components/Loading';
@@ -57,7 +57,7 @@ export default function StockDetails() {
   return (
     <Portal name="stock_details_portal">
       {currentStock && (
-        <BackToStockList
+        <BackToRouteBar
           to={`/stock_market/${market}`}
           stock_id={currentStock.stock_id}
           title={currentStock.stock_name}

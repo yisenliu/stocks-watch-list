@@ -47,7 +47,7 @@ export default function TreasuryBoundList() {
     })
       .then(res => res.data.data)
       .then(data => {
-        const days = data.slice(-4).reverse();
+        const days = data.slice(-3).reverse();
         const history = days.map(day => {
           const { date, value } = day;
           const key = moment(date).format('MM/DD');
@@ -81,7 +81,7 @@ export default function TreasuryBoundList() {
             headerAlign: 'center',
             sortable: false,
             type: 'number',
-            width: 60,
+            width: 70,
             valueFormatter: params => params.value,
           };
 

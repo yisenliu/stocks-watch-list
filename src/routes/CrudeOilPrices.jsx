@@ -1,6 +1,6 @@
 import './stockDetails.sass';
 import { useState } from 'react';
-import BackToStockList from '@components/BackToStockList';
+import BackToRouteBar from '@components/BackToRouteBar';
 import HistoryInfo from '@components/HistoryInfo';
 import Portal from '@components/Portal';
 import Tabs from '@mui/material/Tabs';
@@ -24,7 +24,7 @@ export default function CrudeOilPrices() {
 
   return (
     <Portal name="crude_oil_prices_portal">
-      <BackToStockList to="/" title="Crude Oil Price" />
+      <BackToRouteBar to={-1} title="Crude Oil Price" />
       <div className="min-h-full pb-8 bg-gray-900">
         <div className="z-5 bg-primary sticky top-0 text-white">
           <Tabs

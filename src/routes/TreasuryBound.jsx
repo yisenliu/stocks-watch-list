@@ -1,6 +1,6 @@
 import './stockDetails.sass';
 import { useParams } from 'react-router-dom';
-import BackToStockList from '@components/BackToStockList';
+import BackToRouteBar from '@components/BackToRouteBar';
 import HistoryInfo from '@components/HistoryInfo';
 import Portal from '@components/Portal';
 import Tabs from '@mui/material/Tabs';
@@ -12,7 +12,7 @@ export default function TreasuryBound() {
 
   return (
     <Portal name="treasury_bound_protal">
-      <BackToStockList to="/us_treasury_bound" title={bound_data_id} />
+      <BackToRouteBar to="/us_treasury_bound" title={bound_data_id} />
       <div className="min-h-full pb-8 bg-gray-900">
         <div className="z-5 bg-primary sticky top-0 text-white">
           <Tabs
