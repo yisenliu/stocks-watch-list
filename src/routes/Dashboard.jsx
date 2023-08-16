@@ -42,12 +42,12 @@ function createInitialState() {
 export default function Dashboard() {
   // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
-  // const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
   const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
   const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
   const currentLocation = useLocation();
+  const pathname = currentLocation.pathname;
   const { market } = useParams();
   const memberOnlyRoutes = [{ path: 'stock_market/:market' }, { path: 'stock_market/:market/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
@@ -90,7 +90,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     closeKeywordSearch();
-  }, [currentLocation]);
+  }, [pathname]);
+
   return (
     <StockContext.Provider value={context}>
       {memberRouteMatch && !userId && <Login onSuccess={onLoginSuccess} />}

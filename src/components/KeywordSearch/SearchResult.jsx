@@ -9,6 +9,7 @@ function HighlightWords({ text, query }) {
   const chunks = highlightWords({
     text,
     query,
+    matchExactly: true,
   });
   return chunks.map(({ text, match, key }) =>
     match ? (

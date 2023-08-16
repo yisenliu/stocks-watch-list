@@ -6,15 +6,15 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
-export default function BackToStockList({ to, stock_id, title }) {
-  // console.log('component: BackToStockList');
+export default function BackToRouteBar({ to, stock_id, title }) {
+  // console.log('component: BackToRouteBar');
   const { market, watchList, dispatch } = useContext(StockContext);
   const navigate = useNavigate();
   const stockList = watchList[market];
   const isExist = stockList?.some(stock => stock.id === stock_id);
   const [toAdd, setToAdd] = useState(isExist);
 
-  function backToList() {
+  function goBack() {
     if (stock_id) {
       if (toAdd && !isExist) {
         dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
@@ -29,7 +29,7 @@ export default function BackToStockList({ to, stock_id, title }) {
 
   return (
     <div className="items-center grid w-full h-12 grid-cols-[60px_1fr_60px] bg-primary">
-      <IconButton onClick={backToList} aria-label="back to watch list" sx={{ color: 'white' }}>
+      <IconButton onClick={goBack} aria-label="back to the previous route" sx={{ color: 'white' }}>
         <ArrowBackIcon />
       </IconButton>
       <h2 className="text-lg leading-tight text-white">{title}</h2>
