@@ -21,7 +21,7 @@ const data_ids = [
 ];
 let boundCacheMap = new Map();
 
-export default function TreasuryBoundList() {
+export function TreasuryBoundList() {
   // console.log('route: TreasuryBoundList');
   const { bound_data_id } = useParams();
   const navigate = useNavigate();

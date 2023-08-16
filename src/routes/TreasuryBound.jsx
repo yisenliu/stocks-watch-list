@@ -1,4 +1,3 @@
-import './stockDetails.sass';
 import { useParams } from 'react-router-dom';
 import BackToRouteBar from '@components/BackToRouteBar';
 import HistoryInfo from '@components/HistoryInfo';
@@ -6,7 +5,7 @@ import Portal from '@components/Portal';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-export default function TreasuryBound() {
+export function TreasuryBound() {
   // console.log('route: TreasuryBound');
   const { bound_data_id } = useParams();
 

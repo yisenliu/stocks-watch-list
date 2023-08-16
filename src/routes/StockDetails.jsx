@@ -1,4 +1,3 @@
-import './stockDetails.sass';
 import { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import BackToRouteBar from '@components/BackToRouteBar';
@@ -27,7 +26,7 @@ function getMarketData(market) {
   return fn();
 }
 
-export default function StockDetails() {
+export function StockDetails() {
   // console.log('route: StockDetails');
   const stock_id = useLoaderData();
   const { market, stocksInfo, token } = useContext(StockContext);

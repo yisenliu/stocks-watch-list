@@ -1,4 +1,3 @@
-import './stockDetails.sass';
 import { useState } from 'react';
 import BackToRouteBar from '@components/BackToRouteBar';
 import HistoryInfo from '@components/HistoryInfo';
@@ -6,7 +5,7 @@ import Portal from '@components/Portal';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-export default function CrudeOilPrices() {
+export function CrudeOilPrices() {
   // console.log('route: CrudeOilPrices');
   const [component, setComponent] = useState(localStorage.getItem('crude_oil_prices_active_tab') || 'Brent');
   const TabPanelComponents = {

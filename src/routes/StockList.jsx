@@ -10,7 +10,7 @@ import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
 import useStockInfo from '@hooks/useStockInfo';
 
-export default function StockList() {
+export function StockList() {
   // console.log('route: StockList');
   const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);

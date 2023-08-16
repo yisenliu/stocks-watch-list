@@ -11,7 +11,8 @@ const outDir = resolve(__dirname, 'dist');
 
 export default defineConfig(() => {
   return {
-    base: process.env.GithubPages ? '/stocks-watch-list/' : './',
+    appType: 'spa',
+    base: process.env.GithubPages ? '/stocks-watch-list/' : '/',
     build: {
       emptyOutDir: true,
       outDir,
@@ -19,6 +20,9 @@ export default defineConfig(() => {
         input: {
           index: resolve(root, 'index.html'),
           404: resolve(root, '404.html'),
+        },
+        output: {
+          chunkFileNames: 'assets/[name]-[hash].chunk.js',
         },
       },
     },

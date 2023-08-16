@@ -1,4 +1,3 @@
-import './stockDetails.sass';
 import { useEffect, useState } from 'react';
 import BackToRouteBar from '@components/BackToRouteBar';
 import BlockSection from '@components/BlockSection';
@@ -12,7 +11,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useGoldPrice from '@hooks/useGoldPrice';
 
-export default function GoldPrice() {
+export function GoldPrice() {
   // console.log('route: GoldPrice');
   const { data, error, stage } = useGoldPrice();
   const [range, setRange] = useState({ min: null, max: null });
