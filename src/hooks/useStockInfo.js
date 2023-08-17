@@ -13,9 +13,6 @@ export default function useStockInfo(dataset, token = null) {
       data: {
         token,
       },
-      // params: {
-      //   dataset,
-      // },
     },
     [dataset],
   );
@@ -24,5 +21,5 @@ export default function useStockInfo(dataset, token = null) {
     result.data = result.data.data;
   }
 
-  return { ...result };
+  return result;
 }

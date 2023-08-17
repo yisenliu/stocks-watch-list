@@ -37,5 +37,5 @@ export default function usePriceHistory({
   if (result.data) {
     result.data = result.data.data;
   }
-  return { ...result };
+  return result;
 }

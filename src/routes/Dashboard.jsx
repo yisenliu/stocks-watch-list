@@ -25,8 +25,13 @@ function reducer(state, action) {
 
 function createInitialState() {
   const watchList = {
-    tw: JSON.parse(localStorage.getItem('stocks_tw')) || [],
-    us: JSON.parse(localStorage.getItem('stocks_us')) || [],
+    tw: JSON.parse(localStorage.getItem('stocks_tw')) || [{ id: 'TAIEX' }],
+    us: JSON.parse(localStorage.getItem('stocks_us')) || [
+      { id: '^DJI' },
+      { id: '^GSPC' },
+      { id: '^IXIC' },
+      { id: '^SOX' },
+    ],
   };
 
   for (const [key, value] of Object.entries(watchList)) {
