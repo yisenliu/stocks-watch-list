@@ -25,6 +25,7 @@ const stripTableStyles = css`
     }
   }
 `;
+
 function DividendGroup({ year, dividends }) {
   let total = dividends.reduce((acc, current) => acc + current.value, 0);
   total = parseFloat(total).toFixed(2);
@@ -52,6 +53,7 @@ function DividendGroup({ year, dividends }) {
     </BlockSection>
   );
 }
+
 export default function Dividend({ ticker, token }) {
   // console.log('component: Dividend');
   const { data, error, stage } = useStockDividend({ ticker, token });

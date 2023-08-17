@@ -24,5 +24,5 @@ export default function useTreasuryBondsYield(data_id = null) {
     result.data = result.data.data;
   }
 
-  return { ...result };
+  return result;
 }

@@ -6,10 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import StockContext from '@contexts/StockContext';
 
 function HighlightWords({ text, query }) {
+  const newQuery = query.trim().replace(/\s+/g, ' ').split(' ').join('|');
+  const regexQuery = new RegExp(`(${newQuery})`, 'i');
   const chunks = highlightWords({
     text,
-    query,
-    matchExactly: true,
+    query: regexQuery,
   });
   return chunks.map(({ text, match, key }) =>
     match ? (

@@ -32,7 +32,8 @@ export function StockDetails() {
   const { market, stocksInfo, token } = useContext(StockContext);
   const { dataset, dataKey } = getMarketData(market);
   const { data, error, stage } = stocksInfo;
-  const currentStock = data?.filter(stock => stock.stock_id === stock_id.toUpperCase())[0] || null;
+  const currentStock = data?.find(stock => stock.stock_id === stock_id.toUpperCase()) || null;
+  console.log(currentStock);
   const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'HistoryInfo');
   const TabPanelComponents = {
     HistoryInfo: <HistoryInfo dataset={dataset} data_id={stock_id} token={token} dataKey={dataKey} />,

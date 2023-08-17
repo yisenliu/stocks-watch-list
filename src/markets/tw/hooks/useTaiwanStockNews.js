@@ -30,5 +30,5 @@ export default function useTaiwanStockNews(ticker, token = null) {
     const newsData = [...result.data.data];
     result.data = newsData.reverse();
   }
-  return { ...result };
+  return result;
 }
