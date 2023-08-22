@@ -34,9 +34,15 @@ export default function Navigation({ isOpen, closeMenu }) {
         <div data-name="navigation" className={navContainerStyles + (isOpen ? 'w-full' : 'w-0')} onClick={closeMenu}>
           <div
             ref={navRef}
-            className={'flex flex-col transition-transform w-64 h-screen p-4  text-white bg-gray-900 ' + statusStyle}
+            className={
+              'flex flex-col transition-transform w-64 h-screen p-4  text-white bg-gray-900 divide-y divide-gray-800 ' +
+              statusStyle
+            }
           >
             <NavItem to="/" text="Home" noEffect onClick={closeMenu} />
+            <NavGroup>
+              <NavItem to="market_index" text="大盤指數" onClick={closeMenu} />
+            </NavGroup>
             <NavGroup name="股票觀察表">
               <NavItem to="stock_market/tw" text="台股" count={watchList.tw.length} onClick={closeMenu} />
               <NavItem to="stock_market/us" text="美股" count={watchList.us.length} onClick={closeMenu} />

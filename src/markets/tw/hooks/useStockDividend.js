@@ -28,7 +28,7 @@ export default function useStockDividend({ ticker, token = null }) {
   useEffect(() => {
     function getDividendData() {
       let result = null;
-      const dividendOrigin = fetchedData.data.data;
+      const dividendOrigin = fetchedData.data;
       if (dividendOrigin.length) {
         const dividendByQuarter = dividendOrigin.reduce((acc, current) => {
           const year = moment(current.date).year();

@@ -22,9 +22,5 @@ export default function useCrudeOilPrices(data_id) {
     [],
   );
 
-  if (result.data) {
-    result.data = result.data.data;
-  }
-
   return result;
 }

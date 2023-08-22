@@ -56,7 +56,6 @@ export default function Dashboard() {
   const { market } = useParams();
   const memberOnlyRoutes = [{ path: 'stock_market/:market' }, { path: 'stock_market/:market/:stock_id' }];
   const memberRouteMatch = matchRoutes(memberOnlyRoutes, currentLocation);
-  const [stocksInfo, setStocksInfo] = useState({ data: null, error: null, stage: 'idle' });
   const context = {
     dispatch,
     isShowKeywordSearch,
@@ -65,8 +64,6 @@ export default function Dashboard() {
     setKeyword,
     logout,
     market,
-    stocksInfo,
-    setStocksInfo,
     token,
     userId,
     watchList,
