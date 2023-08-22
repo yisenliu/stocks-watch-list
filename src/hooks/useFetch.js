@@ -1,5 +1,5 @@
-import fetch from '@utils/fetch';
 import { useState, useEffect } from 'react';
+import fetch from '@utils/fetch';
 
 let cacheMap = new Map();
 export default function useFetch(options, dependency) {
@@ -21,7 +21,7 @@ export default function useFetch(options, dependency) {
       setStage('fetching');
       setError(null);
       fetch(options)
-        .then(res => res.data)
+        .then(res => res.data.data)
         .then(data => {
           if (!ignore) {
             setData(data);

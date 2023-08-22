@@ -26,7 +26,7 @@ export default function useGoldPrice() {
 
   useEffect(() => {
     function getDailyData() {
-      const originData = fetchedData.data.data;
+      const originData = fetchedData.data;
       let prevDate = originData[0].date.split(' ')[0];
       const result = originData.reduce((acc, currentValue, currentIndex, array) => {
         const currentDate = currentValue.date.split(' ')[0];
@@ -45,7 +45,6 @@ export default function useGoldPrice() {
       }, []);
 
       setGoldPrice(result);
-      // console.log(result);
     }
     if (fetchedData.data) {
       getDailyData();

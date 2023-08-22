@@ -4,7 +4,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import DraggableDataGrid from '@components/DraggableDataGrid';
+import ErrorMsg from '@components/ErrorMsg';
 import fetch from '@utils/fetch';
+import Loading from '@components/Loading';
 import moment from 'moment';
 import StockContext from '@contexts/StockContext';
 import SelectedStocksStatistics from '@components/SelectedStocksStatistics';
@@ -14,16 +16,16 @@ export function StockList() {
   // console.log('route: StockList');
   const { stock_id } = useParams();
   const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const { dispatch, market, setStocksInfo, token, watchList } = useContext(StockContext);
+  const { dispatch, market, token, watchList } = useContext(StockContext);
   const [sortModel, setSortModel] = useState([]);
   const stockInfoDataset = getStockInfoDataSetByMarket(market);
-  const fetchedStocksInfo = useStockInfo(stockInfoDataset, token);
+  const { error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const [apiRefCurrent, setApiRefCurrent] = useState(null);
   const stockPriceDataset = getStockPriceDataSetByMarket(market);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const stockList = watchList[market];
-  let stocksNum = stockList?.length;
+  const watchListByMarket = watchList[market];
+  let stocksNum = watchListByMarket?.length;
 
   function clearSelectedRowIds() {
     setSelectedRowIds([]);
@@ -84,12 +86,8 @@ export function StockList() {
   }
 
   useEffect(() => {
-    setStocksInfo(fetchedStocksInfo);
-  }, [fetchedStocksInfo.error, fetchedStocksInfo.data]);
-
-  useEffect(() => {
     if (stocksNum > 0) {
-      const rowsPromise = stockList.map(item => {
+      const rowsPromise = watchListByMarket.map(item => {
         return getStockPrice(item.id);
       });
       Promise.all(rowsPromise).then(data => {
@@ -104,12 +102,14 @@ export function StockList() {
 
   return (
     <>
-      {!stock_id && (
+      {stage === 'fetching' && <Loading />}
+      {error && <ErrorMsg>{error.message}</ErrorMsg>}
+      {!stock_id && stage === 'fetched' && (
         <>
           {selectedRowIds.length > 0 && (
             <SelectedStocksStatistics clearSelectedRowIds={clearSelectedRowIds} selectedRowIds={selectedRowIds} />
           )}
-          {stockList.length > 0 && (
+          {watchListByMarket.length > 0 && (
             <DraggableDataGrid
               className="-m-4"
               columns={stockColumns}
@@ -120,7 +120,7 @@ export function StockList() {
               market={market}
               onRowClick={onRowClick}
               onSortModelChange={onSortModelChange}
-              rows={stockList}
+              rows={watchListByMarket}
               setSelectedRowIds={setSelectedRowIds}
               selectedRowIds={selectedRowIds}
               setApiRefCurrent={setApiRefCurrent}
@@ -130,7 +130,7 @@ export function StockList() {
               updateSelectedRowIds={updateSelectedRowIds}
             />
           )}
-          {stockList.length === 0 && (
+          {watchListByMarket.length === 0 && (
             <p className="mx-4 my-8 text-center text-white">您尚未建立觀察名單，請按右上角「+」</p>
           )}
         </>

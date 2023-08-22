@@ -34,8 +34,5 @@ export default function usePriceHistory({
     [data_id, dataset],
   );
 
-  if (result.data) {
-    result.data = result.data.data;
-  }
   return result;
 }

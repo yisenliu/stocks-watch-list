@@ -23,11 +23,8 @@ export default function useTaiwanStockNews(ticker, token = null) {
     [ticker],
   );
 
-  if (result.error) {
-    console.log(`%c${result.error.message}`, 'color: red');
-  }
   if (result.data) {
-    const newsData = [...result.data.data];
+    const newsData = [...result.data];
     result.data = newsData.reverse();
   }
   return result;

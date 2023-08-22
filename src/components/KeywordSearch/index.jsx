@@ -1,4 +1,5 @@
 import { useContext, useRef } from 'react';
+import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
 import ClearIcon from '@mui/icons-material/Clear';
 import ErrorMsg from '@components/ErrorMsg';
 import FlexSearch from 'flexsearch';
@@ -7,6 +8,7 @@ import Loading from '@components/Loading';
 import SearchResult from './SearchResult';
 import StockContext from '@contexts/StockContext';
 import tw from 'twin.macro';
+import useStockInfo from '@hooks/useStockInfo';
 
 const Input = tw.input`w-full mr-2 border-none bg-transparent focus:ring-0`;
 
@@ -24,15 +26,16 @@ function debounce(fun, delay) {
 }
 
 export default function KeywordSearch() {
-  const { keyword, setKeyword, stocksInfo } = useContext(StockContext);
-  const { data, error, stage } = stocksInfo;
+  const { keyword, market, setKeyword, token } = useContext(StockContext);
+  const stockInfoDataset = getStockInfoDataSetByMarket(market);
+  const { data, error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const keywordRef = useRef();
-  const onChange = debounce(e => setKeyword(e.target.value.toUpperCase()), 500);
+  const onChange = debounce(e => setKeyword(e.target.value.toUpperCase()), 300);
   // 建立股票索引
-  const indexDB = new FlexSearch({ tokenize: 'full' });
-  data?.forEach(({ stock_id, stock_name }, index) => indexDB.add(index, stock_id + ',' + stock_name));
+  const indexedDB = new FlexSearch({ tokenize: 'full' });
+  data?.forEach(({ stock_id, stock_name }, index) => indexedDB.add(index, stock_id + ',' + stock_name));
   // 以陣列儲存搜尋結果的資料索引值
-  const matchedIndexs = indexDB.search(keyword);
+  const matchedIndexs = indexedDB.search(keyword);
   const matchedStocks = matchedIndexs.map(index => data[index]);
 
   function clearInput() {

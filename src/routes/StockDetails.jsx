@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
 import BackToRouteBar from '@components/BackToRouteBar';
 import Dividend from '@markets/tw/components/Dividend';
 import ErrorMsg from '@components/ErrorMsg';
@@ -10,6 +11,7 @@ import Portal from '@components/Portal';
 import StockNews from '@markets/tw/components/StockNews';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import useStockInfo from '@hooks/useStockInfo';
 
 function getMarketData(market) {
   let fn;
@@ -29,11 +31,11 @@ function getMarketData(market) {
 export function StockDetails() {
   // console.log('route: StockDetails');
   const stock_id = useLoaderData();
-  const { market, stocksInfo, token } = useContext(StockContext);
+  const { market, token } = useContext(StockContext);
   const { dataset, dataKey } = getMarketData(market);
-  const { data, error, stage } = stocksInfo;
+  const stockInfoDataset = getStockInfoDataSetByMarket(market);
+  const { data, error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const currentStock = data?.find(stock => stock.stock_id === stock_id.toUpperCase()) || null;
-  console.log(currentStock);
   const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'HistoryInfo');
   const TabPanelComponents = {
     HistoryInfo: <HistoryInfo dataset={dataset} data_id={stock_id} token={token} dataKey={dataKey} />,
@@ -56,13 +58,7 @@ export function StockDetails() {
 
   return (
     <Portal name="stock_details_portal">
-      {currentStock && (
-        <BackToRouteBar
-          to={`/stock_market/${market}`}
-          stock_id={currentStock.stock_id}
-          title={currentStock.stock_name}
-        />
-      )}
+      {currentStock && <BackToRouteBar to={-1} stock_id={currentStock.stock_id} title={currentStock.stock_name} />}
       {stage === 'fetching' && <Loading />}
       {error && <ErrorMsg>{error.message}</ErrorMsg>}
       {stage === 'fetched' && (

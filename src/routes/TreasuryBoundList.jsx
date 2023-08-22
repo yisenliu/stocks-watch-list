@@ -1,10 +1,10 @@
 import { boundColumns, gridStyles } from '@lib/muiDataGrid';
+import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import concatParams from '@utils/concatParams';
 import fetch from '@utils/fetch';
 import moment from 'moment';
-import { DataGridPro } from '@mui/x-data-grid-pro';
 
 const data_ids = [
   'United States 1-Month',

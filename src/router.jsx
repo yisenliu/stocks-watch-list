@@ -63,6 +63,13 @@ export const router = createBrowserRouter(
             return { Component: CrudeOilPrices };
           },
         },
+        {
+          path: 'market_index',
+          async lazy() {
+            let { MarketIndex } = await import('./routes/MarketIndex');
+            return { Component: MarketIndex };
+          },
+        },
       ],
     },
   ],
