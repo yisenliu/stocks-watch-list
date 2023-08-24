@@ -12,25 +12,25 @@
 Install Dependencies
 
 ```bash
-$ yarn install
+$ npm install | yarn install
 ```
 
 Development
 
 ```bash
-$ yarn dev
+$ npm run dev | yarn dev
 ```
 
 Production Build
 
 ```bash
-$ yarn build
+$ npm run build | yarn build
 ```
 
 Production Preview
 
 ```bash
-$ yarn preview
+$ npm run preview | yarn preview
 ```
 
 ## Features
@@ -40,6 +40,7 @@ $ yarn preview
 - 圖表化呈現每一筆觀察名單在不同時間區間的表現
 - 台股可查詢上市公司股票與 ETF 近五年股利。
 - 與國際股市同採「綠漲紅跌」呈現數據變化。
+- 台、美股市大盤指數，美國政府公債殖利率，黃金現貨、原油價格。
 
 ## Experience
 
