@@ -48,7 +48,7 @@ export default function Dashboard() {
   // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
   const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
-  const [showDetailedRow, setShowDetailedRow] = useState(localStorage.getItem('show_detailed_row') || false);
+  const [showDetailedRow, setShowDetailedRow] = useState(localStorage.getItem('show_detailed_row') === 'true');
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
   const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
