@@ -1,3 +1,6 @@
+import { gridStringOrNumberComparator } from '@mui/x-data-grid-pro';
+import { IdName, PercentSpread } from '@components/StockCell';
+
 export const gridStyles = {
   border: 'none',
   color: 'white',
@@ -51,7 +54,19 @@ export const gridStyles = {
   },
 };
 export const stockColumns = [
-  { field: 'id', flex: 1, headerName: '代號' },
+  {
+    field: 'id',
+    flex: 1,
+    headerName: '代號',
+    renderCell: ({ value }) => <IdName value={value} />,
+    sortComparator: (v1, v2) => gridStringOrNumberComparator(v1.id, v2.id),
+    valueGetter: params => {
+      return {
+        id: params.row.id,
+        name: params.row.name,
+      };
+    },
+  },
   {
     align: 'right',
     field: 'price',
@@ -69,16 +84,24 @@ export const stockColumns = [
     field: 'percent',
     headerName: '漲幅 %',
     headerAlign: 'right',
+    renderCell: ({ value }) => <PercentSpread value={value} />,
+    sortComparator: (v1, v2) => gridStringOrNumberComparator(v1.percent, v2.percent),
     valueGetter: params => {
-      return parseFloat((params.row.spread / params.row.open) * 100).toFixed(2);
+      const spread = params.row.spread;
+      const open = params.row.open;
+      return {
+        percent: isNaN(spread) ? '-' : parseFloat((spread / open) * 100).toFixed(2),
+        spread: isNaN(spread) ? '-' : parseFloat(spread).toFixed(2),
+      };
     },
-    valueFormatter: params => {
-      if (params.value == null) {
-        return '';
-      }
-      return `${params.value.toLocaleString()} %`;
+    valueFormatter: ({ value }) => {
+      const { percent, spread } = value;
+      return {
+        percent: isNaN(percent) ? '-' : `${percent.toLocaleString()} %`,
+        spread,
+      };
     },
-    width: 120,
+    width: 100,
   },
 ];
 export const boundColumns = [

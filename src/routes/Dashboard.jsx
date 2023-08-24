@@ -48,8 +48,9 @@ export default function Dashboard() {
   // console.log('route: Dashboard');
   const [keyword, setKeyword] = useState('');
   const [isShowKeywordSearch, setIsShowKeywordSearch] = useState(false);
-  const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
+  const [showDetailedRow, setShowDetailedRow] = useState(localStorage.getItem('show_detailed_row') || false);
   const [token, setToken] = useState(sessionStorage.getItem('token') || null);
+  const [userId, setUserId] = useState(sessionStorage.getItem('user_id') || null);
   const [watchList, dispatch] = useReducer(reducer, null, createInitialState);
   const currentLocation = useLocation();
   const pathname = currentLocation.pathname;
@@ -64,6 +65,8 @@ export default function Dashboard() {
     setKeyword,
     logout,
     market,
+    showDetailedRow,
+    setShowDetailedRow,
     token,
     userId,
     watchList,
@@ -93,6 +96,8 @@ export default function Dashboard() {
   useEffect(() => {
     closeKeywordSearch();
   }, [pathname]);
+
+  useEffect(() => {}, []);
 
   return (
     <StockContext.Provider value={context}>

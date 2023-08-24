@@ -23,12 +23,12 @@ export default function useStockInfo(dataset, token = null, storeName) {
     let ignore = false;
     let retry = 0;
     async function fetchData() {
-      const { db, saveData } = await initDB();
-      const storeData = await db.getAll(storeName);
+      const { db, storeData } = await initDB();
+      const storedData = await db.getAll(storeName);
 
-      if (storeData.length) {
+      if (storedData.length) {
         // get data from indexedDB
-        setData(storeData);
+        setData(storedData);
         setStage('fetched');
       } else {
         // fetch data
@@ -36,14 +36,13 @@ export default function useStockInfo(dataset, token = null, storeName) {
         setError(null);
         fetch(params)
           .then(res => res.data.data)
-          .then(data => {
+          .then(async data => {
             if (!ignore) {
-              saveData(data, storeName).then(() => {
-                setData(data);
-                setStage('fetched');
-                setError(null);
-                retry = 0;
-              });
+              await storeData(db, data, storeName);
+              setData(data);
+              setStage('fetched');
+              setError(null);
+              retry = 0;
             }
           })
           .catch(err => {

@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
+import { getStockInfoDatasetByMarket } from '@utils/getDataSetByMarket';
 import ClearIcon from '@mui/icons-material/Clear';
 import ErrorMsg from '@components/ErrorMsg';
 import FlexSearch from 'flexsearch';
@@ -27,7 +27,7 @@ function debounce(fun, delay) {
 
 export default function KeywordSearch() {
   const { keyword, market, setKeyword, token } = useContext(StockContext);
-  const stockInfoDataset = getStockInfoDataSetByMarket(market);
+  const stockInfoDataset = getStockInfoDatasetByMarket(market);
   const { data, error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const keywordRef = useRef();
   const onChange = debounce(e => setKeyword(e.target.value.toUpperCase()), 300);
@@ -47,6 +47,7 @@ export default function KeywordSearch() {
   return (
     <>
       {stage === 'fetching' && <Loading />}
+      {error && <ErrorMsg>{error.message}</ErrorMsg>}
       {stage === 'fetched' && (
         <div data-name="keyword_search" className="flex items-center flex-1">
           <Input type="text" autoFocus placeholder="輸入代碼或關鍵字" onChange={onChange} ref={keywordRef} />
@@ -58,7 +59,6 @@ export default function KeywordSearch() {
           {matchedStocks !== null && <SearchResult stocks={matchedStocks} keyword={keyword} />}
         </div>
       )}
-      {error && <ErrorMsg>{error.message}</ErrorMsg>}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { getStockInfoDataSetByMarket } from '@utils/getDataSetByMarket';
+import { getStockInfoDatasetByMarket } from '@utils/getDataSetByMarket';
 import BackToRouteBar from '@components/BackToRouteBar';
 import Dividend from '@markets/tw/components/Dividend';
 import ErrorMsg from '@components/ErrorMsg';
@@ -33,7 +33,7 @@ export function StockDetails() {
   const stock_id = useLoaderData();
   const { market, token } = useContext(StockContext);
   const { dataset, dataKey } = getMarketData(market);
-  const stockInfoDataset = getStockInfoDataSetByMarket(market);
+  const stockInfoDataset = getStockInfoDatasetByMarket(market);
   const { data, error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const currentStock = data?.find(stock => stock.stock_id === stock_id.toUpperCase()) || null;
   const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'HistoryInfo');

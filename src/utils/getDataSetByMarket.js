@@ -1,4 +1,4 @@
-export function getStockInfoDataSetByMarket(market) {
+export function getStockInfoDatasetByMarket(market) {
   let fn;
   let dataset = {
     tw() {
@@ -15,7 +15,7 @@ export function getStockInfoDataSetByMarket(market) {
 
   return fn();
 }
-export function getStockPriceDataSetByMarket(market) {
+export function getStockPriceDatasetByMarket(market) {
   let fn;
   let dataset = {
     tw() {

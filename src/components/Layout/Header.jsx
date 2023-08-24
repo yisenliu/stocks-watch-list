@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import StockContext from '@contexts/StockContext';
 import tw, { css } from 'twin.macro';
+import ViewColumnIcon from '@mui/icons-material/ViewColumn';
+import ViewModuleIcon from '@mui/icons-material/ViewModule';
 
 const naviTrigger = css`
   ${tw`before:origin-bottom-left after:origin-top-left flex flex-col items-center justify-center h-12 cursor-pointer`}
@@ -32,10 +34,20 @@ const naviTrigger = css`
   }
 `;
 
+function ToggleDetailedRowButton({ showDetailedRow, onClick }) {
+  return (
+    <IconButton onClick={onClick} aria-label="show/hide stock name" size="large" sx={{ color: 'white' }}>
+      {showDetailedRow && <ViewColumnIcon fontSize="medium" />}
+      {!showDetailedRow && <ViewModuleIcon fontSize="medium" />}
+    </IconButton>
+  );
+}
 export default function Header() {
-  const { market, isShowKeywordSearch, setKeyword, setIsShowKeywordSearch } = useContext(StockContext);
+  const { market, isShowKeywordSearch, setKeyword, setIsShowKeywordSearch, showDetailedRow, setShowDetailedRow } =
+    useContext(StockContext);
   const pathname = useLocation().pathname;
   const inStockMarket = pathname.includes('stock_market');
+  const inMarketIndex = pathname.includes('market_index');
   const [isShowNavi, setIsShowNavi] = useState(false);
 
   function closeMenu(e) {
@@ -57,6 +69,11 @@ export default function Header() {
     }
   }
 
+  function toggleDetailedRow() {
+    localStorage.setItem('show_detailed_row', !showDetailedRow);
+    setShowDetailedRow(!showDetailedRow);
+  }
+
   return (
     <header data-name="header" className="z-1 sticky top-0 w-full text-white bg-gray-900">
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ height: 48 }}>
@@ -74,9 +91,11 @@ export default function Header() {
             <IconButton onClick={openKeywordSearch} aria-label="show input" size="large" sx={{ color: 'white' }}>
               <AddIcon fontSize="medium" />
             </IconButton>
+            <ToggleDetailedRowButton showDetailedRow={showDetailedRow} onClick={toggleDetailedRow} />
           </>
         )}
         {inStockMarket && isShowKeywordSearch && <KeywordSearch />}
+        {inMarketIndex && <ToggleDetailedRowButton showDetailedRow={showDetailedRow} onClick={toggleDetailedRow} />}
       </Stack>
       <Navigation isOpen={isShowNavi} closeMenu={closeMenu} />
     </header>
