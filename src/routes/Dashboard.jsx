@@ -97,8 +97,6 @@ export default function Dashboard() {
     closeKeywordSearch();
   }, [pathname]);
 
-  useEffect(() => {}, []);
-
   return (
     <StockContext.Provider value={context}>
       {memberRouteMatch && !userId && <Login onSuccess={onLoginSuccess} />}

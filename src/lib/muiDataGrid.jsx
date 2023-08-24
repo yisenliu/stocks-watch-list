@@ -90,15 +90,8 @@ export const stockColumns = [
       const spread = params.row.spread;
       const open = params.row.open;
       return {
-        percent: isNaN(spread) ? '-' : parseFloat((spread / open) * 100).toFixed(2),
+        percent: isNaN(spread) ? '-' : parseFloat((spread / open) * 100).toFixed(2) + '%',
         spread: isNaN(spread) ? '-' : parseFloat(spread).toFixed(2),
-      };
-    },
-    valueFormatter: ({ value }) => {
-      const { percent, spread } = value;
-      return {
-        percent: isNaN(percent) ? '-' : `${percent.toLocaleString()} %`,
-        spread,
       };
     },
     width: 100,
