@@ -34,6 +34,20 @@ const naviTrigger = css`
   }
 `;
 
+function getRouteTitle(pathname) {
+  let fn;
+  const getTitle = {
+    '/market_index': () => '大盤指數',
+    '/stock_market/tw': () => '台股',
+    '/stock_market/us': () => '美股',
+    '/us_treasury_bound': () => '美國政府公債殖利率',
+    default: () => '',
+  };
+
+  fn = getTitle[pathname] ? getTitle[pathname] : getTitle['default'];
+
+  return fn();
+}
 function ToggleDetailedRowButton({ showDetailedRow, onClick }) {
   return (
     <IconButton onClick={onClick} aria-label="show/hide stock name" size="large" sx={{ color: 'white' }}>
@@ -43,9 +57,10 @@ function ToggleDetailedRowButton({ showDetailedRow, onClick }) {
   );
 }
 export default function Header() {
-  const { market, isShowKeywordSearch, setKeyword, setIsShowKeywordSearch, showDetailedRow, setShowDetailedRow } =
+  const { isShowKeywordSearch, setKeyword, setIsShowKeywordSearch, showDetailedRow, setShowDetailedRow } =
     useContext(StockContext);
-  const pathname = useLocation().pathname;
+  const { pathname } = useLocation();
+  const routeTitle = getRouteTitle(pathname);
   const inStockMarket = pathname.includes('stock_market');
   const inMarketIndex = pathname.includes('market_index');
   const [isShowNavi, setIsShowNavi] = useState(false);
@@ -85,9 +100,9 @@ export default function Header() {
         >
           <span>Open Navigation</span>
         </Button>
+        {routeTitle && <h3 className="flex-1 text-left">{routeTitle}</h3>}
         {inStockMarket && !isShowKeywordSearch && (
           <>
-            <h3 className="flex-1 text-left">{market === 'tw' ? '台股' : '美股'}</h3>
             <IconButton onClick={openKeywordSearch} aria-label="show input" size="large" sx={{ color: 'white' }}>
               <AddIcon fontSize="medium" />
             </IconButton>

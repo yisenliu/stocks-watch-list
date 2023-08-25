@@ -41,6 +41,7 @@ export default function HistoryChart({ history, dataKey, tooltipValueLabel = 'æ”
               zIndex: 1,
               right: 16,
               left: 'auto',
+              textAlign: 'right',
             }}
           />
           <Area animationDuration={500} dataKey={dataKey} stroke="#00acc1" strokeWidth={2} fillOpacity={0} />
