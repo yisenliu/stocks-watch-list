@@ -15,6 +15,7 @@ export default defineConfig(() => {
     base: process.env.GithubPages ? '/stocks-watch-list/' : '/',
     build: {
       emptyOutDir: true,
+      manifest: true,
       outDir,
       rollupOptions: {
         input: {
@@ -51,7 +52,7 @@ export default defineConfig(() => {
       imagetools(),
       splitVendorChunkPlugin(),
       mdPlugin.plugin({
-        mode: ['html', 'react'],
+        mode: ['html'],
       }),
     ],
     publicDir,

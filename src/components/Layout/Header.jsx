@@ -100,7 +100,7 @@ export default function Header() {
         >
           <span>Open Navigation</span>
         </Button>
-        {routeTitle && <h3 className="flex-1 text-left">{routeTitle}</h3>}
+        {routeTitle && !isShowKeywordSearch && <h3 className="flex-1 text-left">{routeTitle}</h3>}
         {inStockMarket && !isShowKeywordSearch && (
           <>
             <IconButton onClick={openKeywordSearch} aria-label="show input" size="large" sx={{ color: 'white' }}>
