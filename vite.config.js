@@ -15,7 +15,6 @@ export default defineConfig(() => {
     base: process.env.GithubPages ? '/stocks-watch-list/' : '/',
     build: {
       emptyOutDir: true,
-      manifest: true,
       outDir,
       rollupOptions: {
         input: {
