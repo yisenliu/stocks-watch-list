@@ -66,7 +66,7 @@ function Stock({ keyword, stock }) {
 
 export default function SearchResult({ keyword, stocks }) {
   return (
-    <div className="z-1 top-12 fixed left-0 w-full shadow-md">
+    <div className="z-1 top-12 absolute left-0 w-full shadow-md">
       <div className="max-h-64 overflow-x-hidden overflow-y-auto text-white bg-gray-900">
         {stocks.map((stock, index) => (
           <Stock key={stock.stock_id + index} keyword={keyword} stock={stock} />
