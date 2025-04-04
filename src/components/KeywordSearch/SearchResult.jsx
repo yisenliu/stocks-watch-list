@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import highlightWords from 'highlight-words';
@@ -28,17 +29,23 @@ function Stock({ keyword, stock }) {
   const stockList = watchList[market];
   const { stock_id, stock_name, industry_category, type } = stock;
   const isExist = stockList.some(stock => stock.id === stock_id);
+  const navigate = useNavigate();
 
-  function addToWatchList() {
+  function addToWatchList(event) {
+    event.stopPropagation();
     dispatch({ type: 'add_stocks', market, stocks: [{ id: stock_id }] });
   }
 
-  function removeFromWatchList() {
+  function removeFromWatchList(event) {
+    event.stopPropagation();
     dispatch({ type: 'remove_stocks', market, stocks: [{ id: stock_id }] });
   }
 
   return (
-    <div className="flex items-center justify-between p-2 space-x-4">
+    <div
+      className="flex items-center justify-between p-2 space-x-4 cursor-pointer"
+      onClick={() => navigate(`/stock_market/${market}/${stock_id}`)}
+    >
       <p className="w-16 text-lg">
         <HighlightWords text={stock_id} query={keyword} />
       </p>

@@ -23,7 +23,7 @@ export default function useStockInfo(dataset, token = null, storeName) {
     let ignore = false;
     let retry = 0;
     async function fetchData() {
-      const { db, storeData } = await initDB();
+      const { db, storeData } = await initDB(storeName);
       const storedData = await db.getAll(storeName);
 
       if (storedData.length) {

@@ -9,8 +9,26 @@ export function CrudeOilPrices() {
   // console.log('route: CrudeOilPrices');
   const [component, setComponent] = useState(localStorage.getItem('crude_oil_prices_active_tab') || 'Brent');
   const TabPanelComponents = {
-    Brent: <HistoryInfo dataset="CrudeOilPrices" data_id="Brent" dataKey="price" tooltipValueLabel="價格" />,
-    WTI: <HistoryInfo dataset="CrudeOilPrices" data_id="WTI" dataKey="price" tooltipValueLabel="價格" />,
+    Brent: (
+      <HistoryInfo
+        dataset="CrudeOilPrices"
+        data_id="Brent"
+        maxKey="price"
+        minKey="price"
+        closeKey="price"
+        tooltipValueLabel="價格"
+      />
+    ),
+    WTI: (
+      <HistoryInfo
+        dataset="CrudeOilPrices"
+        data_id="WTI"
+        maxKey="price"
+        minKey="price"
+        closeKey="price"
+        tooltipValueLabel="價格"
+      />
+    ),
   };
 
   function DynamicTabPanelComponent({ component }) {

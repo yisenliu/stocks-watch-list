@@ -23,7 +23,8 @@ export function StockList() {
   const [sortModel, setSortModel] = useState([]);
   const { stock_id } = useParams();
   const stockInfoDataset = getStockInfoDatasetByMarket(market);
-  const { error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
+  const storeName = `stocks_info_${market}`;
+  const { error, stage } = useStockInfo(stockInfoDataset, token, storeName);
   const stockPriceDataset = getStockPriceDatasetByMarket(market);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -78,8 +79,8 @@ export function StockList() {
       })
         .then(res => res.data.data)
         .then(async data => {
-          const { db } = await initDB();
-          const stock = await db.getFromIndex(`stocks_info_${market}`, 'stock_id', stock_id);
+          const { db } = await initDB(storeName);
+          const stock = await db.getFromIndex(storeName, 'stock_id', stock_id);
           const name = stock?.stock_name || '-';
           const latest = data[data.length - 1];
           let result = { id: stock_id, spread: '-', close: '-', open: '-', name };

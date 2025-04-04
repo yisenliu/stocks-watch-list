@@ -14,7 +14,7 @@ export default function useTreasuryBondsYield(data_id = null) {
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
         : '/api/stock' + paramsStr,
-      timeout: 3000,
+      timeout: 8000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
     },
     [data_id],

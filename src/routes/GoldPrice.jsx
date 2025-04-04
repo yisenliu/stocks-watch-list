@@ -67,7 +67,7 @@ export function GoldPrice() {
                     min={range.min}
                     max={range.max}
                   />
-                  <HistoryChart history={data} dataKey="close" />
+                  <HistoryChart history={data} closeKey="close" />
                 </>
               )}
             </BlockSection>

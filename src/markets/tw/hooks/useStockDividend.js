@@ -18,7 +18,7 @@ export default function useStockDividend({ ticker, token = null }) {
       url: process.env.GithubPages
         ? corsProxy + encodeURIComponent('https://api.finmindtrade.com/api/v4/data' + paramsStr)
         : '/api/stock' + paramsStr,
-      timeout: 3000,
+      timeout: 8000,
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
     },
     [ticker],
@@ -34,7 +34,7 @@ export default function useStockDividend({ ticker, token = null }) {
           const year = moment(current.date).year();
           const quarter = 'Q' + moment(current.date).format('Q');
           const idx = acc.findIndex(item => item.year === year);
-          if (acc === [] || idx === -1) {
+          if (acc.length === 0 || idx === -1) {
             const data = {
               year,
             };
@@ -57,7 +57,7 @@ export default function useStockDividend({ ticker, token = null }) {
           const monthday = current.date.slice(5);
           const idx = acc.findIndex(item => item.year === year);
 
-          if (acc === [] || idx === -1) {
+          if (acc.length === 0 || idx === -1) {
             const data = {
               stock_id: current.stock_id,
               year,

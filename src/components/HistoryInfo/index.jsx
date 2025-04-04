@@ -20,8 +20,7 @@ const durations = [
   { startDate: moment().subtract(5, 'years'), text: '5年' },
 ];
 
-export default function HistoryInfo({ dataset, data_id, dataKey, token, tooltipValueLabel }) {
-  // console.log('component: HistoryInfo');
+export default function HistoryInfo({ dataset, data_id, closeKey, maxKey, minKey, token, tooltipValueLabel }) {
   const [currentDurationIdx, setCurrentDurationIdx] = useState(
     parseInt(localStorage.getItem('current_duration_idx')) || 0,
   );
@@ -51,14 +50,14 @@ export default function HistoryInfo({ dataset, data_id, dataKey, token, tooltipV
   useEffect(() => {
     let min = null;
     let max = null;
-
     currentHistory.forEach(history => {
-      const value = history[dataKey];
-      if (!max || value > max) {
-        max = value;
+      const h_max = history[maxKey];
+      const h_min = history[minKey];
+      if (!max || h_max > max) {
+        max = h_max;
       }
-      if (!min || value < min) {
-        min = value;
+      if (!min || h_min < min) {
+        min = h_min;
       }
     });
 
@@ -74,13 +73,13 @@ export default function HistoryInfo({ dataset, data_id, dataKey, token, tooltipV
           <>
             <Summary
               currentDurationLabel={currentDurationLabel}
-              currentValue={currentHistory[currentHistory.length - 1][dataKey]}
-              startValue={currentHistory[0][dataKey]}
+              currentValue={currentHistory[currentHistory.length - 1][closeKey]}
+              startValue={currentHistory[0][maxKey]}
               endDate={currentHistory[currentHistory.length - 1].date}
               min={range.min}
               max={range.max}
             />
-            <HistoryChart history={currentHistory} dataKey={dataKey} tooltipValueLabel={tooltipValueLabel} />
+            <HistoryChart history={currentHistory} closeKey={closeKey} tooltipValueLabel={tooltipValueLabel} />
             <DurationPicker options={durations} currentIdx={currentDurationIdx} onChange={handleChangeDuration} />
           </>
         )}

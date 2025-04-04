@@ -16,8 +16,8 @@ import useStockInfo from '@hooks/useStockInfo';
 function getMarketData(market) {
   let fn;
   let component = {
-    tw: () => ({ dataset: 'TaiwanStockPrice', dataKey: 'close' }),
-    us: () => ({ dataset: 'USStockPrice', dataKey: 'Close' }),
+    tw: () => ({ dataset: 'TaiwanStockPrice', closeKey: 'close', maxKey: 'max', minKey: 'min' }),
+    us: () => ({ dataset: 'USStockPrice', closeKey: 'Close', maxKey: 'High', minKey: 'Low' }),
     default() {
       throw new Error('unknown market');
     },
@@ -32,13 +32,22 @@ export function StockDetails() {
   // console.log('route: StockDetails');
   const stock_id = useLoaderData();
   const { market, token } = useContext(StockContext);
-  const { dataset, dataKey } = getMarketData(market);
+  const { dataset, closeKey, maxKey, minKey } = getMarketData(market);
   const stockInfoDataset = getStockInfoDatasetByMarket(market);
   const { data, error, stage } = useStockInfo(stockInfoDataset, token, `stocks_info_${market}`);
   const currentStock = data?.find(stock => stock.stock_id === stock_id.toUpperCase()) || null;
   const [component, setComponent] = useState(localStorage.getItem(`${market}_details_active_tab`) || 'HistoryInfo');
   const TabPanelComponents = {
-    HistoryInfo: <HistoryInfo dataset={dataset} data_id={stock_id} token={token} dataKey={dataKey} />,
+    HistoryInfo: (
+      <HistoryInfo
+        dataset={dataset}
+        data_id={stock_id}
+        token={token}
+        closeKey={closeKey}
+        maxKey={maxKey}
+        minKey={minKey}
+      />
+    ),
     Dividend: <Dividend ticker={stock_id} token={token} />,
     StockNews: <StockNews ticker={stock_id} token={token} />,
   };

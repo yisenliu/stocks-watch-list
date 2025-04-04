@@ -77,8 +77,9 @@ export function MarketIndex() {
       })
         .then(res => res.data.data)
         .then(async data => {
-          const { db } = await initDB();
-          const stock = await db.getFromIndex(`stocks_info_${market}`, 'stock_id', stock_id);
+          const storeName = `stocks_info_${market}`;
+          const { db } = await initDB(storeName);
+          const stock = await db.getFromIndex(storeName, 'stock_id', stock_id);
           const name = stock?.stock_name || '-';
           const latest = data[data.length - 1];
           let result = { market, id: stock_id, spread: '-', close: '-', open: '-', name };

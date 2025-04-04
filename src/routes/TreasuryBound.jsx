@@ -30,7 +30,9 @@ export function TreasuryBound() {
           <HistoryInfo
             dataset="GovernmentBondsYield"
             data_id={bound_data_id}
-            dataKey="value"
+            closeKey="value"
+            maxKey="value"
+            minKey="value"
             tooltipValueLabel="殖利率"
           />
         </div>

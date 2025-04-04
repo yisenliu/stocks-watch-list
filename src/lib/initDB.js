@@ -6,12 +6,17 @@ function createObjectStore(db, storeName, indexName) {
   store.createIndex(indexName, indexName);
 }
 
-export default async function initDB() {
-  // console.log('initDB()');
+export default async function initDB(storeName) {
+  console.log({ storeName });
   const db = await openDB('my_database', 1, {
-    upgrade(db) {
-      createObjectStore(db, 'stocks_info_tw', 'stock_id');
-      createObjectStore(db, 'stocks_info_us', 'stock_id');
+    upgrade(db, oldVersion, newVersion, transaction) {
+      console.log({ oldVersion, newVersion });
+      if (oldVersion < 1) {
+        createObjectStore(db, 'stocks_info_tw', 'stock_id');
+        createObjectStore(db, 'stocks_info_us', 'stock_id');
+      } else {
+        transaction(storeName).objectStore(storeName);
+      }
     },
   });
 
