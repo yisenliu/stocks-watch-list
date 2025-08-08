@@ -63,7 +63,7 @@
     "vite-plugin-markdown": "^2.1.0"
   },
   "scripts": {
-    "start": "nvm use 18.17.1",
+    "start": "nvm use 22.18.0",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

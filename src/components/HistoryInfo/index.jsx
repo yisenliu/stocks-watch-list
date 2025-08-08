@@ -20,7 +20,7 @@ const durations = [
   { startDate: moment().subtract(5, 'years'), text: '5年' },
 ];
 
-export default function HistoryInfo({ dataset, data_id, closeKey, token, tooltipValueLabel }) {
+export default function HistoryInfo({ dataset, data_id, closeKey, minKey, maxKey, token, tooltipValueLabel }) {
   const [currentDurationIdx, setCurrentDurationIdx] = useState(
     parseInt(localStorage.getItem('current_duration_idx')) || 0,
   );
@@ -54,8 +54,8 @@ export default function HistoryInfo({ dataset, data_id, closeKey, token, tooltip
     let min = null;
     let max = null;
     currentHistory.forEach(history => {
-      const h_max = history[closeKey];
-      const h_min = history[closeKey];
+      const h_max = history[maxKey];
+      const h_min = history[minKey];
       if (!max || h_max > max) {
         max = h_max;
       }

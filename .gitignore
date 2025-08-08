@@ -29,3 +29,4 @@ dist-ssr
 .env.production
 .env.development.local
 sync.ffs_db
+.sync.ffs_db
