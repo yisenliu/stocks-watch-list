@@ -1,4 +1,4 @@
-import{b as e}from"./vendor-262f8ba3.chunk.js";const n=`<h1>Stocks Watch List</h1>
+import{b as e}from"./vendor-60533d1b.chunk.js";const n=`<h1>Stocks Watch List</h1>
 <p>自訂台股與美股上市公司股票與 ETF 觀察名單。</p>
 <h2>Getting Started</h2>
 <ul>
